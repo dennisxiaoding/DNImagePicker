@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+
+@class DNImageFlowViewController;
 @class DNPhotoBrowser;
 @protocol DNPhotoBrowserDelegate <NSObject>
 
@@ -22,6 +24,7 @@
 
 @interface DNPhotoBrowser : UIViewController
 
+@property (nonatomic, weak) DNImageFlowViewController *imageFlowController;
 @property (nonatomic, weak) id<DNPhotoBrowserDelegate> delegate;
 
 - (instancetype)initWithPhotos:(NSArray *)photosArray

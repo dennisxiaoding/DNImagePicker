@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		954E584E1AA96ABE00E481C4 /* DNAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 954E584D1AA96ABE00E481C4 /* DNAsset.m */; };
+		954E58541AA96E8A00E481C4 /* NSURL+DNIMagePickerUrlEqual.m in Sources */ = {isa = PBXBuildFile; fileRef = 954E58531AA96E8A00E481C4 /* NSURL+DNIMagePickerUrlEqual.m */; };
 		9571F2D51AA74B6B006ACEBD /* DNImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9571F2CE1AA74B6B006ACEBD /* DNImagePickerController.m */; };
 		9571F2D61AA74B6B006ACEBD /* DNAlbumTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9571F2D01AA74B6B006ACEBD /* DNAlbumTableViewController.m */; };
 		9571F2D71AA74B6B006ACEBD /* DNImageFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9571F2D21AA74B6B006ACEBD /* DNImageFlowViewController.m */; };
@@ -45,6 +47,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		954E584C1AA96ABE00E481C4 /* DNAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNAsset.h; sourceTree = "<group>"; };
+		954E584D1AA96ABE00E481C4 /* DNAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNAsset.m; sourceTree = "<group>"; };
+		954E58521AA96E8A00E481C4 /* NSURL+DNIMagePickerUrlEqual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURL+DNIMagePickerUrlEqual.h"; path = "../../../NSURL+DNIMagePickerUrlEqual.h"; sourceTree = "<group>"; };
+		954E58531AA96E8A00E481C4 /* NSURL+DNIMagePickerUrlEqual.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL+DNIMagePickerUrlEqual.m"; path = "../../../NSURL+DNIMagePickerUrlEqual.m"; sourceTree = "<group>"; };
 		9571F2CD1AA74B6B006ACEBD /* DNImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNImagePickerController.h; sourceTree = "<group>"; };
 		9571F2CE1AA74B6B006ACEBD /* DNImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNImagePickerController.m; sourceTree = "<group>"; };
 		9571F2CF1AA74B6B006ACEBD /* DNAlbumTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNAlbumTableViewController.h; sourceTree = "<group>"; };
@@ -128,6 +134,8 @@
 				9571F2D21AA74B6B006ACEBD /* DNImageFlowViewController.m */,
 				9571F2D31AA74B6B006ACEBD /* DNPhotoBrowser.h */,
 				9571F2D41AA74B6B006ACEBD /* DNPhotoBrowser.m */,
+				954E584C1AA96ABE00E481C4 /* DNAsset.h */,
+				954E584D1AA96ABE00E481C4 /* DNAsset.m */,
 			);
 			path = DNImagePicker;
 			sourceTree = "<group>";
@@ -166,6 +174,8 @@
 		9571F30B1AA750E2006ACEBD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				954E58521AA96E8A00E481C4 /* NSURL+DNIMagePickerUrlEqual.h */,
+				954E58531AA96E8A00E481C4 /* NSURL+DNIMagePickerUrlEqual.m */,
 				9571F30C1AA7510B006ACEBD /* UIViewController+DNImagePicker.h */,
 				9571F30D1AA7510B006ACEBD /* UIViewController+DNImagePicker.m */,
 				9571F30E1AA7510B006ACEBD /* UIColor+Hex.h */,
@@ -354,9 +364,11 @@
 				9571F3141AA7510B006ACEBD /* UIView+DNImagePicker.m in Sources */,
 				959A69DE1AA5F3A000ED8A3A /* AppDelegate.m in Sources */,
 				9571F2EC1AA74B9A006ACEBD /* DNFullImageButton.m in Sources */,
+				954E584E1AA96ABE00E481C4 /* DNAsset.m in Sources */,
 				9571F2EB1AA74B9A006ACEBD /* DNSendButton.m in Sources */,
 				959A69DB1AA5F3A000ED8A3A /* main.m in Sources */,
 				9571F2D51AA74B6B006ACEBD /* DNImagePickerController.m in Sources */,
+				954E58541AA96E8A00E481C4 /* NSURL+DNIMagePickerUrlEqual.m in Sources */,
 				9571F2E81AA74B9A006ACEBD /* DNBrowserCell.m in Sources */,
 				9571F2E91AA74B9A006ACEBD /* DNAssetsViewCell.m in Sources */,
 			);

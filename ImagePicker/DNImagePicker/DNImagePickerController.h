@@ -24,7 +24,7 @@ UIKIT_EXTERN ALAssetsFilter * ALAssetsFilterFromDNImagePickerControllerFilterTyp
  *  imagePickerController‘s seleted photos
  *
  *  @param imagePickerController
- *  @param imageAssets           the seleted photos packaged ALAssets type instances
+ *  @param imageAssets           the seleted photos packaged DNAsset type instances
  *  @param fullImage             if the value is yes, the seleted photos is full image
  */
 - (void)dnImagePickerController:(DNImagePickerController *)imagePicker

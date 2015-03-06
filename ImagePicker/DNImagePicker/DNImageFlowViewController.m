@@ -15,6 +15,7 @@
 #import "DNAssetsViewCell.h"
 #import "DNSendButton.h"
 #import "JKPromptView.h"
+#import "DNAsset.h"
 
 static NSUInteger const kDNImageFlowMaxSeletedNumber = 9;
 
@@ -171,6 +172,23 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     [self.selectedAssetsArray addObject:asset];
 }
 
+- (DNAsset *)dnassetFromALAsset:(ALAsset *)ALAsset
+{
+    DNAsset *asset = [[DNAsset alloc] init];
+    asset.url = [ALAsset valueForProperty:ALAssetPropertyAssetURL];
+    return asset;
+}
+
+- (NSArray *)seletedDNAssetArray
+{
+    NSMutableArray *seletedArray = [NSMutableArray new];
+    for (ALAsset *asset in self.selectedAssetsArray) {
+        DNAsset *dnasset = [self dnassetFromALAsset:asset];
+        [seletedArray addObject:dnasset];
+    }
+    return seletedArray;
+}
+
 #pragma mark - priviate methods
 - (void)sendImages
 {
@@ -180,7 +198,7 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     
     DNImagePickerController *imagePicker = [self dnImagePickerController];
     if (imagePicker && [imagePicker.imagePickerDelegate respondsToSelector:@selector(dnImagePickerController:sendImages:isFullImage:)]) {
-        [imagePicker.imagePickerDelegate dnImagePickerController:imagePicker sendImages:self.selectedAssetsArray isFullImage:self.isFullImage];
+        [imagePicker.imagePickerDelegate dnImagePickerController:imagePicker sendImages:[self selectedAssetsArray] isFullImage:self.isFullImage];
     }
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];}
 

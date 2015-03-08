@@ -45,7 +45,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="DNImagePicker" id="vxi-gq-49O">
-                        <barButtonItem key="rightBarButtonItem" style="done" id="H3l-PL-6Je">
+                        <barButtonItem key="rightBarButtonItem" id="H3l-PL-6Je">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="EtB-7L-XeZ">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

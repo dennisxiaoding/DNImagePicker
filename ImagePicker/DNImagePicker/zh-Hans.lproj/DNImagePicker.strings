@@ -10,3 +10,6 @@
 "send" = "发送";
 "preview" = "预览";
 "fullImage" = "原图";
+"alertTitle" = "提示";
+"alertContent" = "不能超过9张图片";
+"alertButton" = "确定";

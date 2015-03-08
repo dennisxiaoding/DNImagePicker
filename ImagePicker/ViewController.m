@@ -8,24 +8,23 @@
 
 #import "ViewController.h"
 #import "DNImagePickerController.h"
+#import "CollectionViewController.h"
+
 @interface ViewController () <DNImagePickerControllerDelegate>
 @property (nonatomic, strong) NSMutableArray *assetsArray;
+
+@property (nonatomic, weak) IBOutlet UIButton *button;
+- (IBAction)buttonAction:(id)sender;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIImage  *img = [UIImage imageNamed:@"compose_pic_add"];
-    UIButton   *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(20, 100, img.size.width, img.size.height);
-    [button setBackgroundImage:img forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage imageNamed:@"compose_pic_add_highlighted"] forState:UIControlStateHighlighted];
-    [button addTarget:self action:@selector(composePicAdd) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
+    [self.button setTitle:NSLocalizedString(@"add", @"add") forState:UIControlStateNormal];
 }
 
-- (void)composePicAdd
+- (void)buttonAction:(id)sender
 {
     DNImagePickerController *imagePicker = [[DNImagePickerController alloc] init];
     imagePicker.imagePickerDelegate = self;
@@ -37,7 +36,10 @@
 - (void)dnImagePickerController:(DNImagePickerController *)imagePickerController sendImages:(NSArray *)imageAssets isFullImage:(BOOL)fullImage
 {
     self.assetsArray = [NSMutableArray arrayWithArray:imageAssets];
-    
+    CollectionViewController *collectionVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CollectionViewController"];
+    collectionVC.isFullImage = fullImage;
+    collectionVC.imageArray = imageAssets;
+    [self.navigationController pushViewController:collectionVC animated:YES];
 }
 
 - (void)dnImagePickerControllerDidCancel:(DNImagePickerController *)imagePicker
@@ -46,7 +48,6 @@
         
     }];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

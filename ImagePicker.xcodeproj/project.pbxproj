@@ -8,7 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		954E584E1AA96ABE00E481C4 /* DNAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 954E584D1AA96ABE00E481C4 /* DNAsset.m */; };
-		954E58541AA96E8A00E481C4 /* NSURL+DNIMagePickerUrlEqual.m in Sources */ = {isa = PBXBuildFile; fileRef = 954E58531AA96E8A00E481C4 /* NSURL+DNIMagePickerUrlEqual.m */; };
+		955F11771AA9D72300C9AC42 /* NSURL+DNIMagePickerUrlEqual.m in Sources */ = {isa = PBXBuildFile; fileRef = 955F11761AA9D72300C9AC42 /* NSURL+DNIMagePickerUrlEqual.m */; };
+		955F117E1AA9DAF600C9AC42 /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 955F117D1AA9DAF600C9AC42 /* InfoViewController.m */; };
+		955F11811AA9FB6A00C9AC42 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 955F11801AA9FB6A00C9AC42 /* CollectionViewController.m */; };
+		955F11841AA9FB8C00C9AC42 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 955F11831AA9FB8C00C9AC42 /* CollectionViewCell.m */; };
+		955F11871AAA041900C9AC42 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 955F11891AAA041900C9AC42 /* Localizable.strings */; };
+		956DB7EC1AAB65FC00F9F271 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 956DB7EA1AAB65FC00F9F271 /* Main.storyboard */; };
 		9571F2D51AA74B6B006ACEBD /* DNImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9571F2CE1AA74B6B006ACEBD /* DNImagePickerController.m */; };
 		9571F2D61AA74B6B006ACEBD /* DNAlbumTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9571F2D01AA74B6B006ACEBD /* DNAlbumTableViewController.m */; };
 		9571F2D71AA74B6B006ACEBD /* DNImageFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9571F2D21AA74B6B006ACEBD /* DNImageFlowViewController.m */; };
@@ -30,7 +35,6 @@
 		959A69DB1AA5F3A000ED8A3A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 959A69DA1AA5F3A000ED8A3A /* main.m */; };
 		959A69DE1AA5F3A000ED8A3A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 959A69DD1AA5F3A000ED8A3A /* AppDelegate.m */; };
 		959A69E11AA5F3A000ED8A3A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 959A69E01AA5F3A000ED8A3A /* ViewController.m */; };
-		959A69E41AA5F3A000ED8A3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 959A69E21AA5F3A000ED8A3A /* Main.storyboard */; };
 		959A69E61AA5F3A000ED8A3A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 959A69E51AA5F3A000ED8A3A /* Images.xcassets */; };
 		959A69E91AA5F3A000ED8A3A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 959A69E71AA5F3A000ED8A3A /* LaunchScreen.xib */; };
 		959A69F51AA5F3A000ED8A3A /* ImagePickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 959A69F41AA5F3A000ED8A3A /* ImagePickerTests.m */; };
@@ -49,8 +53,19 @@
 /* Begin PBXFileReference section */
 		954E584C1AA96ABE00E481C4 /* DNAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNAsset.h; sourceTree = "<group>"; };
 		954E584D1AA96ABE00E481C4 /* DNAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNAsset.m; sourceTree = "<group>"; };
-		954E58521AA96E8A00E481C4 /* NSURL+DNIMagePickerUrlEqual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURL+DNIMagePickerUrlEqual.h"; path = "../../../NSURL+DNIMagePickerUrlEqual.h"; sourceTree = "<group>"; };
-		954E58531AA96E8A00E481C4 /* NSURL+DNIMagePickerUrlEqual.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL+DNIMagePickerUrlEqual.m"; path = "../../../NSURL+DNIMagePickerUrlEqual.m"; sourceTree = "<group>"; };
+		955B2C571AAC414B0043B4DE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = ImagePicker/en.lproj/Main.storyboard; sourceTree = "<group>"; };
+		955B2C581AAC414E0043B4DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ImagePicker/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		955F11751AA9D72300C9AC42 /* NSURL+DNIMagePickerUrlEqual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+DNIMagePickerUrlEqual.h"; sourceTree = "<group>"; };
+		955F11761AA9D72300C9AC42 /* NSURL+DNIMagePickerUrlEqual.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+DNIMagePickerUrlEqual.m"; sourceTree = "<group>"; };
+		955F117C1AA9DAF600C9AC42 /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
+		955F117D1AA9DAF600C9AC42 /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
+		955F117F1AA9FB6A00C9AC42 /* CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
+		955F11801AA9FB6A00C9AC42 /* CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
+		955F11821AA9FB8C00C9AC42 /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
+		955F11831AA9FB8C00C9AC42 /* CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCell.m; sourceTree = "<group>"; };
+		955F11881AAA041900C9AC42 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		955F118A1AAA041D00C9AC42 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		956DB7EB1AAB65FC00F9F271 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "ImagePicker/zh-Hans.lproj/Main.storyboard"; sourceTree = "<group>"; };
 		9571F2CD1AA74B6B006ACEBD /* DNImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNImagePickerController.h; sourceTree = "<group>"; };
 		9571F2CE1AA74B6B006ACEBD /* DNImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNImagePickerController.m; sourceTree = "<group>"; };
 		9571F2CF1AA74B6B006ACEBD /* DNAlbumTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNAlbumTableViewController.h; sourceTree = "<group>"; };
@@ -75,7 +90,6 @@
 		9571F2EF1AA74BF8006ACEBD /* imageResources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = imageResources.xcassets; sourceTree = "<group>"; };
 		9571F3051AA74E67006ACEBD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DNImagePicker.strings; sourceTree = "<group>"; };
 		9571F3081AA74EED006ACEBD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/DNImagePicker.strings"; sourceTree = "<group>"; };
-		9571F3091AA74F39006ACEBD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "zh-Hans.lproj/Main.storyboard"; sourceTree = "<group>"; };
 		9571F30A1AA74F52006ACEBD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.xib"; sourceTree = "<group>"; };
 		9571F30C1AA7510B006ACEBD /* UIViewController+DNImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+DNImagePicker.h"; sourceTree = "<group>"; };
 		9571F30D1AA7510B006ACEBD /* UIViewController+DNImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+DNImagePicker.m"; sourceTree = "<group>"; };
@@ -93,7 +107,6 @@
 		959A69DD1AA5F3A000ED8A3A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		959A69DF1AA5F3A000ED8A3A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		959A69E01AA5F3A000ED8A3A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		959A69E31AA5F3A000ED8A3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		959A69E51AA5F3A000ED8A3A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		959A69E81AA5F3A000ED8A3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		959A69EE1AA5F3A000ED8A3A /* ImagePickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImagePickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,10 +187,10 @@
 		9571F30B1AA750E2006ACEBD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				954E58521AA96E8A00E481C4 /* NSURL+DNIMagePickerUrlEqual.h */,
-				954E58531AA96E8A00E481C4 /* NSURL+DNIMagePickerUrlEqual.m */,
 				9571F30C1AA7510B006ACEBD /* UIViewController+DNImagePicker.h */,
 				9571F30D1AA7510B006ACEBD /* UIViewController+DNImagePicker.m */,
+				955F11751AA9D72300C9AC42 /* NSURL+DNIMagePickerUrlEqual.h */,
+				955F11761AA9D72300C9AC42 /* NSURL+DNIMagePickerUrlEqual.m */,
 				9571F30E1AA7510B006ACEBD /* UIColor+Hex.h */,
 				9571F30F1AA7510B006ACEBD /* UIColor+Hex.m */,
 				9571F3101AA7510B006ACEBD /* UIView+DNImagePicker.h */,
@@ -213,8 +226,14 @@
 				959A69DD1AA5F3A000ED8A3A /* AppDelegate.m */,
 				959A69DF1AA5F3A000ED8A3A /* ViewController.h */,
 				959A69E01AA5F3A000ED8A3A /* ViewController.m */,
-				959A69E21AA5F3A000ED8A3A /* Main.storyboard */,
+				955F117C1AA9DAF600C9AC42 /* InfoViewController.h */,
+				955F117D1AA9DAF600C9AC42 /* InfoViewController.m */,
+				955F117F1AA9FB6A00C9AC42 /* CollectionViewController.h */,
+				955F11801AA9FB6A00C9AC42 /* CollectionViewController.m */,
+				955F11821AA9FB8C00C9AC42 /* CollectionViewCell.h */,
+				955F11831AA9FB8C00C9AC42 /* CollectionViewCell.m */,
 				959A69E51AA5F3A000ED8A3A /* Images.xcassets */,
+				956DB7EA1AAB65FC00F9F271 /* Main.storyboard */,
 				959A69E71AA5F3A000ED8A3A /* LaunchScreen.xib */,
 				959A69D81AA5F3A000ED8A3A /* Supporting Files */,
 			);
@@ -226,6 +245,7 @@
 			children = (
 				959A69D91AA5F3A000ED8A3A /* Info.plist */,
 				959A69DA1AA5F3A000ED8A3A /* main.m */,
+				955F11891AAA041900C9AC42 /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -329,10 +349,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				959A69E41AA5F3A000ED8A3A /* Main.storyboard in Resources */,
+				956DB7EC1AAB65FC00F9F271 /* Main.storyboard in Resources */,
 				9571F2EA1AA74B9A006ACEBD /* DNAssetsViewCell.xib in Resources */,
 				959A69E91AA5F3A000ED8A3A /* LaunchScreen.xib in Resources */,
 				9571F2F01AA74BF8006ACEBD /* imageResources.xcassets in Resources */,
+				955F11871AAA041900C9AC42 /* Localizable.strings in Resources */,
 				9571F3011AA74E2F006ACEBD /* DNImagePicker.strings in Resources */,
 				959A69E61AA5F3A000ED8A3A /* Images.xcassets in Resources */,
 			);
@@ -360,6 +381,7 @@
 				9571F2E71AA74B9A006ACEBD /* MWTapDetectingImageView.m in Sources */,
 				959A69E11AA5F3A000ED8A3A /* ViewController.m in Sources */,
 				9571F2D61AA74B6B006ACEBD /* DNAlbumTableViewController.m in Sources */,
+				955F11811AA9FB6A00C9AC42 /* CollectionViewController.m in Sources */,
 				9571F3121AA7510B006ACEBD /* UIViewController+DNImagePicker.m in Sources */,
 				9571F3141AA7510B006ACEBD /* UIView+DNImagePicker.m in Sources */,
 				959A69DE1AA5F3A000ED8A3A /* AppDelegate.m in Sources */,
@@ -368,8 +390,10 @@
 				9571F2EB1AA74B9A006ACEBD /* DNSendButton.m in Sources */,
 				959A69DB1AA5F3A000ED8A3A /* main.m in Sources */,
 				9571F2D51AA74B6B006ACEBD /* DNImagePickerController.m in Sources */,
-				954E58541AA96E8A00E481C4 /* NSURL+DNIMagePickerUrlEqual.m in Sources */,
+				955F11771AA9D72300C9AC42 /* NSURL+DNIMagePickerUrlEqual.m in Sources */,
 				9571F2E81AA74B9A006ACEBD /* DNBrowserCell.m in Sources */,
+				955F117E1AA9DAF600C9AC42 /* InfoViewController.m in Sources */,
+				955F11841AA9FB8C00C9AC42 /* CollectionViewCell.m in Sources */,
 				9571F2E91AA74B9A006ACEBD /* DNAssetsViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,6 +417,26 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		955F11891AAA041900C9AC42 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				955F11881AAA041900C9AC42 /* zh-Hans */,
+				955F118A1AAA041D00C9AC42 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		956DB7EA1AAB65FC00F9F271 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				956DB7EB1AAB65FC00F9F271 /* zh-Hans */,
+				955B2C571AAC414B0043B4DE /* en */,
+				955B2C581AAC414E0043B4DE /* Base */,
+			);
+			name = Main.storyboard;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		9571F3031AA74E2F006ACEBD /* DNImagePicker.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -400,15 +444,6 @@
 				9571F3081AA74EED006ACEBD /* zh-Hans */,
 			);
 			name = DNImagePicker.strings;
-			sourceTree = "<group>";
-		};
-		959A69E21AA5F3A000ED8A3A /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				959A69E31AA5F3A000ED8A3A /* Base */,
-				9571F3091AA74F39006ACEBD /* zh-Hans */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		959A69E71AA5F3A000ED8A3A /* LaunchScreen.xib */ = {
@@ -457,7 +492,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -492,7 +527,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

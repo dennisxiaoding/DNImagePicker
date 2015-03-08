@@ -198,7 +198,7 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     
     DNImagePickerController *imagePicker = [self dnImagePickerController];
     if (imagePicker && [imagePicker.imagePickerDelegate respondsToSelector:@selector(dnImagePickerController:sendImages:isFullImage:)]) {
-        [imagePicker.imagePickerDelegate dnImagePickerController:imagePicker sendImages:[self selectedAssetsArray] isFullImage:self.isFullImage];
+        [imagePicker.imagePickerDelegate dnImagePickerController:imagePicker sendImages:[self seletedDNAssetArray] isFullImage:self.isFullImage];
     }
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];}
 
@@ -220,7 +220,8 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     UIBarButtonItem *firstItem = self.toolbarItems.firstObject;
     firstItem.enabled = YES;
     if (self.selectedAssetsArray.count >= kDNImageFlowMaxSeletedNumber) {
-        // TODO: 超过9张图片处理
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"alertTitle", @"DNImagePicker", nil) message:NSLocalizedStringFromTable(@"alertContent", @"DNImagePicker", nil) delegate:self cancelButtonTitle:NSLocalizedStringFromTable(@"alertButton", @"DNImagePicker", nil) otherButtonTitles:nil, nil];
+        [alert show];
         
         return NO;
     }else

@@ -10,3 +10,7 @@
 "send" = "send";
 "preview" = "preview";
 "fullImage" = "Full Image";
+"alertTitle" = "Tips";
+"alertContent" = "Can not select more than 9 photos";
+"alertButton" = "OK";
+

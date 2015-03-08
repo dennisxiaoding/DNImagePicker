@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  ImagePicker
+
+  Created by DingXiao on 15/3/6.
+  Copyright (c) 2015年 Dennis. All rights reserved.
+*/
+"loadFailed" = "加载失败";
+"seletedImageTitle" = "选择的图片";
+"infoTitle" = "信息😄";
+"add" = "添加照片";

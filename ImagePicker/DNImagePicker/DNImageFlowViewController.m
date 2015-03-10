@@ -14,8 +14,9 @@
 #import "UIColor+Hex.h"
 #import "DNAssetsViewCell.h"
 #import "DNSendButton.h"
-#import "JKPromptView.h"
 #import "DNAsset.h"
+#import "NSURL+DNIMagePickerUrlEqual.h"
+
 
 static NSUInteger const kDNImageFlowMaxSeletedNumber = 9;
 
@@ -153,7 +154,7 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     for (ALAsset *asset in self.selectedAssetsArray) {
         NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
         NSURL *targetAssetURL = [targetAsset valueForProperty:ALAssetPropertyAssetURL];
-        if ([assetURL isEqual:targetAssetURL]) {
+        if ([assetURL isEqualToOther:targetAssetURL]) {
             return YES;
         }
     }

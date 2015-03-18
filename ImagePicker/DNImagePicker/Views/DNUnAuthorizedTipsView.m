@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 Dennis. All rights reserved.
 //
 
-#import "UnAuthorizedTipsView.h"
+#import "DNUnAuthorizedTipsView.h"
 
-@implementation UnAuthorizedTipsView
+@implementation DNUnAuthorizedTipsView
 
 - (void)awakeFromNib
 {

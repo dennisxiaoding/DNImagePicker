@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UnAuthorizedTipsView : UIView
+@interface DNUnAuthorizedTipsView : UIView
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;
 @property (nonatomic, weak) IBOutlet UILabel *label;
 @end

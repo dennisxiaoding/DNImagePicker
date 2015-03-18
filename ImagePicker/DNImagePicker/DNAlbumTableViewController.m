@@ -11,7 +11,7 @@
 #import "DNImagePickerController.h"
 #import "DNImageFlowViewController.h"
 #import "UIViewController+DNImagePicker.h"
-#import "UnAuthorizedTipsView.h"
+#import "DNUnAuthorizedTipsView.h"
 
 static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewCellReuseIdentifier";
 
@@ -119,7 +119,7 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
 
 - (void)showUnAuthorizedTipsView
 {
-    UnAuthorizedTipsView *view  = [[NSBundle mainBundle] loadNibNamed:@"UnAuthorizedTipsView" owner:self options:nil][0];
+    DNUnAuthorizedTipsView *view  = [[NSBundle mainBundle] loadNibNamed:@"DNUnAuthorizedTipsView" owner:self options:nil][0];
     self.tableView.backgroundView = view;
 //    [self.tableView addSubview:view];
 }
@@ -208,7 +208,6 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
          } failureBlock:^(NSError *error) {
 //             NSLog(@"%@",error.description);
              if ([ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusAuthorized){
-                 // TODO: the tips view when unAuthorized
                  [self showUnAuthorizedTipsView];
              }
          }];

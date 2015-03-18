@@ -11,7 +11,7 @@
 #import "DNImagePickerController.h"
 #import "DNImageFlowViewController.h"
 #import "UIViewController+DNImagePicker.h"
-
+#import "UnAuthorizedTipsView.h"
 
 static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewCellReuseIdentifier";
 
@@ -41,7 +41,6 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
 #pragma mark - mark setup Data and View
 - (void)loadData
 {
-    
     __weak typeof(self) weakSelf = self;
     [self loadAssetsGroupsWithTypes:self.groupTypes completion:^(NSArray *groupAssets)
      {
@@ -64,6 +63,8 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
                                  action:@selector(cancelAction:)];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:dnalbumTableViewCellReuseIdentifier];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.tableFooterView = view;
 }
 
 
@@ -114,6 +115,13 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
                                       } range:NSMakeRange(albumTitle.length, numberString.length)];
     return attributedString;
     
+}
+
+- (void)showUnAuthorizedTipsView
+{
+    UnAuthorizedTipsView *view  = [[NSBundle mainBundle] loadNibNamed:@"UnAuthorizedTipsView" owner:self options:nil][0];
+    self.tableView.backgroundView = view;
+//    [self.tableView addSubview:view];
 }
 
 #pragma mark - Table view data source
@@ -198,10 +206,11 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
                  }
              }
          } failureBlock:^(NSError *error) {
+//             NSLog(@"%@",error.description);
              if ([ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusAuthorized){
-                     // TODO: the tips view when unAuthorized
-                             NSAssert(false, @"unAuthorized");
-                 }
+                 // TODO: the tips view when unAuthorized
+                 [self showUnAuthorizedTipsView];
+             }
          }];
     }
 }

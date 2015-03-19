@@ -48,9 +48,6 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
         _selectedAssetsArray = [NSMutableArray new];
         _assetsGroupURL = assetsGroupURL;
         _assetsLibrary = [[ALAssetsLibrary alloc] init];
-        [_assetsLibrary groupForURL:assetsGroupURL resultBlock:^(ALAssetsGroup *assetsGroup){
-            _assetsGroup = assetsGroup;
-        } failureBlock:^(NSError *error){}];
     }
     return self;
 }
@@ -77,21 +74,22 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 }
 
 #pragma mark - setup view and data
-- (void)loadData
+- (void)setupData
 {
-    [self.assetsGroup setAssetsFilter:ALAssetsFilterFromDNImagePickerControllerFilterType([[self dnImagePickerController] filterType])];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self.assetsGroup enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-            if (result) {
-                [self.assetsArray insertObject:result atIndex:0];
-            }
-        }];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.imageFlowCollectionView reloadData];
-            [self scrollerToBottom:NO];
-        });
-    });
+    [_assetsLibrary groupForURL:self.assetsGroupURL resultBlock:^(ALAssetsGroup *assetsGroup){
+        self.assetsGroup = assetsGroup;
+        if (self.assetsGroup) {
+            self.title =[self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
+            [self loadData];
+        }
+        
+    } failureBlock:^(NSError *error){
+        //            NSLog(@"%@",error.description);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Tips" message:error.description delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }];
 }
+
 
 - (void)setupView
 {
@@ -120,13 +118,20 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     [self setToolbarItems:@[item1,item2,item3,item4] animated:NO];
 }
 
-- (void)setupData
+- (void)loadData
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (self.assetsGroup) {
-            self.title =[self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
-            [self loadData];
-        }
+    [self.assetsGroup setAssetsFilter:ALAssetsFilterFromDNImagePickerControllerFilterType([[self dnImagePickerController] filterType])];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.assetsGroup enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+            if (result) {
+                [self.assetsArray insertObject:result atIndex:0];
+            }
+        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.imageFlowCollectionView reloadData];
+            [self scrollerToBottom:NO];
+        });
     });
 }
 

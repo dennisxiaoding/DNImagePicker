@@ -14,7 +14,7 @@
 @protocol DNPhotoBrowserDelegate <NSObject>
 
 @required
-- (void)sendImagesFromPhotobrowser:(DNPhotoBrowser *)photoBrowser;
+- (void)sendImagesFromPhotobrowser:(DNPhotoBrowser *)photoBrowse currentAsset:(ALAsset *)asset;
 - (NSUInteger)seletedPhotosNumberInPhotoBrowser:(DNPhotoBrowser *)photoBrowser;
 - (BOOL)photoBrowser:(DNPhotoBrowser *)photoBrowser currentPhotoAssetIsSeleted:(ALAsset *)asset;
 - (BOOL)photoBrowser:(DNPhotoBrowser *)photoBrowser seletedAsset:(ALAsset *)asset;
@@ -24,7 +24,6 @@
 
 @interface DNPhotoBrowser : UIViewController
 
-@property (nonatomic, weak) DNImageFlowViewController *imageFlowController;
 @property (nonatomic, weak) id<DNPhotoBrowserDelegate> delegate;
 
 - (instancetype)initWithPhotos:(NSArray *)photosArray

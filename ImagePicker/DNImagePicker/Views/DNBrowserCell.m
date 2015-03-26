@@ -54,19 +54,18 @@
     self.zoomingScrollView.minimumZoomScale = 1;
     self.zoomingScrollView.zoomScale = 1;
     self.zoomingScrollView.contentSize = CGSizeMake(0, 0);
+    
     UIImage *img = [UIImage imageWithCGImage:[[self.asset defaultRepresentation] fullScreenImage]];
     self.photoImageView.image = img;
     self.photoImageView.hidden = NO;
-    
     CGRect photoImageViewFrame;
     photoImageViewFrame.origin = CGPointZero;
     photoImageViewFrame.size = img.size;
     self.photoImageView.frame = photoImageViewFrame;
     self.zoomingScrollView.contentSize = photoImageViewFrame.size;
             
-            // Set zoom to minimum zoom
+    // Set zoom to minimum zoom
     [self setMaxMinZoomScalesForCurrentBounds];
-    
     [self setNeedsLayout];
 }
 

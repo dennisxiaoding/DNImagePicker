@@ -103,14 +103,12 @@ static CGFloat const kSendButtonTextWitdh = 38.0f;
 {
     self.badgeValueLabel.hidden = NO;
     self.backGroudView.hidden = NO;
-    self.sendButton.enabled = YES;
 }
 
 - (void)hideBadgeValue
 {
     self.badgeValueLabel.hidden = YES;
     self.backGroudView.hidden = YES;
-    self.sendButton.enabled = NO;
     self.sendButton.adjustsImageWhenDisabled = YES;
 }
 

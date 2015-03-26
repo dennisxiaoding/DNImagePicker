@@ -295,7 +295,9 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 
 - (void)sendButtonAction:(id)sender
 {
-    [self sendImages];
+    if (self.selectedAssetsArray.count > 0) {
+        [self sendImages];
+    }
 }
 
 - (void)previewAction
@@ -356,8 +358,12 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 }
 
 #pragma mark - DNPhotoBrowserDelegate
-- (void)sendImagesFromPhotobrowser:(DNPhotoBrowser *)photoBrowser
+- (void)sendImagesFromPhotobrowser:(DNPhotoBrowser *)photoBrowser currentAsset:(ALAsset *)asset
 {
+    if (self.selectedAssetsArray.count <= 0) {
+        [self seletedAssets:asset];
+        [self.imageFlowCollectionView reloadData];
+    }
     [self sendImages];
 }
 

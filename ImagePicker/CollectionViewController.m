@@ -102,8 +102,8 @@ static NSString * const reuseIdentifier = @"Cell";
             orientation = [orientationValue intValue];
         }
         
-        image = [UIImage imageWithCGImage:asset.aspectRatioThumbnail];
-//        image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage scale:1.0 orientation:orientation];
+        image = [UIImage imageWithCGImage:asset.thumbnail];
+//        image = [UIImage imageWithCGImage:asset.thumbnail scale:0.1 orientation:orientation];
         
         string = [NSString stringWithFormat:@"fileSize:%lld k\nwidth:%.0f\nheiht:%.0f",asset.defaultRepresentation.size/1000,[[asset defaultRepresentation] dimensions].width, [[asset defaultRepresentation] dimensions].height];
         

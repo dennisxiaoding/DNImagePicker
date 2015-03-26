@@ -82,10 +82,8 @@
         _viewHasAppearedInitially = YES;
     }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.browserCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.currentIndex inSection:0]
-                                           atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-    });
+    //scroll to the current offset
+    [self.browserCollectionView setContentOffset:CGPointMake(self.browserCollectionView.frame.size.width * self.currentIndex,0)];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -257,8 +255,8 @@
 
 - (void)sendButtonAction
 {
-    if ([self.delegate respondsToSelector:@selector(sendImagesFromPhotobrowser:)]) {
-        [self.delegate sendImagesFromPhotobrowser:self];
+    if ([self.delegate respondsToSelector:@selector(sendImagesFromPhotobrowser:currentAsset:)]) {
+        [self.delegate sendImagesFromPhotobrowser:self currentAsset:self.photoDataSources[self.currentIndex]];
     }
 }
 
@@ -398,8 +396,8 @@
 
 - (void)didScrollToPage:(NSInteger)page
 {
-        self.currentIndex = page;
-        [self updateNavigationBarAndToolBar];
+    self.currentIndex = page;
+    [self updateNavigationBarAndToolBar];
 }
 
 #pragma mark - Control Hiding / Showing

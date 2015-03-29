@@ -156,8 +156,8 @@
         NSInteger size = asset.defaultRepresentation.size/1000;
         CGFloat imageSize = (CGFloat)size;
         NSString *imageSizeString;
-        if (size > 1000) {
-            imageSize = imageSize/1000.0f;
+        if (size > 1024) {
+            imageSize = imageSize/1024.0f;
             imageSizeString = [NSString stringWithFormat:@"(%.1fM)",imageSize];
         }else
         {

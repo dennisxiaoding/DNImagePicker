@@ -23,8 +23,6 @@ static NSString * const reuseIdentifier = @"Cell";
     [super viewDidLoad];
     self.title = NSLocalizedString(@"seletedImageTitle", @"seletedImage");
     self.collectionView.alwaysBounceVertical = YES;
-    
-//    [self.collectionView registerClass:[CollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -56,7 +54,6 @@ static NSString * const reuseIdentifier = @"Cell";
         }else
         {
             // On iOS 8.1 [library assetForUrl] Photo Streams always returns nil. Try to obtain it in an alternative way
-            
             [lib enumerateGroupsWithTypes:ALAssetsGroupPhotoStream
                                    usingBlock:^(ALAssetsGroup *group, BOOL *stop)
              {

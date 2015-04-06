@@ -153,7 +153,7 @@
     
     if (self.isFullImage) {
         ALAsset *asset = self.photoDataSources[self.currentIndex];
-        NSInteger size = asset.defaultRepresentation.size/1000;
+        NSInteger size = asset.defaultRepresentation.size/1024;
         CGFloat imageSize = (CGFloat)size;
         NSString *imageSizeString;
         if (size > 1024) {

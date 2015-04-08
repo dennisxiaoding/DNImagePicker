@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		9524A20F1AB97BAE00DC8FDA /* DNUnAuthorizedTipsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9524A20E1AB97BAE00DC8FDA /* DNUnAuthorizedTipsView.m */; };
-		9524A2111AB97C5100DC8FDA /* DNUnAuthorizedTipsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9524A2101AB97C5100DC8FDA /* DNUnAuthorizedTipsView.xib */; };
 		954E584E1AA96ABE00E481C4 /* DNAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 954E584D1AA96ABE00E481C4 /* DNAsset.m */; };
 		955F11771AA9D72300C9AC42 /* NSURL+DNIMagePickerUrlEqual.m in Sources */ = {isa = PBXBuildFile; fileRef = 955F11761AA9D72300C9AC42 /* NSURL+DNIMagePickerUrlEqual.m */; };
 		955F117E1AA9DAF600C9AC42 /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 955F117D1AA9DAF600C9AC42 /* InfoViewController.m */; };
@@ -23,7 +22,6 @@
 		9571F2E71AA74B9A006ACEBD /* MWTapDetectingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9571F2DB1AA74B9A006ACEBD /* MWTapDetectingImageView.m */; };
 		9571F2E81AA74B9A006ACEBD /* DNBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9571F2DD1AA74B9A006ACEBD /* DNBrowserCell.m */; };
 		9571F2E91AA74B9A006ACEBD /* DNAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9571F2DF1AA74B9A006ACEBD /* DNAssetsViewCell.m */; };
-		9571F2EA1AA74B9A006ACEBD /* DNAssetsViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9571F2E01AA74B9A006ACEBD /* DNAssetsViewCell.xib */; };
 		9571F2EB1AA74B9A006ACEBD /* DNSendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9571F2E21AA74B9A006ACEBD /* DNSendButton.m */; };
 		9571F2EC1AA74B9A006ACEBD /* DNFullImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9571F2E41AA74B9A006ACEBD /* DNFullImageButton.m */; };
 		9571F2ED1AA74B9A006ACEBD /* DNBadgeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9571F2E61AA74B9A006ACEBD /* DNBadgeLabel.m */; };
@@ -55,7 +53,6 @@
 /* Begin PBXFileReference section */
 		9524A20D1AB97BAE00DC8FDA /* DNUnAuthorizedTipsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNUnAuthorizedTipsView.h; sourceTree = "<group>"; };
 		9524A20E1AB97BAE00DC8FDA /* DNUnAuthorizedTipsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNUnAuthorizedTipsView.m; sourceTree = "<group>"; };
-		9524A2101AB97C5100DC8FDA /* DNUnAuthorizedTipsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DNUnAuthorizedTipsView.xib; sourceTree = "<group>"; };
 		954E584C1AA96ABE00E481C4 /* DNAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNAsset.h; sourceTree = "<group>"; };
 		954E584D1AA96ABE00E481C4 /* DNAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNAsset.m; sourceTree = "<group>"; };
 		955B2C571AAC414B0043B4DE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = ImagePicker/en.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -85,7 +82,6 @@
 		9571F2DD1AA74B9A006ACEBD /* DNBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNBrowserCell.m; sourceTree = "<group>"; };
 		9571F2DE1AA74B9A006ACEBD /* DNAssetsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNAssetsViewCell.h; sourceTree = "<group>"; };
 		9571F2DF1AA74B9A006ACEBD /* DNAssetsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNAssetsViewCell.m; sourceTree = "<group>"; };
-		9571F2E01AA74B9A006ACEBD /* DNAssetsViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DNAssetsViewCell.xib; sourceTree = "<group>"; };
 		9571F2E11AA74B9A006ACEBD /* DNSendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNSendButton.h; sourceTree = "<group>"; };
 		9571F2E21AA74B9A006ACEBD /* DNSendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNSendButton.m; sourceTree = "<group>"; };
 		9571F2E31AA74B9A006ACEBD /* DNFullImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNFullImageButton.h; sourceTree = "<group>"; };
@@ -169,7 +165,6 @@
 				9571F2DD1AA74B9A006ACEBD /* DNBrowserCell.m */,
 				9571F2DE1AA74B9A006ACEBD /* DNAssetsViewCell.h */,
 				9571F2DF1AA74B9A006ACEBD /* DNAssetsViewCell.m */,
-				9571F2E01AA74B9A006ACEBD /* DNAssetsViewCell.xib */,
 				9571F2E11AA74B9A006ACEBD /* DNSendButton.h */,
 				9571F2E21AA74B9A006ACEBD /* DNSendButton.m */,
 				9571F2E31AA74B9A006ACEBD /* DNFullImageButton.h */,
@@ -178,7 +173,6 @@
 				9571F2E61AA74B9A006ACEBD /* DNBadgeLabel.m */,
 				9524A20D1AB97BAE00DC8FDA /* DNUnAuthorizedTipsView.h */,
 				9524A20E1AB97BAE00DC8FDA /* DNUnAuthorizedTipsView.m */,
-				9524A2101AB97C5100DC8FDA /* DNUnAuthorizedTipsView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -358,12 +352,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				956DB7EC1AAB65FC00F9F271 /* Main.storyboard in Resources */,
-				9571F2EA1AA74B9A006ACEBD /* DNAssetsViewCell.xib in Resources */,
 				959A69E91AA5F3A000ED8A3A /* LaunchScreen.xib in Resources */,
 				9571F2F01AA74BF8006ACEBD /* imageResources.xcassets in Resources */,
 				955F11871AAA041900C9AC42 /* Localizable.strings in Resources */,
 				9571F3011AA74E2F006ACEBD /* DNImagePicker.strings in Resources */,
-				9524A2111AB97C5100DC8FDA /* DNUnAuthorizedTipsView.xib in Resources */,
 				959A69E61AA5F3A000ED8A3A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

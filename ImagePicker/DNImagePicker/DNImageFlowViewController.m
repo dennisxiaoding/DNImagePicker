@@ -266,8 +266,7 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
         layout.scrollDirection = UICollectionViewScrollDirectionVertical;
         _imageFlowCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, [UIScreen mainScreen].bounds.size.height) collectionViewLayout:layout];
         _imageFlowCollectionView.backgroundColor = [UIColor clearColor];
-        [_imageFlowCollectionView registerNib:[UINib nibWithNibName:@"DNAssetsViewCell" bundle:nil]
-                   forCellWithReuseIdentifier:dnAssetsViewCellReuseIdentifier];
+        [_imageFlowCollectionView registerClass:[DNAssetsViewCell class] forCellWithReuseIdentifier:dnAssetsViewCellReuseIdentifier];
         
         _imageFlowCollectionView.alwaysBounceVertical = YES;
         _imageFlowCollectionView.delegate = self;
@@ -349,7 +348,8 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(kSizeThumbnailCollectionView, kSizeThumbnailCollectionView);
+    CGSize size = CGSizeMake(kSizeThumbnailCollectionView, kSizeThumbnailCollectionView);
+    return size;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section

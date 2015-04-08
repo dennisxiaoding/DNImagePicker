@@ -119,7 +119,7 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
 
 - (void)showUnAuthorizedTipsView
 {
-    DNUnAuthorizedTipsView *view  = [[NSBundle mainBundle] loadNibNamed:@"DNUnAuthorizedTipsView" owner:self options:nil][0];
+    DNUnAuthorizedTipsView *view  = [[DNUnAuthorizedTipsView alloc] initWithFrame:self.tableView.frame];
     self.tableView.backgroundView = view;
 //    [self.tableView addSubview:view];
 }

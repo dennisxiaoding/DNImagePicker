@@ -91,7 +91,7 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
     
     if (nil == self.navigationController
         ||
-        NO == [self.navigationController isKindOfClass:[DNImagePickerController class]])
+        ![self.navigationController isKindOfClass:[DNImagePickerController class]])
     {
         NSAssert(false, @"check the navigation controller");
     }

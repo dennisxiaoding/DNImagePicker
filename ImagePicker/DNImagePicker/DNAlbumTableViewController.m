@@ -134,8 +134,16 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:dnalbumTableViewCellReuseIdentifier forIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     ALAssetsGroup *group = self.assetsGroups[indexPath.row];
-    cell.imageView.image = [UIImage imageWithCGImage:group.posterImage];
     cell.textLabel.attributedText = [self albumTitle:group];
+    
+    //choose the latest pic as poster image
+    __weak UITableViewCell *blockCell = cell;
+    [group enumerateAssetsAtIndexes:[NSIndexSet indexSetWithIndex:group.numberOfAssets-1] options:NSEnumerationConcurrent usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+        if (result) {
+            *stop = YES;
+            blockCell.imageView.image = [UIImage imageWithCGImage:result.thumbnail];
+        }
+    }];
     return cell;
 }
 

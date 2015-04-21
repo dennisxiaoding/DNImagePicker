@@ -16,13 +16,9 @@
     if (self) {
         [self imageView];
         [self label];
+        [self addContentConstraints];
     }
     return self;
-}
-
-- (void)layoutSubviews
-{
-    [self addContentConstraints];
 }
 
 - (void)addContentConstraints

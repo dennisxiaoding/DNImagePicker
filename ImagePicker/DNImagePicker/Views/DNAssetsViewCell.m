@@ -28,13 +28,9 @@
         [self imageView];
         [self checkButton];
         [self checkImageView];
+        [self addContentConstraint];
     }
     return self;
-}
-
-- (void)layoutSubviews
-{
-    [self addContentConstraint];
 }
 
 - (void)addContentConstraint

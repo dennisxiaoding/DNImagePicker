@@ -145,6 +145,15 @@
 {
     if (self.checkButton.selected) {
         self.checkImageView.image = [UIImage imageNamed:@"photo_check_selected"];
+        
+        [UIView animateWithDuration:0.2 animations:^{
+            self.checkImageView.transform = CGAffineTransformMakeScale(1.2, 1.2);
+        }
+                         completion:^(BOOL finished){
+                             [UIView animateWithDuration:0.2 animations:^{
+                                 self.checkImageView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                             }];
+                         }];
     }else
     {
         self.checkImageView.image = [UIImage imageNamed:@"photo_check_default"];

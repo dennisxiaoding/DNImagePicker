@@ -374,7 +374,7 @@
     CGFloat itemWidth = CGRectGetWidth(self.browserCollectionView.frame);
     CGFloat currentPageOffset = itemWidth * self.currentIndex;
     CGFloat deltaOffset = offsetX - currentPageOffset;
-    if (fabsf(deltaOffset) >= itemWidth/2 ) {
+    if (fabs(deltaOffset) >= itemWidth/2 ) {
         [self.fullImageButton shouldAnimating:YES];
     }else
     {

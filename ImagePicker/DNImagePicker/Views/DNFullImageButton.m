@@ -10,7 +10,7 @@
 #import "UIView+DNImagePicker.h"
 
 #define kDNFullImageButtonFont  [UIFont systemFontOfSize:13]
-static NSInteger const buttonPadding = 5;
+static NSInteger const buttonPadding = 10;
 static NSInteger const buttonImageWidth = 16;
 
 @interface DNFullImageButton ()
@@ -68,7 +68,7 @@ static NSInteger const buttonImageWidth = 16;
         [_fullImageButton setImage:[UIImage imageNamed:@"photo_full_image_unselected"] forState:UIControlStateNormal];
         [_fullImageButton setImage:[UIImage imageNamed:@"photo_full_image_selected"] forState:UIControlStateSelected];
         _fullImageButton.contentVerticalAlignment = NSTextAlignmentRight;
-        [_fullImageButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -buttonImageWidth-buttonPadding, 6, 0)];
+        [_fullImageButton setTitleEdgeInsets:UIEdgeInsetsMake(0, buttonPadding-buttonImageWidth, 6, 0)];
         [_fullImageButton setImageEdgeInsets:UIEdgeInsetsMake(6, 0, 6, _fullImageButton.width - buttonImageWidth)];
         [self addSubview:_fullImageButton];
     }
@@ -100,7 +100,7 @@ static NSInteger const buttonImageWidth = 16;
         _selected = selected;
         self.fullImageButton.selected = _selected;
         self.fullImageButton.width = [self fullImageButtonWidth];
-        [self.fullImageButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -buttonImageWidth-buttonPadding, 6, 0)];
+        [self.fullImageButton setTitleEdgeInsets:UIEdgeInsetsMake(0, buttonPadding-buttonImageWidth, 6, 0)];
         [self.fullImageButton setImageEdgeInsets:UIEdgeInsetsMake(6, 0, 6, self.fullImageButton.width - buttonImageWidth)];
         CGFloat labelWidth = self.width - self.fullImageButton.width;
         self.imageSizeLabel.left = self.fullImageButton.width;

@@ -44,8 +44,9 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
     __weak typeof(self) weakSelf = self;
     [self loadAssetsGroupsWithTypes:self.groupTypes completion:^(NSArray *groupAssets)
      {
-         weakSelf.assetsGroups = groupAssets;
-         [weakSelf.tableView reloadData];
+         __strong typeof(weakSelf) strongSelf = weakSelf;
+         strongSelf.assetsGroups = groupAssets;
+         [strongSelf.tableView reloadData];
      }];
 }
 
@@ -179,9 +180,10 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
         [self.assetsLibrary enumerateGroupsWithTypes:[type unsignedIntegerValue]
                                           usingBlock:^(ALAssetsGroup *assetsGroup, BOOL *stop)
          {
+             __strong typeof(weakSelf) strongSelf = weakSelf;
              if (assetsGroup) {
                  // Filter the assets group
-                 [assetsGroup setAssetsFilter:ALAssetsFilterFromDNImagePickerControllerFilterType([[weakSelf dnImagePickerController] filterType])];
+                 [assetsGroup setAssetsFilter:ALAssetsFilterFromDNImagePickerControllerFilterType([[strongSelf dnImagePickerController] filterType])];
                  // Add assets group
                  if (assetsGroup.numberOfAssets > 0) {
                      // Add assets group
@@ -214,9 +216,9 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
                  }
              }
          } failureBlock:^(NSError *error) {
-//             NSLog(@"%@",error.description);
+             __strong typeof(weakSelf) strongSelf = weakSelf;
              if ([ALAssetsLibrary authorizationStatus] != ALAuthorizationStatusAuthorized){
-                 [self showUnAuthorizedTipsView];
+                 [strongSelf showUnAuthorizedTipsView];
              }
          }];
     }

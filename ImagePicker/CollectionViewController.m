@@ -49,8 +49,9 @@ static NSString * const reuseIdentifier = @"Cell";
     __block CollectionViewCell *blockCell = cell;
     __weak typeof(self) weakSelf = self;
     [lib assetForURL:dnasset.url resultBlock:^(ALAsset *asset){
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         if (asset) {
-            [weakSelf setCell:blockCell asset:asset];
+            [strongSelf setCell:blockCell asset:asset];
         }else
         {
             // On iOS 8.1 [library assetForUrl] Photo Streams always returns nil. Try to obtain it in an alternative way
@@ -62,19 +63,20 @@ static NSString * const reuseIdentifier = @"Cell";
                      
                      if([[result valueForProperty:ALAssetPropertyAssetURL] isEqual:dnasset.url])
                      {
-                         [weakSelf setCell:blockCell asset:result];
+                         [strongSelf setCell:blockCell asset:result];
                          *stop = YES;
                      }
                  }];
              }
                              failureBlock:^(NSError *error)
              {
-                 [weakSelf setCell:blockCell asset:nil];
+                 [strongSelf setCell:blockCell asset:nil];
              }];
         }
         
     } failureBlock:^(NSError *error){
-        [weakSelf setCell:blockCell asset:nil];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf setCell:blockCell asset:nil];
     }];
     
     

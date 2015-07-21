@@ -93,8 +93,7 @@ static CGFloat const kSendButtonTextWitdh = 38.0f;
                              }];
                          }];
         
-    }else
-    {
+    } else {
         [self hideBadgeValue];
     }
 }

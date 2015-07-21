@@ -154,8 +154,7 @@
                                  self.checkImageView.transform = CGAffineTransformMakeScale(1.0, 1.0);
                              }];
                          }];
-    }else
-    {
+    } else {
         self.checkImageView.image = [UIImage imageNamed:@"photo_check_default"];
     }
 }
@@ -166,8 +165,7 @@
         if (self.delegate && [self.delegate respondsToSelector:@selector(didDeselectItemAssetsViewCell:)]) {
             [self.delegate didDeselectItemAssetsViewCell:self];
         }
-    }else
-    {
+    } else {
         if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectItemAssetsViewCell:)]) {
             [self.delegate didSelectItemAssetsViewCell:self];
         }

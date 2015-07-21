@@ -159,8 +159,7 @@
         if (size > 1024) {
             imageSize = imageSize/1024.0f;
             imageSizeString = [NSString stringWithFormat:@"(%.1fM)",imageSize];
-        }else
-        {
+        } else {
             imageSizeString = [NSString stringWithFormat:@"(%ldK)",size];
         }
         self.fullImageButton.text = imageSizeString;
@@ -239,8 +238,7 @@
             [self.delegate photoBrowser:self deseletedAsset:self.photoDataSources[self.currentIndex]];
             self.checkButton.selected = NO;
         }
-    }else
-    {
+    } else {
         if (self.delegate && [self.delegate respondsToSelector:@selector(photoBrowser:seletedAsset:)]) {
             self.checkButton.selected = [self.delegate photoBrowser:self seletedAsset:self.photoDataSources[self.currentIndex]];
         }
@@ -376,8 +374,7 @@
     CGFloat deltaOffset = offsetX - currentPageOffset;
     if (fabs(deltaOffset) >= itemWidth/2 ) {
         [self.fullImageButton shouldAnimating:YES];
-    }else
-    {
+    } else {
         [self.fullImageButton shouldAnimating:NO];
     }
 }

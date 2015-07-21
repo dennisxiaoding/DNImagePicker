@@ -70,8 +70,7 @@
                              }];
                          }];
 
-    }else
-    {
+    } else {
         [self hide];
     }
 }

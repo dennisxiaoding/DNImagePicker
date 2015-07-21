@@ -20,11 +20,9 @@ ALAssetsFilter * ALAssetsFilterFromDNImagePickerControllerFilterType(DNImagePick
         case DNImagePickerFilterTypeNone:
             return [ALAssetsFilter allAssets];
             break;
-            
         case DNImagePickerFilterTypePhotos:
             return [ALAssetsFilter allPhotos];
             break;
-            
         case DNImagePickerFilterTypeVideos:
             return [ALAssetsFilter allVideos];
             break;
@@ -53,8 +51,7 @@ ALAssetsFilter * ALAssetsFilterFromDNImagePickerControllerFilterType(DNImagePick
 
     if (propwetyID.length <= 0) {
         [self showAlbumList];
-    }else
-    {
+    } else {
         ALAssetsLibrary *assetsLibiary = [[ALAssetsLibrary alloc] init];
         [assetsLibiary enumerateGroupsWithTypes:ALAssetsGroupAll
                                      usingBlock:^(ALAssetsGroup *assetsGroup, BOOL *stop)

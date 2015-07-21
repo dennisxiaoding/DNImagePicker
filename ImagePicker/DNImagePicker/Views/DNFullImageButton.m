@@ -120,8 +120,7 @@ static NSInteger const buttonImageWidth = 16;
         self.imageSizeLabel.hidden = animate;
         if (animate) {
             [self.indicatorView startAnimating];
-        }else
-        {
+        } else {
             [self.indicatorView stopAnimating];
         }
     }

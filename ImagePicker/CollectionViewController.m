@@ -52,8 +52,7 @@ static NSString * const reuseIdentifier = @"Cell";
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (asset) {
             [strongSelf setCell:blockCell asset:asset];
-        }else
-        {
+        } else {
             // On iOS 8.1 [library assetForUrl] Photo Streams always returns nil. Try to obtain it in an alternative way
             [lib enumerateGroupsWithTypes:ALAssetsGroupPhotoStream
                                    usingBlock:^(ALAssetsGroup *group, BOOL *stop)
@@ -91,6 +90,7 @@ static NSString * const reuseIdentifier = @"Cell";
         cell.textLabel.hidden = YES;
         return;
     }
+    
     cell.textLabel.hidden = NO;
     UIImage *image;
     NSString *string;
@@ -106,13 +106,11 @@ static NSString * const reuseIdentifier = @"Cell";
         
         string = [NSString stringWithFormat:@"fileSize:%lld k\nwidth:%.0f\nheiht:%.0f",asset.defaultRepresentation.size/1000,[[asset defaultRepresentation] dimensions].width, [[asset defaultRepresentation] dimensions].height];
         
-    }else
-    {
+    } else {
         image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
         
         string = [NSString stringWithFormat:@"fileSize:%lld k\nwidth:%.0f\nheiht:%.0f",asset.defaultRepresentation.size/1000,image.size.width,image.size.height];
     }
-    
    
     cell.textLabel.text = string;
     cell.imageView.image = image;

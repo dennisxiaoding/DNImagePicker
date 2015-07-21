@@ -25,8 +25,7 @@
 {
     if ([asset isKindOfClass:[DNAsset class]]) {
         return [asset.url isEqualToOther:asset.url];
-    }else
-    {
+    } else {
         return NO;
     }
 }

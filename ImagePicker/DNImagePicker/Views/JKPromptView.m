@@ -63,8 +63,6 @@ static JKPromptView *instancePrompt;
             label.centerX = self.width/2;
             label.top = 10;
         }
-        
-        
     }
     return self;
 }

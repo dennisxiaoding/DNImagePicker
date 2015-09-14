@@ -24,7 +24,7 @@
 - (BOOL)isEqualToAsset:(DNAsset *)asset
 {
     if ([asset isKindOfClass:[DNAsset class]]) {
-        return [asset.url isEqualToOther:asset.url];
+        return [self.url isEqualToOther:asset.url];
     } else {
         return NO;
     }

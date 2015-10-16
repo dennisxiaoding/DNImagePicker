@@ -12,6 +12,4 @@
 
 @property (nonatomic, copy) NSString *title;
 
-@property (nonatomic, strong) UIColor *tintColor; //default "#1FB823"
-
 @end

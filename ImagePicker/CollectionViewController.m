@@ -49,6 +49,16 @@ static NSString * const reuseIdentifier = @"Cell";
     __block CollectionViewCell *blockCell = cell;
     __weak typeof(self) weakSelf = self;
     [lib assetForURL:dnasset.url resultBlock:^(ALAsset *asset){
+
+#warning ⚠️：用法强化
+        //  KTJ:    URL无法使用时候请使用源数据进行获取。《iOS8.3-iPhone6x会出现无法获取URL
+        asset = asset?:dnasset.alAsset;
+        //不保证此方法下面都是OK的，只是在使用DNAsset的时候请保证这个判断存在。除非你适配iOS8.3-iPhone6x机型。
+        
+        // iOS8.3-iPhone6x机型会走这个方法，但是asset为空。。。。所以作出如上优化。
+        
+        
+        
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (asset) {
             [strongSelf setCell:blockCell asset:asset];

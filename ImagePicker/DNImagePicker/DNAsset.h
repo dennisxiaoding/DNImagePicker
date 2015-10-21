@@ -9,7 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
+@class ALAsset;
 @interface DNAsset : NSObject
+
+//  KTJ:    URL无法使用时候请使用源数据进行获取。《iOS8.3-iPhone6x会出现无法获取URL
+@property (nonatomic, strong) ALAsset *alAsset;
 
 @property (nonatomic, strong) NSURL *url;  //ALAsset url
 

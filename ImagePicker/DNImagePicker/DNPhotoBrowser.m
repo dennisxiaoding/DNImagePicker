@@ -143,7 +143,7 @@
 
 - (void)updateNavigationBarAndToolBar {
     NSUInteger totalNumber = self.photoDataSources.count;
-    self.title = [NSString stringWithFormat:@"%lu/%lu",self.currentIndex + 1,totalNumber];
+    self.title = [NSString stringWithFormat:@"%@/%@",@(self.currentIndex+1),@(totalNumber)];
     BOOL isSeleted = NO;
     if ([self.delegate respondsToSelector:@selector(photoBrowser:currentPhotoAssetIsSeleted:)]) {
         isSeleted = [self.delegate photoBrowser:self currentPhotoAssetIsSeleted:[self.photoDataSources objectAtIndex:self.currentIndex]];
@@ -153,14 +153,14 @@
     
     if (self.isFullImage) {
         ALAsset *asset = self.photoDataSources[self.currentIndex];
-        NSInteger size = asset.defaultRepresentation.size/1024;
+        NSInteger size = (NSUInteger)(asset.defaultRepresentation.size/1024);
         CGFloat imageSize = (CGFloat)size;
         NSString *imageSizeString;
         if (size > 1024) {
             imageSize = imageSize/1024.0f;
             imageSizeString = [NSString stringWithFormat:@"(%.1fM)",imageSize];
         } else {
-            imageSizeString = [NSString stringWithFormat:@"(%ldK)",size];
+            imageSizeString = [NSString stringWithFormat:@"(%@K)",@(size)];
         }
         self.fullImageButton.text = imageSizeString;
     }
@@ -172,7 +172,7 @@
     if ([self.delegate respondsToSelector:@selector(seletedPhotosNumberInPhotoBrowser:)]) {
         selectedNumber = [self.delegate seletedPhotosNumberInPhotoBrowser:self];
     }
-    self.sendButton.badgeValue = [NSString stringWithFormat:@"%lu",selectedNumber];
+    self.sendButton.badgeValue = [NSString stringWithFormat:@"%@",@(selectedNumber)];
 }
 
 #pragma mark - Nav Bar Appearance

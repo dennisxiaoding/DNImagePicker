@@ -110,6 +110,11 @@
     _viewIsActive = YES;
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    _viewIsActive = NO;
+    [super viewDidDisappear:animated];
+}
+
 #pragma mark - priviate
 - (void)setupView {
     self.automaticallyAdjustsScrollViewInsets = NO;

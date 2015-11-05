@@ -1,6 +1,8 @@
 # DNImagePicker
 A imagePicker functioned like wechat.
 
+DNImagePicker has a swift version [DXPhotoPickerController](https://github.com/AwesomeDennis/DXPhotoPicker)
+
 Thanks [JKImagePicker](https://github.com/pjk1129/JKImagePicker) 
 and [mwaterfall/MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser)
 

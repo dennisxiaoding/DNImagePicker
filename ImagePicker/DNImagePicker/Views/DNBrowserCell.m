@@ -7,12 +7,12 @@
 //
 
 #import "DNBrowserCell.h"
-#import "MWTapDetectingImageView.h"
+#import "DNTapDetectingImageView.h"
 #import "DNPhotoBrowser.h"
 
-@interface DNBrowserCell () <UIScrollViewDelegate,MWTapDetectingImageViewDelegate>
+@interface DNBrowserCell () <UIScrollViewDelegate,DNTapDetectingImageViewDelegate>
 @property (nonatomic, strong) UIScrollView *zoomingScrollView;
-@property (nonatomic, strong) MWTapDetectingImageView *photoImageView;
+@property (nonatomic, strong) DNTapDetectingImageView *photoImageView;
 
 @end
 
@@ -71,10 +71,10 @@
 
 
 #pragma mark - get
-- (MWTapDetectingImageView *)photoImageView
+- (DNTapDetectingImageView *)photoImageView
 {
     if (nil == _photoImageView) {
-        _photoImageView = [[MWTapDetectingImageView alloc] initWithFrame:CGRectZero];
+        _photoImageView = [[DNTapDetectingImageView alloc] initWithFrame:CGRectZero];
         _photoImageView.tapDelegate = self;
         _photoImageView.contentMode = UIViewContentModeCenter;
         _photoImageView.backgroundColor = [UIColor blackColor];

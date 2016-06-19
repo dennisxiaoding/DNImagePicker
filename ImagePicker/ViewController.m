@@ -44,9 +44,7 @@
 
 - (void)dnImagePickerControllerDidCancel:(DNImagePickerController *)imagePicker
 {
-    [imagePicker dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    [imagePicker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

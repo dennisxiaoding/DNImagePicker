@@ -233,7 +233,7 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     }else
     {
         [self addAssetsObject:asset];
-        self.sendButton.badgeValue = [NSString stringWithFormat:@"%lu",(unsigned long)self.selectedAssetsArray.count];
+        self.sendButton.badgeValue = [NSString stringWithFormat:@"%@",@(self.selectedAssetsArray.count)];
         return YES;
     }
 }
@@ -241,7 +241,7 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 - (void)deseletedAssets:(ALAsset *)asset
 {
     [self removeAssetsObject:asset];
-    self.sendButton.badgeValue = [NSString stringWithFormat:@"%lu",(unsigned long)self.selectedAssetsArray.count];
+    self.sendButton.badgeValue = [NSString stringWithFormat:@"%@",@(self.selectedAssetsArray.count)];
     if (self.selectedAssetsArray.count < 1) {
         UIBarButtonItem *firstItem = self.toolbarItems.firstObject;
         firstItem.enabled = NO;

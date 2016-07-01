@@ -54,8 +54,7 @@ ALAssetsFilter * ALAssetsFilterFromDNImagePickerControllerFilterType(DNImagePick
     } else {
         ALAssetsLibrary *assetsLibiary = [[ALAssetsLibrary alloc] init];
         [assetsLibiary enumerateGroupsWithTypes:ALAssetsGroupAll
-                                     usingBlock:^(ALAssetsGroup *assetsGroup, BOOL *stop)
-         {
+                                     usingBlock:^(ALAssetsGroup *assetsGroup, BOOL *stop){
              if (assetsGroup == nil && *stop ==  NO) {
                  [self showAlbumList];
              }
@@ -69,8 +68,7 @@ ALAssetsFilter * ALAssetsFilterFromDNImagePickerControllerFilterType(DNImagePick
                  [self setViewControllers:@[albumTableViewController,imageFlowController]];
              }
          }
-                                   failureBlock:^(NSError *error)
-         {
+         failureBlock:^(NSError *error){
              [self showAlbumList];
          }];
     }

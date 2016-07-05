@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9524A20F1AB97BAE00DC8FDA /* DNUnAuthorizedTipsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9524A20E1AB97BAE00DC8FDA /* DNUnAuthorizedTipsView.m */; };
+		952600FC1D2BA79300080227 /* ImagesPicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 952600FB1D2BA79300080227 /* ImagesPicker.xcassets */; };
+		952601001D2BA81C00080227 /* DNImagePicker.strings in Resources */ = {isa = PBXBuildFile; fileRef = 952600FF1D2BA81C00080227 /* DNImagePicker.strings */; };
 		954E05A51C3F800200CCD875 /* DNTapDetectingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 954E05A41C3F800200CCD875 /* DNTapDetectingImageView.m */; };
 		954E584E1AA96ABE00E481C4 /* DNAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 954E584D1AA96ABE00E481C4 /* DNAsset.m */; };
 		955F11771AA9D72300C9AC42 /* NSURL+DNIMagePickerUrlEqual.m in Sources */ = {isa = PBXBuildFile; fileRef = 955F11761AA9D72300C9AC42 /* NSURL+DNIMagePickerUrlEqual.m */; };
@@ -25,8 +27,6 @@
 		9571F2EB1AA74B9A006ACEBD /* DNSendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9571F2E21AA74B9A006ACEBD /* DNSendButton.m */; };
 		9571F2EC1AA74B9A006ACEBD /* DNFullImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9571F2E41AA74B9A006ACEBD /* DNFullImageButton.m */; };
 		9571F2ED1AA74B9A006ACEBD /* DNBadgeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9571F2E61AA74B9A006ACEBD /* DNBadgeLabel.m */; };
-		9571F2F01AA74BF8006ACEBD /* imageResources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9571F2EF1AA74BF8006ACEBD /* imageResources.xcassets */; };
-		9571F3011AA74E2F006ACEBD /* DNImagePicker.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9571F3031AA74E2F006ACEBD /* DNImagePicker.strings */; };
 		9571F3121AA7510B006ACEBD /* UIViewController+DNImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 9571F30D1AA7510B006ACEBD /* UIViewController+DNImagePicker.m */; };
 		9571F3131AA7510B006ACEBD /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 9571F30F1AA7510B006ACEBD /* UIColor+Hex.m */; };
 		9571F3141AA7510B006ACEBD /* UIView+DNImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 9571F3111AA7510B006ACEBD /* UIView+DNImagePicker.m */; };
@@ -38,6 +38,7 @@
 		959A69E61AA5F3A000ED8A3A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 959A69E51AA5F3A000ED8A3A /* Images.xcassets */; };
 		959A69E91AA5F3A000ED8A3A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 959A69E71AA5F3A000ED8A3A /* LaunchScreen.xib */; };
 		959A69F51AA5F3A000ED8A3A /* ImagePickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 959A69F41AA5F3A000ED8A3A /* ImagePickerTests.m */; };
+		95AC145C1D2670C700653849 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95AC145B1D2670C700653849 /* Photos.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,9 @@
 /* Begin PBXFileReference section */
 		9524A20D1AB97BAE00DC8FDA /* DNUnAuthorizedTipsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNUnAuthorizedTipsView.h; sourceTree = "<group>"; };
 		9524A20E1AB97BAE00DC8FDA /* DNUnAuthorizedTipsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNUnAuthorizedTipsView.m; sourceTree = "<group>"; };
+		952600501D2B941300080227 /* DNImagePicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DNImagePicker.h; sourceTree = "<group>"; };
+		952600FB1D2BA79300080227 /* ImagesPicker.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImagesPicker.xcassets; sourceTree = "<group>"; };
+		952600FF1D2BA81C00080227 /* DNImagePicker.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = DNImagePicker.strings; sourceTree = "<group>"; };
 		954E05A31C3F800200CCD875 /* DNTapDetectingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNTapDetectingImageView.h; sourceTree = "<group>"; };
 		954E05A41C3F800200CCD875 /* DNTapDetectingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNTapDetectingImageView.m; sourceTree = "<group>"; };
 		954E584C1AA96ABE00E481C4 /* DNAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNAsset.h; sourceTree = "<group>"; };
@@ -88,9 +92,6 @@
 		9571F2E41AA74B9A006ACEBD /* DNFullImageButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNFullImageButton.m; sourceTree = "<group>"; };
 		9571F2E51AA74B9A006ACEBD /* DNBadgeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNBadgeLabel.h; sourceTree = "<group>"; };
 		9571F2E61AA74B9A006ACEBD /* DNBadgeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNBadgeLabel.m; sourceTree = "<group>"; };
-		9571F2EF1AA74BF8006ACEBD /* imageResources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = imageResources.xcassets; sourceTree = "<group>"; };
-		9571F3051AA74E67006ACEBD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DNImagePicker.strings; sourceTree = "<group>"; };
-		9571F3081AA74EED006ACEBD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/DNImagePicker.strings"; sourceTree = "<group>"; };
 		9571F30A1AA74F52006ACEBD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.xib"; sourceTree = "<group>"; };
 		9571F30C1AA7510B006ACEBD /* UIViewController+DNImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+DNImagePicker.h"; sourceTree = "<group>"; };
 		9571F30D1AA7510B006ACEBD /* UIViewController+DNImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+DNImagePicker.m"; sourceTree = "<group>"; };
@@ -113,6 +114,7 @@
 		959A69EE1AA5F3A000ED8A3A /* ImagePickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImagePickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		959A69F31AA5F3A000ED8A3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		959A69F41AA5F3A000ED8A3A /* ImagePickerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImagePickerTests.m; sourceTree = "<group>"; };
+		95AC145B1D2670C700653849 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95AC145C1D2670C700653849 /* Photos.framework in Frameworks */,
 				9571F31C1AA751D7006ACEBD /* AssetsLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,6 +140,7 @@
 		9571F2CC1AA74B05006ACEBD /* DNImagePicker */ = {
 			isa = PBXGroup;
 			children = (
+				95C271501D2A3B4E00087807 /* Manager */,
 				9571F30B1AA750E2006ACEBD /* Extensions */,
 				9571F2EE1AA74BA6006ACEBD /* Assets */,
 				9571F2D91AA74B7D006ACEBD /* Views */,
@@ -150,6 +154,7 @@
 				9571F2D41AA74B6B006ACEBD /* DNPhotoBrowser.m */,
 				954E584C1AA96ABE00E481C4 /* DNAsset.h */,
 				954E584D1AA96ABE00E481C4 /* DNAsset.m */,
+				952600501D2B941300080227 /* DNImagePicker.h */,
 			);
 			path = DNImagePicker;
 			sourceTree = "<group>";
@@ -180,8 +185,8 @@
 		9571F2EE1AA74BA6006ACEBD /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				9571F2EF1AA74BF8006ACEBD /* imageResources.xcassets */,
-				9571F3031AA74E2F006ACEBD /* DNImagePicker.strings */,
+				952600FB1D2BA79300080227 /* ImagesPicker.xcassets */,
+				952600FF1D2BA81C00080227 /* DNImagePicker.strings */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -204,6 +209,7 @@
 		959A69CC1AA5F3A000ED8A3A = {
 			isa = PBXGroup;
 			children = (
+				95AC145B1D2670C700653849 /* Photos.framework */,
 				9571F31B1AA751D7006ACEBD /* AssetsLibrary.framework */,
 				959A69D71AA5F3A000ED8A3A /* ImagePicker */,
 				959A69F11AA5F3A000ED8A3A /* ImagePickerTests */,
@@ -267,6 +273,13 @@
 				959A69F31AA5F3A000ED8A3A /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		95C271501D2A3B4E00087807 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -351,11 +364,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				952600FC1D2BA79300080227 /* ImagesPicker.xcassets in Resources */,
 				956DB7EC1AAB65FC00F9F271 /* Main.storyboard in Resources */,
 				959A69E91AA5F3A000ED8A3A /* LaunchScreen.xib in Resources */,
-				9571F2F01AA74BF8006ACEBD /* imageResources.xcassets in Resources */,
 				955F11871AAA041900C9AC42 /* Localizable.strings in Resources */,
-				9571F3011AA74E2F006ACEBD /* DNImagePicker.strings in Resources */,
+				952601001D2BA81C00080227 /* DNImagePicker.strings in Resources */,
 				959A69E61AA5F3A000ED8A3A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -437,15 +450,6 @@
 			);
 			name = Main.storyboard;
 			path = ..;
-			sourceTree = "<group>";
-		};
-		9571F3031AA74E2F006ACEBD /* DNImagePicker.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9571F3051AA74E67006ACEBD /* en */,
-				9571F3081AA74EED006ACEBD /* zh-Hans */,
-			);
-			name = DNImagePicker.strings;
 			sourceTree = "<group>";
 		};
 		959A69E71AA5F3A000ED8A3A /* LaunchScreen.xib */ = {

@@ -38,6 +38,7 @@
 		9526011E1D2BBB4A00080227 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9526011B1D2BBB4A00080227 /* CollectionViewCell.m */; };
 		952601211D2BBBA500080227 /* DNAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 952601201D2BBBA500080227 /* DNAsset.m */; };
 		952601271D2CDDB200080227 /* DNImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 952601261D2CDDB200080227 /* DNImagePickerManager.m */; };
+		9526012A1D2D112500080227 /* DNAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 952601291D2D112500080227 /* DNAlbum.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +100,8 @@
 		952601221D2CD7C600080227 /* DNImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNImagePicker.h; sourceTree = "<group>"; };
 		952601251D2CDDB200080227 /* DNImagePickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNImagePickerManager.h; sourceTree = "<group>"; };
 		952601261D2CDDB200080227 /* DNImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNImagePickerManager.m; sourceTree = "<group>"; };
+		952601281D2D112500080227 /* DNAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNAlbum.h; sourceTree = "<group>"; };
+		952601291D2D112500080227 /* DNAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNAlbum.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,6 +256,8 @@
 			children = (
 				9526011F1D2BBBA500080227 /* DNAsset.h */,
 				952601201D2BBBA500080227 /* DNAsset.m */,
+				952601281D2D112500080227 /* DNAlbum.h */,
+				952601291D2D112500080227 /* DNAlbum.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -340,6 +345,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				952600EB1D2BA26400080227 /* DNTapDetectingImageView.m in Sources */,
+				9526012A1D2D112500080227 /* DNAlbum.m in Sources */,
 				952600D61D2BA05700080227 /* DNImageFlowViewController.m in Sources */,
 				952600EC1D2BA26400080227 /* DNAssetsViewCell.m in Sources */,
 				952600D71D2BA05700080227 /* DNPhotoBrowser.m in Sources */,

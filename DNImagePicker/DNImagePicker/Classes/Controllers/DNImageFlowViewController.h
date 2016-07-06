@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AssetsLibrary/AssetsLibrary.h>
+
 @interface DNImageFlowViewController : UIViewController
 
 - (instancetype)initWithGroupURL:(NSURL *)assetsGroupURL;

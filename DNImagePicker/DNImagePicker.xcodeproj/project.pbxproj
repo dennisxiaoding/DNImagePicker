@@ -37,6 +37,7 @@
 		9526011D1D2BBB4A00080227 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952601191D2BBB4A00080227 /* CollectionViewController.m */; };
 		9526011E1D2BBB4A00080227 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9526011B1D2BBB4A00080227 /* CollectionViewCell.m */; };
 		952601211D2BBBA500080227 /* DNAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 952601201D2BBBA500080227 /* DNAsset.m */; };
+		952601271D2CDDB200080227 /* DNImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 952601261D2CDDB200080227 /* DNImagePickerManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,6 +96,9 @@
 		9526011B1D2BBB4A00080227 /* CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCell.m; sourceTree = "<group>"; };
 		9526011F1D2BBBA500080227 /* DNAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNAsset.h; sourceTree = "<group>"; };
 		952601201D2BBBA500080227 /* DNAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNAsset.m; sourceTree = "<group>"; };
+		952601221D2CD7C600080227 /* DNImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNImagePicker.h; sourceTree = "<group>"; };
+		952601251D2CDDB200080227 /* DNImagePickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNImagePickerManager.h; sourceTree = "<group>"; };
+		952601261D2CDDB200080227 /* DNImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNImagePickerManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +136,7 @@
 		952600AF1D2B9D4100080227 /* DNImagePicker */ = {
 			isa = PBXGroup;
 			children = (
+				952601221D2CD7C600080227 /* DNImagePicker.h */,
 				952600CA1D2B9F6F00080227 /* Support */,
 				952600C91D2B9F5100080227 /* Resources */,
 				952600C81D2B9F3700080227 /* Classes */,
@@ -173,6 +178,7 @@
 		952600C81D2B9F3700080227 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				952601241D2CDBAC00080227 /* Managers */,
 				952601151D2BB93C00080227 /* Models */,
 				952600D81D2BA17900080227 /* Views */,
 				952600CB1D2BA00700080227 /* Controllers */,
@@ -249,6 +255,15 @@
 				952601201D2BBBA500080227 /* DNAsset.m */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		952601241D2CDBAC00080227 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				952601251D2CDDB200080227 /* DNImagePickerManager.h */,
+				952601261D2CDDB200080227 /* DNImagePickerManager.m */,
+			);
+			name = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -347,6 +362,7 @@
 				9526011C1D2BBB4A00080227 /* InfoViewController.m in Sources */,
 				9526011E1D2BBB4A00080227 /* CollectionViewCell.m in Sources */,
 				952600F01D2BA26400080227 /* DNUnAuthorizedTipsView.m in Sources */,
+				952601271D2CDDB200080227 /* DNImagePickerManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,6 +486,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = DNImagePicker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dennis.DNImagePicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -481,6 +498,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = DNImagePicker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dennis.DNImagePicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";

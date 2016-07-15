@@ -20,8 +20,9 @@
 @property (nonatomic, assign) NSInteger count;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, strong) NSDate *startDate;
+@property (nonatomic, copy) NSString *identifier;
 #endif
 
-@property (nonatomic, copy) NSString *identifier;
+
 
 @end

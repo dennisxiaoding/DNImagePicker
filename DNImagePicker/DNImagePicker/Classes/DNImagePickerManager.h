@@ -20,6 +20,10 @@
 - (DNAlbumAuthorizationStatus)authorizationStatus;
 
 
+- (NSArray *)fetchAlbumList;
+
+
+// storeage
 - (void)saveAblumIdentifier:(NSString *)identifier;
 
 - (NSString *)albumIdentifier;

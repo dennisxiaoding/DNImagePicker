@@ -15,7 +15,7 @@ typedef NS_ENUM(NSUInteger, DNImagePickerFilterType) {
     DNImagePickerFilterTypeVideos,
 };
 
-UIKIT_EXTERN ALAssetsFilter * ALAssetsFilterFromDNImagePickerControllerFilterType(DNImagePickerFilterType type);
+FOUNDATION_EXTERN ALAssetsFilter * ALAssetsFilterFromDNImagePickerControllerFilterType(DNImagePickerFilterType type);
 
 @class DNImagePickerController;
 @protocol DNImagePickerControllerDelegate <NSObject>

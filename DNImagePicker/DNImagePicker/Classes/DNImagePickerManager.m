@@ -63,6 +63,30 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
     return list;
 }
 
+- (DNAlbum *)fetchCurrentAlbum {
+    DNAlbum *album = [[DNAlbum alloc] init];
+    NSString *identifier = [self albumIdentifier];
+    if (!identifier || identifier.length <= 0 ) {
+        return album;
+    }
+    
+    PHFetchResult *result = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[identifier] options:nil];
+    if (result.count <= 0) {
+        return album;
+    }
+    PHFetchOptions *options = [[PHFetchOptions alloc] init];
+    options.predicate = [NSPredicate predicateWithFormat:@"mediaType",@(PHAssetMediaTypeImage)];
+    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+    PHAssetCollection *collection = result.firstObject;
+    PHFetchResult *requestReslut = [PHAsset fetchKeyAssetsInAssetCollection:collection options:options];
+    album.name = collection.localizedTitle;
+    album.results = requestReslut;
+    album.count = requestReslut.count;
+    album.startDate = collection.startDate;
+    album.identifier = collection.localIdentifier;
+    return album;
+}
+
 - (NSArray *)fetchAlbumsResults {
     PHFetchOptions *userAlbumsOptions = [[PHFetchOptions alloc] init];
     userAlbumsOptions.predicate = [NSPredicate predicateWithFormat:@"estimatedAssetCount > 0"];

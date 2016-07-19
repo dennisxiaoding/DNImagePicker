@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "DNImagePicker.h"
+@class DNAlbum;
 
 @interface DNImagePickerManager : NSObject
 
@@ -21,6 +22,13 @@
 
 
 - (NSArray *)fetchAlbumList;
+
+/**
+ *  Fetch the album which is stored by identifier; if not stored, it'll return the album without anything.
+ *
+ *  @return the stored album
+ */
+- (DNAlbum *)fetchCurrentAlbum;
 
 
 // storeage

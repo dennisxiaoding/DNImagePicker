@@ -36,7 +36,7 @@
     self.zoomingScrollView = nil;
     self.photoImageView = nil;
     self.photoBrowser = nil;
-    self.asset = nil;
+    _asset = nil;
 }
 
 #pragma mark - set
@@ -50,6 +50,9 @@
 
 // Get and display image
 - (void)displayImage {
+    
+    CGFloat screenScale = [[UIScreen mainScreen] scale];
+    
     self.zoomingScrollView.maximumZoomScale = 1;
     self.zoomingScrollView.minimumZoomScale = 1;
     self.zoomingScrollView.zoomScale = 1;
@@ -60,7 +63,7 @@
     self.photoImageView.hidden = NO;
     CGRect photoImageViewFrame;
     photoImageViewFrame.origin = CGPointZero;
-    photoImageViewFrame.size = img.size;
+    photoImageViewFrame.size = CGSizeMake(img.size.width/screenScale, img.size.height/screenScale);
     self.photoImageView.frame = photoImageViewFrame;
     self.zoomingScrollView.contentSize = photoImageViewFrame.size;
             

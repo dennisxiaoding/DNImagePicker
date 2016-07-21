@@ -22,7 +22,6 @@
     BOOL _previousNavBarHidden;
     BOOL _previousNavBarTranslucent;
     UIBarStyle _previousNavBarStyle;
-    UIStatusBarStyle _previousStatusBarStyle;
     UIColor *_previousNavBarTintColor;
     UIColor *_previousNavBarBarTintColor;
     UIBarButtonItem *_previousViewControllerBackButton;
@@ -68,8 +67,6 @@
     
     // Super
     [super viewWillAppear:animated];
-    _previousStatusBarStyle = [[UIApplication sharedApplication] statusBarStyle];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:animated];
     
     // Navigation bar appearance
     if (!_viewIsActive && [self.navigationController.viewControllers objectAtIndex:0] != self) {
@@ -99,10 +96,12 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [self setControlsHidden:NO animated:NO];
     
-    [[UIApplication sharedApplication] setStatusBarStyle:_previousStatusBarStyle animated:animated];
-    
     // Super
     [super viewWillDisappear:animated];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleDefault;
 }
 
 - (void)viewDidAppear:(BOOL)animated {

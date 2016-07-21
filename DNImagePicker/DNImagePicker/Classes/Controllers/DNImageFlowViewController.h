@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@class DNAlbum;
 
 @interface DNImageFlowViewController : UIViewController
 
 - (instancetype)initWithGroupURL:(NSURL *)assetsGroupURL;
+
+- (instancetype)initWithAblum:(DNAlbum *)album;
+
+
+
 @end

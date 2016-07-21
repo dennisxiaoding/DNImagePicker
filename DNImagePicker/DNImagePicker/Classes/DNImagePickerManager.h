@@ -21,19 +21,28 @@
 - (DNAlbumAuthorizationStatus)authorizationStatus;
 
 
-- (NSArray *)fetchAlbumList;
+- (nonnull NSArray *)fetchAlbumList;
 
 /**
  *  Fetch the album which is stored by identifier; if not stored, it'll return the album without anything.
  *
  *  @return the stored album
  */
-- (DNAlbum *)fetchCurrentAlbum;
+- (nonnull DNAlbum *)fetchCurrentAlbum;
+
+/**
+ *  fetch `PHAsset` array via CollectionResults
+ *
+ *  @param results collection fetch results
+ *
+ *  @return `PHAsset` array in collection
+ */
+- (nonnull NSArray *)fetchImageAssetsViaCollectionResults:(nullable PHFetchResult *)results;
 
 
 // storeage
-- (void)saveAblumIdentifier:(NSString *)identifier;
+- (void)saveAblumIdentifier:(nullable NSString *)identifier;
 
-- (NSString *)albumIdentifier;
+- (nullable NSString *)albumIdentifier;
 
 @end

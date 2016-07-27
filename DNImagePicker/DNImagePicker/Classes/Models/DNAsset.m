@@ -10,8 +10,7 @@
 #import "NSURL+DNIMagePickerUrlEqual.h"
 @implementation DNAsset
 
-- (BOOL)isEqual:(id)other
-{
+- (BOOL)isEqual:(id)other {
     if (other == self) {
         return YES;
     } else if (![super isEqual:other]) {
@@ -21,8 +20,7 @@
     }
 }
 
-- (BOOL)isEqualToAsset:(DNAsset *)asset
-{
+- (BOOL)isEqualToAsset:(DNAsset *)asset {
     if ([asset isKindOfClass:[DNAsset class]]) {
         return [self.url isEqualToOther:asset.url];
     } else {

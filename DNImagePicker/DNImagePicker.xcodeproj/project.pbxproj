@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		951079781D4A0234003CDF9D /* DNImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 951079771D4A0234003CDF9D /* DNImageManager.m */; };
 		952600B21D2B9D4100080227 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 952600B11D2B9D4100080227 /* main.m */; };
 		952600B51D2B9D4100080227 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 952600B41D2B9D4100080227 /* AppDelegate.m */; };
 		952600B81D2B9D4100080227 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952600B71D2B9D4100080227 /* ViewController.m */; };
@@ -42,6 +43,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		951079761D4A0234003CDF9D /* DNImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNImageManager.h; sourceTree = "<group>"; };
+		951079771D4A0234003CDF9D /* DNImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNImageManager.m; sourceTree = "<group>"; };
 		952600AD1D2B9D4100080227 /* DNImagePicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DNImagePicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		952600B11D2B9D4100080227 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		952600B31D2B9D4100080227 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../DNImagePicker/AppDelegate.h; sourceTree = "<group>"; };
@@ -267,6 +270,8 @@
 			children = (
 				952601251D2CDDB200080227 /* DNImagePickerManager.h */,
 				952601261D2CDDB200080227 /* DNImagePickerManager.m */,
+				951079761D4A0234003CDF9D /* DNImageManager.h */,
+				951079771D4A0234003CDF9D /* DNImageManager.m */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -355,6 +360,7 @@
 				952600E91D2BA26400080227 /* JKPromptView.m in Sources */,
 				952601211D2BBBA500080227 /* DNAsset.m in Sources */,
 				9526011D1D2BBB4A00080227 /* CollectionViewController.m in Sources */,
+				951079781D4A0234003CDF9D /* DNImageManager.m in Sources */,
 				952600EE1D2BA26400080227 /* DNFullImageButton.m in Sources */,
 				952600D51D2BA05700080227 /* DNAlbumTableViewController.m in Sources */,
 				952601121D2BB7F700080227 /* NSURL+DNIMagePickerUrlEqual.m in Sources */,

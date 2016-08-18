@@ -12,8 +12,15 @@
 @interface DNImageManager : NSObject
 
 - (PHImageRequestID)fetchImageWithAsset:(PHAsset *)asset
+                             targetSize:(CGSize)targetSize
+                      imageResutHandler:(void (^)(UIImage *))handler;
+
+- (PHImageRequestID)fetchImageWithAsset:(PHAsset *)asset
                  targetSize:(CGSize)targetSize
             needHighQuality:(BOOL)isHighQuality
           imageResutHandler:(void (^)(UIImage *image))handler;
+
+- (void)fetchImageSizeWithAsset:(PHAsset *)asset
+         imageSizeResultHandler:(void (^)(CGFloat imageSize, NSString *sizeString))handler;
 
 @end

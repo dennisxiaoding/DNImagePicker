@@ -24,7 +24,7 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
 
 #if DNImagePikerPhotosAvaiable == 1
 - (NSArray *)fetchAlbumList {
-    NSMutableArray *albums = [NSMutableArray arrayWithArray:[self fetchAlbumList]];
+    NSMutableArray *albums = [NSMutableArray arrayWithArray:[self fetchAlbumsResults]];
     if (!albums)
         return [NSArray array];
     

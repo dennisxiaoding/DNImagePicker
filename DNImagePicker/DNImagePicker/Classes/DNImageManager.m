@@ -49,7 +49,10 @@
     
     [[PHImageManager defaultManager] requestImageDataForAsset:asset
                                                       options:nil
-                                                resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+                                                resultHandler:^(NSData * _Nullable imageData,
+                                                                NSString * _Nullable dataUTI,
+                                                                UIImageOrientation orientation,
+                                                                NSDictionary * _Nullable info) {
                                                     NSString *string = @"0M";
                                                     CGFloat imageSize = 0.0;
                                                     if (!imageData) {

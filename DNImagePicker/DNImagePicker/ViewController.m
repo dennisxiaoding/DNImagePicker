@@ -25,8 +25,7 @@
     [self.button setTitle:NSLocalizedString(@"add", @"add") forState:UIControlStateNormal];
 }
 
-- (void)buttonAction:(id)sender
-{
+- (void)buttonAction:(id)sender {
     DNImagePickerController *imagePicker = [[DNImagePickerController alloc] init];
     imagePicker.imagePickerDelegate = self;
     [self presentViewController:imagePicker animated:YES completion:nil];
@@ -34,8 +33,9 @@
 
 #pragma mark - DNImagePickerControllerDelegate
 
-- (void)dnImagePickerController:(DNImagePickerController *)imagePickerController sendImages:(NSArray *)imageAssets isFullImage:(BOOL)fullImage
-{
+- (void)dnImagePickerController:(DNImagePickerController *)imagePickerController
+                     sendImages:(NSArray *)imageAssets
+                    isFullImage:(BOOL)fullImage {
     self.assetsArray = [NSMutableArray arrayWithArray:imageAssets];
     CollectionViewController *collectionVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CollectionViewController"];
     collectionVC.isFullImage = fullImage;
@@ -43,14 +43,8 @@
     [self.navigationController pushViewController:collectionVC animated:YES];
 }
 
-- (void)dnImagePickerControllerDidCancel:(DNImagePickerController *)imagePicker
-{
+- (void)dnImagePickerControllerDidCancel:(DNImagePickerController *)imagePicker {
     [imagePicker dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

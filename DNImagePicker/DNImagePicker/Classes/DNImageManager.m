@@ -68,8 +68,7 @@
                                                         string = [NSString stringWithFormat:@"%.1fK",size];
                                                     }
                                                     handler(imageSize, string);
-        
-    }];
+                                                }];
 }
 
 

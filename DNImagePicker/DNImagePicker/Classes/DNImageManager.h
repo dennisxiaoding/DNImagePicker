@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DNImagePickerManager.h"
+#import <UIKit/UIKit.h>
+@class PHAsset;
+@class PHImageRequestID;
+
 
 @interface DNImageManager : NSObject
 
@@ -19,8 +22,4 @@
                  targetSize:(CGSize)targetSize
             needHighQuality:(BOOL)isHighQuality
           imageResutHandler:(void (^)(UIImage *image))handler;
-
-- (void)fetchImageSizeWithAsset:(PHAsset *)asset
-         imageSizeResultHandler:(void (^)(CGFloat imageSize, NSString *sizeString))handler;
-
 @end

@@ -23,7 +23,7 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
 }
 
 #if DNImagePikerPhotosAvaiable == 1
-- (NSArray *)fetchAlbumList {
++ (NSArray *)fetchAlbumList {
     NSMutableArray *albums = [NSMutableArray arrayWithArray:[self fetchAlbumsResults]];
     if (!albums)
         return [NSArray array];
@@ -63,9 +63,9 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
     return list;
 }
 
-- (DNAlbum *)fetchCurrentAlbum {
++(DNAlbum *)fetchCurrentAlbum {
     DNAlbum *album = [[DNAlbum alloc] init];
-    NSString *identifier = [self albumIdentifier];
+    NSString *identifier = [DNImagePickerManager albumIdentifier];
     if (!identifier || identifier.length <= 0 ) {
         return album;
     }
@@ -87,7 +87,7 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
     return album;
 }
 
-- (NSArray *)fetchAlbumsResults {
++ (NSArray *)fetchAlbumsResults {
     PHFetchOptions *userAlbumsOptions = [[PHFetchOptions alloc] init];
     userAlbumsOptions.predicate = [NSPredicate predicateWithFormat:@"estimatedAssetCount > 0"];
     userAlbumsOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"startDate" ascending:NO]];
@@ -102,16 +102,47 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
                                               options:userAlbumsOptions]];
     return albumsArray;
 }
+
+- (void)fetchImageSizeWithAsset:(PHAsset *)asset imageSizeResultHandler:(void (^)(CGFloat, NSString *))handler {
+    if (!asset) {
+        handler(0,@"0M");
+        return;
+    }
+    
+    [[PHImageManager defaultManager] requestImageDataForAsset:asset
+                                                      options:nil
+                                                resultHandler:^(NSData * _Nullable imageData,
+                                                                NSString * _Nullable dataUTI,
+                                                                UIImageOrientation orientation,
+                                                                NSDictionary * _Nullable info) {
+                                                    NSString *string = @"0M";
+                                                    CGFloat imageSize = 0.0;
+                                                    if (!imageData) {
+                                                        handler(imageSize, string);
+                                                        return;
+                                                    }
+                                                    imageSize = imageData.length;
+                                                    if (imageSize > 1024*1024) {
+                                                        CGFloat size = imageSize/(1024*2024);
+                                                        string = [NSString stringWithFormat:@"%.1fM",size];
+                                                    } else {
+                                                        CGFloat size = imageSize/1024;
+                                                        string = [NSString stringWithFormat:@"%.1fK",size];
+                                                    }
+                                                    handler(imageSize, string);
+                                                }];
+}
+
 #endif
 
 
-- (void)saveAblumIdentifier:(NSString *)identifier {
++ (void)saveAblumIdentifier:(NSString *)identifier {
     if (identifier.length <= 0)  return;
     [[NSUserDefaults standardUserDefaults] setObject:identifier forKey:kDNImagePickerStoredGroupKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (NSString *)albumIdentifier {
++ (NSString *)albumIdentifier {
     return [[NSUserDefaults standardUserDefaults] objectForKey:kDNImagePickerStoredGroupKey];
 }
 

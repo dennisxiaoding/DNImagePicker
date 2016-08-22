@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DNImagePicker.h"
+@class PHAsset;
+@class PHFetchResult;
 @class DNAlbum;
 
 @interface DNImagePickerManager : NSObject
@@ -18,17 +19,17 @@
  *
  *  @return The current authorization status.
  */
-- (DNAlbumAuthorizationStatus)authorizationStatus;
++ (DNAlbumAuthorizationStatus)authorizationStatus;
 
 
-- (nonnull NSArray *)fetchAlbumList;
++ (nonnull NSArray *)fetchAlbumList;
 
 /**
  *  Fetch the album which is stored by identifier; if not stored, it'll return the album without anything.
  *
  *  @return the stored album
  */
-- (nonnull DNAlbum *)fetchCurrentAlbum;
++ (nonnull DNAlbum *)fetchCurrentAlbum;
 
 /**
  *  fetch `PHAsset` array via CollectionResults
@@ -40,9 +41,13 @@
 - (nonnull NSArray *)fetchImageAssetsViaCollectionResults:(nullable PHFetchResult *)results;
 
 
-// storeage
-- (void)saveAblumIdentifier:(nullable NSString *)identifier;
+- (void)fetchImageSizeWithAsset:(nullable PHAsset *)asset
+         imageSizeResultHandler:(void ( ^ _Nonnull)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler;
 
-- (nullable NSString *)albumIdentifier;
+
+// storeage
++ (void)saveAblumIdentifier:(nullable NSString *)identifier;
+
++ (nullable NSString *)albumIdentifier;
 
 @end

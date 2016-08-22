@@ -7,6 +7,7 @@
 //
 
 #import "DNImageManager.h"
+#import "DNImagePicker.h"
 
 @implementation DNImageManager
 
@@ -40,36 +41,5 @@
                                                               handler(result);
                                                           }];
 }
-
-- (void)fetchImageSizeWithAsset:(PHAsset *)asset imageSizeResultHandler:(void (^)(CGFloat, NSString *))handler {
-    if (!asset) {
-        handler(0,@"0M");
-        return;
-    }
-    
-    [[PHImageManager defaultManager] requestImageDataForAsset:asset
-                                                      options:nil
-                                                resultHandler:^(NSData * _Nullable imageData,
-                                                                NSString * _Nullable dataUTI,
-                                                                UIImageOrientation orientation,
-                                                                NSDictionary * _Nullable info) {
-                                                    NSString *string = @"0M";
-                                                    CGFloat imageSize = 0.0;
-                                                    if (!imageData) {
-                                                        handler(imageSize, string);
-                                                        return;
-                                                    }
-                                                    imageSize = imageData.length;
-                                                    if (imageSize > 1024*1024) {
-                                                        CGFloat size = imageSize/(1024*2024);
-                                                        string = [NSString stringWithFormat:@"%.1fM",size];
-                                                    } else {
-                                                        CGFloat size = imageSize/1024;
-                                                        string = [NSString stringWithFormat:@"%.1fK",size];
-                                                    }
-                                                    handler(imageSize, string);
-                                                }];
-}
-
 
 @end

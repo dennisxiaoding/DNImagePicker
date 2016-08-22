@@ -11,7 +11,7 @@
 
 @interface DNImageFlowViewController : UIViewController
 
-- (instancetype)initWithGroupURL:(NSURL *)assetsGroupURL;
+- (instancetype)initWithAlbumIdentifier:(NSString *)albumIdentifier;
 
 - (instancetype)initWithAblum:(DNAlbum *)album;
 

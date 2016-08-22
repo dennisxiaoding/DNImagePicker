@@ -10,4 +10,6 @@
 
 @interface DNAlbumTableViewController : UITableViewController
 
+- (void)showUnAuthorizedTipsView;
+
 @end

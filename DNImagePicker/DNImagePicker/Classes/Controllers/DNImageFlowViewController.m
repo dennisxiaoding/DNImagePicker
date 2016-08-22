@@ -22,7 +22,7 @@ static NSUInteger const kDNImageFlowMaxSeletedNumber = 9;
 
 @interface DNImageFlowViewController () <UICollectionViewDataSource, UICollectionViewDelegate, DNAssetsViewCellDelegate, DNPhotoBrowserDelegate>
 
-@property (nonatomic, strong) NSURL *assetsGroupURL;
+@property (nonatomic, strong) NSString *albumIdentifier;
 @property (nonatomic, strong) ALAssetsLibrary *assetsLibrary;
 @property (nonatomic, strong) ALAssetsGroup *assetsGroup;
 
@@ -40,13 +40,13 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 
 @implementation DNImageFlowViewController
 
-- (instancetype)initWithGroupURL:(NSURL *)assetsGroupURL
+- (instancetype)initWithAlbumIdentifier:(NSString *)albumIdentifier;
 {
     self = [super init];
     if (self) {
         _assetsArray = [NSMutableArray new];
         _selectedAssetsArray = [NSMutableArray new];
-        _assetsGroupURL = assetsGroupURL;
+        _albumIdentifier = albumIdentifier;
         _assetsLibrary = [[ALAssetsLibrary alloc] init];
     }
     return self;
@@ -72,11 +72,11 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
+
 #pragma mark - setup view and data
 - (void)setupData
 {
-    [_assetsLibrary groupForURL:self.assetsGroupURL resultBlock:^(ALAssetsGroup *assetsGroup){
+    [_assetsLibrary groupForURL:[NSURL URLWithString:self.albumIdentifier] resultBlock:^(ALAssetsGroup *assetsGroup){
         self.assetsGroup = assetsGroup;
         if (self.assetsGroup) {
             self.title =[self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];

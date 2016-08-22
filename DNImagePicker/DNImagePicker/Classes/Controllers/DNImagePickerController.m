@@ -10,24 +10,10 @@
 #import "DNImagePickerController.h"
 #import "DNAlbumTableViewController.h"
 #import "DNImageFlowViewController.h"
+#import "DNImagePickerManager.h"
 
 NSString *kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePickerStoredGroup";
 
-ALAssetsFilter * ALAssetsFilterFromDNImagePickerControllerFilterType(DNImagePickerFilterType type)
-{
-    switch (type) {
-        default:
-        case DNImagePickerFilterTypeNone:
-            return [ALAssetsFilter allAssets];
-            break;
-        case DNImagePickerFilterTypePhotos:
-            return [ALAssetsFilter allPhotos];
-            break;
-        case DNImagePickerFilterTypeVideos:
-            return [ALAssetsFilter allVideos];
-            break;
-    }
-}
 
 @interface DNImagePickerController ()<UIGestureRecognizerDelegate, UINavigationControllerDelegate>
 
@@ -62,10 +48,7 @@ ALAssetsFilter * ALAssetsFilterFromDNImagePickerControllerFilterType(DNImagePick
              NSString *assetsGroupID= [assetsGroup valueForProperty:ALAssetsGroupPropertyPersistentID];
              if ([assetsGroupID isEqualToString:propwetyID]) {
                  *stop = YES;
-                 NSURL *assetsGroupURL = [assetsGroup valueForProperty:ALAssetsGroupPropertyURL];
-                 DNAlbumTableViewController *albumTableViewController = [[DNAlbumTableViewController alloc] init];
-                 DNImageFlowViewController *imageFlowController = [[DNImageFlowViewController alloc] initWithGroupURL:assetsGroupURL];
-                 [self setViewControllers:@[albumTableViewController,imageFlowController]];
+                 [self showImageFlow];
              }
          }
          failureBlock:^(NSError *error){
@@ -80,10 +63,43 @@ ALAssetsFilter * ALAssetsFilterFromDNImagePickerControllerFilterType(DNImagePick
     // Dispose of any resources that can be recreated.
 }
 #pragma mark - priviate methods
-- (void)showAlbumList
-{
+- (void)showAlbumList {
     DNAlbumTableViewController *albumTableViewController = [[DNAlbumTableViewController alloc] init];
     [self setViewControllers:@[albumTableViewController]];
+}
+
+- (void)showImageFlow {
+    NSString *albumIdentifier = [DNImagePickerManager albumIdentifier];
+    DNAlbumTableViewController *albumTableViewController = [[DNAlbumTableViewController alloc] init];
+    DNImageFlowViewController *imageFlowController = [[DNImageFlowViewController alloc] initWithAlbumIdentifier:albumIdentifier];
+    [self setViewControllers:@[albumTableViewController,imageFlowController]];
+}
+
+- (void)chargeAuthorizationStatus:(DNAlbumAuthorizationStatus)status {
+    if (!self.viewControllers.firstObject) {
+        [self showAlbumList];
+    }
+
+    DNAlbumTableViewController *albumTableViewController = self.viewControllers.firstObject;
+
+    switch (status) {
+        case DNAlbumAuthorizationStatusAuthorized:
+            // TODO:Authorized
+            break;
+        case DNAlbumAuthorizationStatusDenied:
+        case DNAlbumAuthorizationStatusRestricted:
+            [albumTableViewController showUnAuthorizedTipsView];
+            break;
+        case DNAlbumAuthorizationStatusNotDetermined:
+            // TODO: requestAuthorization
+            break;
+            
+            
+            
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - UINavigationController

@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DNImagePicker.h"
 
+@class PHFetchResult;
 @interface DNAlbum : NSObject
 
 #if DNImagePikerPhotosAvaiable == 1

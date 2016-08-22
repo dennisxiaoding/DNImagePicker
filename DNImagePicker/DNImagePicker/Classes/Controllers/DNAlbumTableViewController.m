@@ -104,12 +104,11 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
     cell.textLabel.attributedText = [self albumAttributedStringFromlbum:album];
     
     __weak UITableViewCell *blockCell = cell;
-//    [group enumerateAssetsAtIndexes:[NSIndexSet indexSetWithIndex:group.numberOfAssets-1] options:NSEnumerationConcurrent usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-//        if (result) {
-//            *stop = YES;
-//            blockCell.imageView.image = [UIImage imageWithCGImage:result.thumbnail];
-//        }
-//    }];
+    [DNImagePickerManager fetchImageWithAsset:album.results.lastObject
+                                   targetSize:CGSizeMake(60, 60)
+                            imageResutHandler:^(UIImage * _Nullable postImage) {
+                                blockCell.imageView.image = postImage;
+    }];
     return cell;
 }
 

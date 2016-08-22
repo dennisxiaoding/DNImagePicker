@@ -23,8 +23,6 @@ static NSUInteger const kDNImageFlowMaxSeletedNumber = 9;
 @interface DNImageFlowViewController () <UICollectionViewDataSource, UICollectionViewDelegate, DNAssetsViewCellDelegate, DNPhotoBrowserDelegate>
 
 @property (nonatomic, strong) NSString *albumIdentifier;
-@property (nonatomic, strong) ALAssetsLibrary *assetsLibrary;
-@property (nonatomic, strong) ALAssetsGroup *assetsGroup;
 
 @property (nonatomic, strong) UICollectionView *imageFlowCollectionView;
 @property (nonatomic, strong) DNSendButton *sendButton;
@@ -47,7 +45,6 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
         _assetsArray = [NSMutableArray new];
         _selectedAssetsArray = [NSMutableArray new];
         _albumIdentifier = albumIdentifier;
-        _assetsLibrary = [[ALAssetsLibrary alloc] init];
     }
     return self;
 }
@@ -76,18 +73,18 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 #pragma mark - setup view and data
 - (void)setupData
 {
-    [_assetsLibrary groupForURL:[NSURL URLWithString:self.albumIdentifier] resultBlock:^(ALAssetsGroup *assetsGroup){
-        self.assetsGroup = assetsGroup;
-        if (self.assetsGroup) {
-            self.title =[self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
-            [self loadData];
-        }
-        
-    } failureBlock:^(NSError *error){
-        //            NSLog(@"%@",error.description);
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Tips" message:error.description delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-    }];
+//    [_assetsLibrary groupForURL:[NSURL URLWithString:self.albumIdentifier] resultBlock:^(ALAssetsGroup *assetsGroup){
+//        self.assetsGroup = assetsGroup;
+//        if (self.assetsGroup) {
+//            self.title =[self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
+//            [self loadData];
+//        }
+//        
+//    } failureBlock:^(NSError *error){
+//        //            NSLog(@"%@",error.description);
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Tips" message:error.description delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        [alert show];
+//    }];
 }
 
 
@@ -120,19 +117,19 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 
 - (void)loadData
 {
-    [self.assetsGroup setAssetsFilter:ALAssetsFilterFromDNImagePickerControllerFilterType([[self dnImagePickerController] filterType])];
+//    [self.assetsGroup setAssetsFilter:ALAssetsFilterFromDNImagePickerControllerFilterType([[self dnImagePickerController] filterType])];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self.assetsGroup enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-            if (result) {
-                [self.assetsArray insertObject:result atIndex:0];
-            }
-        }];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.imageFlowCollectionView reloadData];
-            [self scrollerToBottom:NO];
-        });
-    });
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        [self.assetsGroup enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+//            if (result) {
+//                [self.assetsArray insertObject:result atIndex:0];
+//            }
+//        }];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.imageFlowCollectionView reloadData];
+//            [self scrollerToBottom:NO];
+//        });
+//    });
 }
 
 #pragma mark - helpmethods
@@ -198,9 +195,9 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 #pragma mark - priviate methods
 - (void)sendImages
 {
-    NSString *properyID = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyPersistentID];
-    [[NSUserDefaults standardUserDefaults] setObject:properyID forKey:kDNImagePickerStoredGroupKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+//    NSString *properyID = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyPersistentID];
+//    [[NSUserDefaults standardUserDefaults] setObject:properyID forKey:kDNImagePickerStoredGroupKey];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
     DNImagePickerController *imagePicker = [self dnImagePickerController];
     if (imagePicker && [imagePicker.imagePickerDelegate respondsToSelector:@selector(dnImagePickerController:sendImages:isFullImage:)]) {
@@ -218,44 +215,44 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     [self.navigationController pushViewController:browser animated:YES];
 }
 
-- (BOOL)seletedAssets:(ALAsset *)asset
-{
-    if ([self assetIsSelected:asset]) {
-        return NO;
-    }
-    UIBarButtonItem *firstItem = self.toolbarItems.firstObject;
-    firstItem.enabled = YES;
-    if (self.selectedAssetsArray.count >= kDNImageFlowMaxSeletedNumber) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"alertTitle", @"DNImagePicker", nil) message:NSLocalizedStringFromTable(@"alertContent", @"DNImagePicker", nil) delegate:self cancelButtonTitle:NSLocalizedStringFromTable(@"alertButton", @"DNImagePicker", nil) otherButtonTitles:nil, nil];
-        [alert show];
-        
-        return NO;
-    }else
-    {
-        [self addAssetsObject:asset];
-        self.sendButton.badgeValue = [NSString stringWithFormat:@"%@",@(self.selectedAssetsArray.count)];
-        return YES;
-    }
-}
+//- (BOOL)seletedAssets:(ALAsset *)asset
+//{
+//    if ([self assetIsSelected:asset]) {
+//        return NO;
+//    }
+//    UIBarButtonItem *firstItem = self.toolbarItems.firstObject;
+//    firstItem.enabled = YES;
+//    if (self.selectedAssetsArray.count >= kDNImageFlowMaxSeletedNumber) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"alertTitle", @"DNImagePicker", nil) message:NSLocalizedStringFromTable(@"alertContent", @"DNImagePicker", nil) delegate:self cancelButtonTitle:NSLocalizedStringFromTable(@"alertButton", @"DNImagePicker", nil) otherButtonTitles:nil, nil];
+//        [alert show];
+//        
+//        return NO;
+//    }else
+//    {
+//        [self addAssetsObject:asset];
+//        self.sendButton.badgeValue = [NSString stringWithFormat:@"%@",@(self.selectedAssetsArray.count)];
+//        return YES;
+//    }
+//}
 
-- (void)deseletedAssets:(ALAsset *)asset
-{
-    [self removeAssetsObject:asset];
-    self.sendButton.badgeValue = [NSString stringWithFormat:@"%@",@(self.selectedAssetsArray.count)];
-    if (self.selectedAssetsArray.count < 1) {
-        UIBarButtonItem *firstItem = self.toolbarItems.firstObject;
-        firstItem.enabled = NO;
-    }
-}
+//- (void)deseletedAssets:(ALAsset *)asset
+//{
+//    [self removeAssetsObject:asset];
+//    self.sendButton.badgeValue = [NSString stringWithFormat:@"%@",@(self.selectedAssetsArray.count)];
+//    if (self.selectedAssetsArray.count < 1) {
+//        UIBarButtonItem *firstItem = self.toolbarItems.firstObject;
+//        firstItem.enabled = NO;
+//    }
+//}
 
 #pragma mark - getter/setter
-- (ALAssetsLibrary *)assetsLibrary
-{
-    if (nil == _assetsLibrary) {
-        _assetsLibrary = [[ALAssetsLibrary alloc] init];
-    }
-    return _assetsLibrary;
-}
+//- (ALAssetsLibrary *)assetsLibrary
+//{
+//    if (nil == _assetsLibrary) {
+//        _assetsLibrary = [[ALAssetsLibrary alloc] init];
+//    }
+//    return _assetsLibrary;
+//}
 
 - (UICollectionView *)imageFlowCollectionView
 {
@@ -313,16 +310,16 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 }
 
 #pragma mark - DNAssetsViewCellDelegate
-- (void)didSelectItemAssetsViewCell:(DNAssetsViewCell *)assetsCell
-{
-    assetsCell.isSelected = [self seletedAssets:assetsCell.asset];
-}
-
-- (void)didDeselectItemAssetsViewCell:(DNAssetsViewCell *)assetsCell
-{
-    assetsCell.isSelected = NO;
-    [self deseletedAssets:assetsCell.asset];
-}
+//- (void)didSelectItemAssetsViewCell:(DNAssetsViewCell *)assetsCell
+//{
+//    assetsCell.isSelected = [self seletedAssets:assetsCell.asset];
+//}
+//
+//- (void)didDeselectItemAssetsViewCell:(DNAssetsViewCell *)assetsCell
+//{
+//    assetsCell.isSelected = NO;
+//    [self deseletedAssets:assetsCell.asset];
+//}
 
 #pragma mark - UICollectionView delegate and Datasource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -333,9 +330,9 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DNAssetsViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:dnAssetsViewCellReuseIdentifier forIndexPath:indexPath];
-    ALAsset *asset = self.assetsArray[indexPath.row];
-    cell.delegate = self;
-    [cell fillWithAsset:asset isSelected:[self assetIsSelected:asset]];
+//    ALAsset *asset = self.assetsArray[indexPath.row];
+//    cell.delegate = self;
+//    [cell fillWithAsset:asset isSelected:[self assetIsSelected:asset]];
     return cell;
 }
 
@@ -358,39 +355,39 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 }
 
 #pragma mark - DNPhotoBrowserDelegate
-- (void)sendImagesFromPhotobrowser:(DNPhotoBrowser *)photoBrowser currentAsset:(ALAsset *)asset
-{
-    if (self.selectedAssetsArray.count <= 0) {
-        [self seletedAssets:asset];
-        [self.imageFlowCollectionView reloadData];
-    }
-    [self sendImages];
-}
-
-- (NSUInteger)seletedPhotosNumberInPhotoBrowser:(DNPhotoBrowser *)photoBrowser
-{
-    return self.selectedAssetsArray.count;
-}
-
-- (BOOL)photoBrowser:(DNPhotoBrowser *)photoBrowser currentPhotoAssetIsSeleted:(ALAsset *)asset{
-    return [self assetIsSelected:asset];
-}
-
-- (BOOL)photoBrowser:(DNPhotoBrowser *)photoBrowser seletedAsset:(ALAsset *)asset
-{
-    BOOL seleted = [self seletedAssets:asset];
-    [self.imageFlowCollectionView reloadData];
-    return seleted;
-}
-
-- (void)photoBrowser:(DNPhotoBrowser *)photoBrowser deseletedAsset:(ALAsset *)asset
-{
-    [self deseletedAssets:asset];
-    [self.imageFlowCollectionView reloadData];
-}
-
-- (void)photoBrowser:(DNPhotoBrowser *)photoBrowser seleteFullImage:(BOOL)fullImage
-{
-    self.isFullImage = fullImage;
-}
+//- (void)sendImagesFromPhotobrowser:(DNPhotoBrowser *)photoBrowser currentAsset:(ALAsset *)asset
+//{
+//    if (self.selectedAssetsArray.count <= 0) {
+////        [self seletedAssets:asset];
+//        [self.imageFlowCollectionView reloadData];
+//    }
+//    [self sendImages];
+//}
+//
+//- (NSUInteger)seletedPhotosNumberInPhotoBrowser:(DNPhotoBrowser *)photoBrowser
+//{
+//    return self.selectedAssetsArray.count;
+//}
+//
+//- (BOOL)photoBrowser:(DNPhotoBrowser *)photoBrowser currentPhotoAssetIsSeleted:(ALAsset *)asset{
+//    return [self assetIsSelected:asset];
+//}
+//
+//- (BOOL)photoBrowser:(DNPhotoBrowser *)photoBrowser seletedAsset:(ALAsset *)asset
+//{
+//    BOOL seleted = [self seletedAssets:asset];
+//    [self.imageFlowCollectionView reloadData];
+//    return seleted;
+//}
+//
+//- (void)photoBrowser:(DNPhotoBrowser *)photoBrowser deseletedAsset:(ALAsset *)asset
+//{
+//    [self deseletedAssets:asset];
+//    [self.imageFlowCollectionView reloadData];
+//}
+//
+//- (void)photoBrowser:(DNPhotoBrowser *)photoBrowser seleteFullImage:(BOOL)fullImage
+//{
+//    self.isFullImage = fullImage;
+//}
 @end

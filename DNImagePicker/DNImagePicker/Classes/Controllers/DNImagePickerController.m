@@ -6,7 +6,6 @@
 //  Copyright (c) 2015年 Dennis. All rights reserved.
 //
 
-#import "DNImagePicker.h"
 #import "DNImagePickerController.h"
 #import "DNAlbumTableViewController.h"
 #import "DNImageFlowViewController.h"

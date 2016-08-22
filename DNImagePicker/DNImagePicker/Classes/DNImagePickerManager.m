@@ -7,7 +7,6 @@
 //
 
 #import "DNImagePickerManager.h"
-#import "DNImagePicker.h"
 #import "DNAlbum.h"
 
 static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePickerStoredGroup";
@@ -131,6 +130,38 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
                                                     }
                                                     handler(imageSize, string);
                                                 }];
+}
+
+
++ (PHImageRequestID)fetchImageWithAsset:(PHAsset *)asset
+                             targetSize:(CGSize)targetSize
+                      imageResutHandler:(void (^)(UIImage *))handler {
+    return  [self fetchImageWithAsset:asset targetSize:targetSize needHighQuality:NO imageResutHandler:handler];
+}
+
++ (PHImageRequestID)fetchImageWithAsset:(nullable PHAsset *)asset
+                             targetSize:(CGSize)targetSize
+                        needHighQuality:(BOOL)isHighQuality
+                      imageResutHandler:(void (^ _Nullable)( UIImage * _Nullable image))handler {
+    if (!asset) {
+        return PHInvalidImageRequestID;
+    }
+    
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+    if (isHighQuality) {
+        options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+    } else {
+        options.resizeMode = PHImageRequestOptionsResizeModeExact;
+    }
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    CGSize size = CGSizeMake(targetSize.width * scale, targetSize.height * scale);
+    return [[PHCachingImageManager defaultManager] requestImageForAsset:asset
+                                                             targetSize:size
+                                                            contentMode:PHImageContentModeAspectFill
+                                                                options:options
+                                                          resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                                                              handler(result);
+                                                          }];
 }
 
 #endif

@@ -6,9 +6,10 @@
 //  Copyright © 2016年 Dennis. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-@class PHAsset;
-@class PHFetchResult;
+
+#import <UIKit/UIKit.h>
+#import "DNImagePicker.h"
+
 @class DNAlbum;
 
 @interface DNImagePickerManager : NSObject
@@ -38,11 +39,19 @@
  *
  *  @return `PHAsset` array in collection
  */
-- (nonnull NSArray *)fetchImageAssetsViaCollectionResults:(nullable PHFetchResult *)results;
-
+- (nonnull NSArray *)fetchImageAssetsViaCollectionResults:(nullable PHFetchResult *)results;DNImagePickerManager
 
 - (void)fetchImageSizeWithAsset:(nullable PHAsset *)asset
          imageSizeResultHandler:(void ( ^ _Nonnull)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler;
+
++ (PHImageRequestID)fetchImageWithAsset:(nullable PHAsset *)asset
+                             targetSize:(CGSize)targetSize
+                        needHighQuality:(BOOL)isHighQuality
+                      imageResutHandler:(void (^ _Nullable)( UIImage * _Nullable image))handler;
+
++ (PHImageRequestID)fetchImageWithAsset:(nullable PHAsset *)asset
+                             targetSize:(CGSize)targetSize
+                      imageResutHandler:(void (^ _Nullable)(UIImage * _Nullable))handler;
 
 
 // storeage

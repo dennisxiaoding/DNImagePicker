@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DNImagePicker.h"
+
 
 @class ALAssetsLibrary;
 @class ALAssetsFilter;
@@ -17,11 +17,6 @@ typedef NS_ENUM(NSUInteger, DNImagePickerFilterType) {
     DNImagePickerFilterTypePhotos,
     DNImagePickerFilterTypeVideos,
 };
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-FOUNDATION_EXTERN ALAssetsFilter * ALAssetsFilterFromDNImagePickerControllerFilterType(DNImagePickerFilterType type);
-#pragma clang diagnostic pop
 
 
 
@@ -48,6 +43,6 @@ FOUNDATION_EXTERN ALAssetsFilter * ALAssetsFilterFromDNImagePickerControllerFilt
 @property (nonatomic, assign) DNImagePickerFilterType filterType;
 @property (nonatomic, weak) id<DNImagePickerControllerDelegate> imagePickerDelegate;
 
-@property (nonatomic, readonly) ALAssetsLibrary *assetsLibrary;
+//@property (nonatomic, readonly) ALAssetsLibrary *assetsLibrary;
 
 @end

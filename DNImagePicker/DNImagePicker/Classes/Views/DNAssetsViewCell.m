@@ -18,8 +18,7 @@
 
 @implementation DNAssetsViewCell
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         [self setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -31,13 +30,12 @@
     return self;
 }
 
-- (void)addContentConstraint
-{
+- (void)addContentConstraint {
     NSLayoutConstraint *imageConstraintsBottom = [NSLayoutConstraint
                                                   constraintWithItem:self.imageView
                                                   attribute:NSLayoutAttributeBottom 
                                                   relatedBy:NSLayoutRelationEqual
-                                                  toItem:self
+                                                  toItem:self.contentView
                                                   attribute:NSLayoutAttributeBottom
                                                   multiplier:1.0f
                                                   constant:0];
@@ -46,7 +44,7 @@
                                                    constraintWithItem:self.imageView
                                                    attribute:NSLayoutAttributeLeading
                                                    relatedBy:NSLayoutRelationEqual
-                                                   toItem:self
+                                                   toItem:self.contentView
                                                    attribute:NSLayoutAttributeLeading
                                                    multiplier:1.0
                                                    constant:0];
@@ -55,7 +53,7 @@
                                               constraintWithItem:self.imageView
                                               attribute:NSLayoutAttributeTop
                                               relatedBy:NSLayoutRelationEqual
-                                              toItem:self
+                                              toItem:self.contentView
                                               attribute:NSLayoutAttributeTop
                                               multiplier:1.0
                                               constant:0];
@@ -64,7 +62,7 @@
                                                        constraintWithItem:self.imageView
                                                        attribute:NSLayoutAttributeTrailing
                                                        relatedBy:NSLayoutRelationEqual
-                                                       toItem:self
+                                                       toItem:self.contentView
                                                        attribute:NSLayoutAttributeTrailing
                                                        multiplier:1.0
                                                        constant:0];
@@ -75,7 +73,7 @@
                                                constraintWithItem:self.checkButton
                                                attribute:NSLayoutAttributeTrailing
                                                relatedBy:NSLayoutRelationEqual
-                                               toItem:self
+                                               toItem:self.contentView
                                                attribute:NSLayoutAttributeTrailing
                                                multiplier:1.0f
                                                constant:0];
@@ -84,7 +82,7 @@
                                              constraintWithItem:self.checkButton
                                              attribute:NSLayoutAttributeTop
                                              relatedBy:NSLayoutRelationEqual
-                                             toItem:self
+                                             toItem:self.contentView
                                              attribute:NSLayoutAttributeTop
                                              multiplier:1.0f
                                              constant:0];
@@ -107,7 +105,7 @@
                                                      multiplier:1.0
                                                      constant:0];
     
-    [self addConstraints:@[checkConstraitRight,checkConstraitTop,chekBtViewConsraintWidth,chekBtViewConsraintHeight]];
+    [self.contentView addConstraints:@[checkConstraitRight,checkConstraitTop,chekBtViewConsraintWidth,chekBtViewConsraintHeight]];
     
     NSDictionary *checkImageViewMetric = @{@"sideLength":@25};
     NSString *checkImageViewVFLH = @"H:[_checkImageView(sideLength)]-3-|";
@@ -115,8 +113,8 @@
     NSArray *checkImageConstraintsH = [NSLayoutConstraint constraintsWithVisualFormat:checkImageViewVFLH options:0 metrics:checkImageViewMetric views:NSDictionaryOfVariableBindings(_checkImageView)];
     NSArray *checkImageConstraintsV = [NSLayoutConstraint constraintsWithVisualFormat:checkImageVIewVFLV options:0 metrics:checkImageViewMetric views:NSDictionaryOfVariableBindings(_checkImageView)];
 
-    [self addConstraints:checkImageConstraintsH];
-    [self addConstraints:checkImageConstraintsV];
+    [self.contentView addConstraints:checkImageConstraintsH];
+    [self.contentView addConstraints:checkImageConstraintsV];
 }
 
 
@@ -125,15 +123,13 @@
     self.asset = asset;
 }
 
-- (void)setIsSelected:(BOOL)isSelected
-{
+- (void)setIsSelected:(BOOL)isSelected {
     _isSelected = isSelected;
     self.checkButton.selected = _isSelected;
     [self updateCheckImageView];
 }
 
-- (void)updateCheckImageView
-{
+- (void)updateCheckImageView {
     if (self.checkButton.selected) {
         self.checkImageView.image = [UIImage imageNamed:@"photo_check_selected"];
         
@@ -163,8 +159,7 @@
     }
 }
 
-- (void)prepareForReuse
-{
+- (void)prepareForReuse {
     _asset = nil;
     _isSelected = NO;
     _delegate = nil;
@@ -172,35 +167,32 @@
 }
 
 #pragma mark - Getter
-- (UIImageView *)imageView
-{
-    if (_imageView == nil) {
+- (UIImageView *)imageView {
+    if (!_imageView) {
         _imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
         [_imageView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self addSubview:_imageView];
+        [self.contentView addSubview:_imageView];
     }
     return _imageView;
 }
 
-- (UIButton *)checkButton
-{
-    if (_checkButton == nil) {
+- (UIButton *)checkButton {
+    if (!_checkButton) {
         _checkButton = [UIButton buttonWithType:UIButtonTypeCustom];
 
         [_checkButton addTarget:self action:@selector(checkButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [_checkButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self addSubview:_checkButton];
+        [self.contentView addSubview:_checkButton];
     }
     return _checkButton;
 }
 
-- (UIImageView *)checkImageView
-{
-    if (_checkImageView == nil) {
+- (UIImageView *)checkImageView {
+    if (!_checkImageView) {
         _checkImageView = [UIImageView new];
         _checkImageView.contentMode = UIViewContentModeScaleAspectFit;
         [_checkImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self addSubview:_checkImageView];
+        [self.contentView addSubview:_checkImageView];
     }
     return _checkImageView;
 }

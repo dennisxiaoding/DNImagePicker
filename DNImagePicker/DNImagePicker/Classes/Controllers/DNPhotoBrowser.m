@@ -13,6 +13,14 @@
 #import "DNFullImageButton.h"
 #import "DNBrowserCell.h"
 #import "DNAsset.h"
+#define iOS8_OR_LATER   ( [[[UIDevice currentDevice] systemVersion] compare:@"8.0"] != NSOrderedAscending)
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
+
+#define DNIMAGEPICKER_UIBarMetrics iOS8_OR_LATER?UIBarMetricsCompact:UIBarMetricsLandscapePhone
+
 
 @interface DNPhotoBrowser () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 {
@@ -56,10 +64,7 @@
         _fullImage = isFullImage;
     }
     return self;
-}
-- (void)dealloc {
-    NSLog(@"____");
-}
+} 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -189,7 +194,11 @@
     navBar.barStyle = UIBarStyleBlackTranslucent;
     if ([[UINavigationBar class] respondsToSelector:@selector(appearance)]) {
         [navBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
-        [navBar setBackgroundImage:nil forBarMetrics:UIBarMetricsLandscapePhone];
+        if (iOS8_OR_LATER) {
+            [navBar setBackgroundImage:nil forBarMetrics:UIBarMetricsCompact];;
+        } else {
+            [navBar setBackgroundImage:nil forBarMetrics:DNIMAGEPICKER_UIBarMetrics];
+        }
     }
 }
 
@@ -204,7 +213,11 @@
     _previousNavBarStyle = self.navigationController.navigationBar.barStyle;
     if ([[UINavigationBar class] respondsToSelector:@selector(appearance)]) {
         _previousNavigationBarBackgroundImageDefault = [self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsDefault];
-        _previousNavigationBarBackgroundImageLandscapePhone = [self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsLandscapePhone];
+        if (iOS8_OR_LATER) {
+            _previousNavigationBarBackgroundImageLandscapePhone = [self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsCompact];
+        } else {
+            _previousNavigationBarBackgroundImageLandscapePhone = [self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsLandscapePhone];
+        }
     }
 }
 
@@ -220,7 +233,11 @@
         navBar.barStyle = _previousNavBarStyle;
         if ([[UINavigationBar class] respondsToSelector:@selector(appearance)]) {
             [navBar setBackgroundImage:_previousNavigationBarBackgroundImageDefault forBarMetrics:UIBarMetricsDefault];
-            [navBar setBackgroundImage:_previousNavigationBarBackgroundImageLandscapePhone forBarMetrics:UIBarMetricsLandscapePhone];
+            if (iOS8_OR_LATER) {
+               [navBar setBackgroundImage:_previousNavigationBarBackgroundImageLandscapePhone forBarMetrics:UIBarMetricsCompact];
+            } else {
+               [navBar setBackgroundImage:_previousNavigationBarBackgroundImageLandscapePhone forBarMetrics:UIBarMetricsLandscapePhone];
+            }
         }
         // Restore back button if we need to
         if (_previousViewControllerBackButton) {
@@ -315,7 +332,11 @@
         _toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - height, self.view.bounds.size.width, height)];
         if ([[UIToolbar class] respondsToSelector:@selector(appearance)]) {
             [_toolbar setBackgroundImage:nil forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
-            [_toolbar setBackgroundImage:nil forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsLandscapePhone];
+            if (iOS8_OR_LATER) {
+                [_toolbar setBackgroundImage:nil forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsCompact];
+            } else {
+                [_toolbar setBackgroundImage:nil forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsLandscapePhone];
+            }
         }
         _toolbar.barStyle = UIBarStyleBlackTranslucent;
         _toolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
@@ -450,3 +471,4 @@
 - (void)hideControls { [self setControlsHidden:YES animated:YES]; }
 - (void)toggleControls { [self setControlsHidden:![self areControlsHidden] animated:YES]; }
 @end
+#pragma clang diagnostic pop

@@ -19,8 +19,6 @@
 #import "DNAlbum.h"
 #import "DNAsset.h"
 
-
-
 static NSUInteger const kDNImageFlowMaxSeletedNumber = 9;
 
 @interface DNImageFlowViewController () <UICollectionViewDataSource, UICollectionViewDelegate, DNAssetsViewCellDelegate, DNPhotoBrowserDelegate>
@@ -45,8 +43,8 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 - (instancetype)initWithAlbumIdentifier:(NSString *)albumIdentifier {
     self = [super init];
     if (self) {
-        _assetsArray = [NSMutableArray new];
-        _selectedAssetsArray = [NSMutableArray new];
+        _assetsArray = [NSMutableArray array];
+        _selectedAssetsArray = [NSMutableArray array];
         _albumIdentifier = albumIdentifier;
     }
     return self;
@@ -55,8 +53,8 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 - (instancetype)initWithAblum:(DNAlbum *)album {
     self = [super init];
     if (self) {
-        _assetsArray = [NSMutableArray new];
-        _selectedAssetsArray = [NSMutableArray new];
+        _assetsArray = [NSMutableArray array];
+        _selectedAssetsArray = [NSMutableArray array];
         _album = album;
 
     }
@@ -128,15 +126,12 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 }
 
 #pragma mark - helpmethods
-- (void)scrollerToBottom:(BOOL)animated
-{
+- (void)scrollerToBottom:(BOOL)animated {
     NSInteger rows = [self.imageFlowCollectionView numberOfItemsInSection:0] - 1;
     [self.imageFlowCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:rows inSection:0] atScrollPosition:UICollectionViewScrollPositionBottom animated:animated];
 }
 
-- (DNImagePickerController *)dnImagePickerController
-{
-    
+- (DNImagePickerController *)dnImagePickerController {
     if (nil == self.navigationController
         ||
         NO == [self.navigationController isKindOfClass:[DNImagePickerController class]])
@@ -146,45 +141,14 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     return (DNImagePickerController *)self.navigationController;
 }
 
-- (BOOL)assetIsSelected:(DNAsset *)targetAsset
-{
-//    for (ALAsset *asset in self.selectedAssetsArray) {
-//        NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
-//        NSURL *targetAssetURL = [targetAsset valueForProperty:ALAssetPropertyAssetURL];
-//        if ([assetURL isEqualToOther:targetAssetURL]) {
-//            return YES;
-//        }
-//    }
-    return NO;
-}
-
-- (void)removeAssetsObject:(DNAsset *)asset
-{
-    if ([self assetIsSelected:asset]) {
+- (void)removeAssetsObject:(DNAsset *)asset {
+    if ([self.selectedAssetsArray containsObject:asset]) {
         [self.selectedAssetsArray removeObject:asset];
     }
 }
 
-- (void)addAssetsObject:(DNAsset *)asset
-{
+- (void)addAssetsObject:(DNAsset *)asset {
     [self.selectedAssetsArray addObject:asset];
-}
-
-- (DNAsset *)dnassetFromALAsset:(DNAsset *)ALAsset
-{
-    DNAsset *asset = [[DNAsset alloc] init];
-//    asset.url = [ALAsset valueForProperty:ALAssetPropertyAssetURL];
-    return asset;
-}
-
-- (NSArray *)seletedDNAssetArray
-{
-    NSMutableArray *seletedArray = [NSMutableArray new];
-//    for (ALAsset *asset in self.selectedAssetsArray) {
-//        DNAsset *dnasset = [self dnassetFromALAsset:asset];
-//        [seletedArray addObject:dnasset];
-//    }
-    return seletedArray;
 }
 
 #pragma mark - priviate methods
@@ -194,12 +158,13 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     
     DNImagePickerController *imagePicker = [self dnImagePickerController];
     if (imagePicker && [imagePicker.imagePickerDelegate respondsToSelector:@selector(dnImagePickerController:sendImages:isFullImage:)]) {
-        [imagePicker.imagePickerDelegate dnImagePickerController:imagePicker sendImages:[self seletedDNAssetArray] isFullImage:self.isFullImage];
+        [imagePicker.imagePickerDelegate dnImagePickerController:imagePicker
+                                                      sendImages:self.selectedAssetsArray
+                                                     isFullImage:self.isFullImage];
     }
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];}
 
-- (void)browserPhotoAsstes:(NSArray *)assets pageIndex:(NSInteger)page
-{
+- (void)browserPhotoAsstes:(NSArray *)assets pageIndex:(NSInteger)page {
     DNPhotoBrowser *browser = [[DNPhotoBrowser alloc] initWithPhotos:assets
                                                         currentIndex:page
                                                            fullImage:self.isFullImage];
@@ -208,44 +173,37 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     [self.navigationController pushViewController:browser animated:YES];
 }
 
-//- (BOOL)seletedAssets:(ALAsset *)asset
-//{
-//    if ([self assetIsSelected:asset]) {
-//        return NO;
-//    }
-//    UIBarButtonItem *firstItem = self.toolbarItems.firstObject;
-//    firstItem.enabled = YES;
-//    if (self.selectedAssetsArray.count >= kDNImageFlowMaxSeletedNumber) {
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"alertTitle", @"DNImagePicker", nil) message:NSLocalizedStringFromTable(@"alertContent", @"DNImagePicker", nil) delegate:self cancelButtonTitle:NSLocalizedStringFromTable(@"alertButton", @"DNImagePicker", nil) otherButtonTitles:nil, nil];
-//        [alert show];
-//        
-//        return NO;
-//    }else
-//    {
-//        [self addAssetsObject:asset];
-//        self.sendButton.badgeValue = [NSString stringWithFormat:@"%@",@(self.selectedAssetsArray.count)];
-//        return YES;
-//    }
-//}
+- (BOOL)seletedAssets:(DNAsset *)asset {
+    if ([self.selectedAssetsArray containsObject:asset]) {
+        return NO;
+    }
+    UIBarButtonItem *firstItem = self.toolbarItems.firstObject;
+    firstItem.enabled = YES;
+    if (self.selectedAssetsArray.count >= kDNImageFlowMaxSeletedNumber) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedStringFromTable(@"alertTitle", @"DNImagePicker", nil)
+                                                        message:NSLocalizedStringFromTable(@"alertContent", @"DNImagePicker", nil)
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedStringFromTable(@"alertButton", @"DNImagePicker", nil)
+                                              otherButtonTitles:nil, nil];
+        [alert show];
+        return NO;
+    } else {
+        [self addAssetsObject:asset];
+        self.sendButton.badgeValue = [NSString stringWithFormat:@"%@",@(self.selectedAssetsArray.count)];
+        return YES;
+    }
+}
 
-//- (void)deseletedAssets:(ALAsset *)asset
-//{
-//    [self removeAssetsObject:asset];
-//    self.sendButton.badgeValue = [NSString stringWithFormat:@"%@",@(self.selectedAssetsArray.count)];
-//    if (self.selectedAssetsArray.count < 1) {
-//        UIBarButtonItem *firstItem = self.toolbarItems.firstObject;
-//        firstItem.enabled = NO;
-//    }
-//}
+- (void)deseletedAssets:(DNAsset *)asset {
+    [self removeAssetsObject:asset];
+    self.sendButton.badgeValue = [NSString stringWithFormat:@"%@",@(self.selectedAssetsArray.count)];
+    if (self.selectedAssetsArray.count < 1) {
+        UIBarButtonItem *firstItem = self.toolbarItems.firstObject;
+        firstItem.enabled = NO;
+    }
+}
 
 #pragma mark - getter/setter
-//- (ALAssetsLibrary *)assetsLibrary
-//{
-//    if (nil == _assetsLibrary) {
-//        _assetsLibrary = [[ALAssetsLibrary alloc] init];
-//    }
-//    return _assetsLibrary;
-//}
 
 - (UICollectionView *)imageFlowCollectionView {
     if (!_imageFlowCollectionView) {
@@ -267,8 +225,7 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     return _imageFlowCollectionView;
 }
 
-- (DNSendButton *)sendButton
-{
+- (DNSendButton *)sendButton {
     if (nil == _sendButton) {
         _sendButton = [[DNSendButton alloc] initWithFrame:CGRectZero];
         [_sendButton addTaget:self action:@selector(sendButtonAction:)];
@@ -281,20 +238,17 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)sendButtonAction:(id)sender
-{
+- (void)sendButtonAction:(id)sender {
     if (self.selectedAssetsArray.count > 0) {
         [self sendImages];
     }
 }
 
-- (void)previewAction
-{
+- (void)previewAction {
     [self browserPhotoAsstes:self.selectedAssetsArray pageIndex:0];
 }
 
-- (void)cancelAction
-{
+- (void)cancelAction {
     DNImagePickerController *navController = [self dnImagePickerController];
     if (navController && [navController.imagePickerDelegate respondsToSelector:@selector(dnImagePickerControllerDidCancel:)]) {
         [navController.imagePickerDelegate dnImagePickerControllerDidCancel:navController];
@@ -302,28 +256,27 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 }
 
 #pragma mark - DNAssetsViewCellDelegate
-//- (void)didSelectItemAssetsViewCell:(DNAssetsViewCell *)assetsCell
-//{
-//    assetsCell.isSelected = [self seletedAssets:assetsCell.asset];
-//}
-//
-//- (void)didDeselectItemAssetsViewCell:(DNAssetsViewCell *)assetsCell
-//{
-//    assetsCell.isSelected = NO;
-//    [self deseletedAssets:assetsCell.asset];
-//}
+- (void)didSelectItemAssetsViewCell:(DNAssetsViewCell *)assetsCell {
+    assetsCell.isSelected = [self seletedAssets:assetsCell.asset];
+}
+
+- (void)didDeselectItemAssetsViewCell:(DNAssetsViewCell *)assetsCell {
+    assetsCell.isSelected = NO;
+    [self deseletedAssets:assetsCell.asset];
+}
 
 #pragma mark - UICollectionView delegate and Datasource
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
     return self.assetsArray.count;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     DNAssetsViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:dnAssetsViewCellReuseIdentifier forIndexPath:indexPath];
     DNAsset *asset = self.assetsArray[indexPath.row];
     cell.delegate = self;
+    [cell fillWithAsset:asset isSelected:[self.selectedAssetsArray containsObject:asset]];
     CGFloat kThumbSizeLength =  ceil(([[UIScreen mainScreen] bounds].size.width -10)/4);
     [asset fetchImageWithSize:CGSizeMake(kThumbSizeLength, kThumbSizeLength)
             imageResutHandler:^(UIImage * _Nullable image) {
@@ -336,58 +289,55 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     return cell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)collectionView:(UICollectionView *)collectionView
+didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [self browserPhotoAsstes:self.assetsArray pageIndex:indexPath.row];
 }
 
 #define kSizeThumbnailCollectionView  ([UIScreen mainScreen].bounds.size.width-10)/4
 #pragma mark - UICollectionViewDelegateFlowLayout
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGSize size = CGSizeMake(kSizeThumbnailCollectionView, kSizeThumbnailCollectionView);
     return size;
 }
 
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
+                        layout:(UICollectionViewLayout*)collectionViewLayout
+        insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(2, 2, 2, 2);
 }
 
 #pragma mark - DNPhotoBrowserDelegate
-//- (void)sendImagesFromPhotobrowser:(DNPhotoBrowser *)photoBrowser currentAsset:(ALAsset *)asset
-//{
-//    if (self.selectedAssetsArray.count <= 0) {
-////        [self seletedAssets:asset];
-//        [self.imageFlowCollectionView reloadData];
-//    }
-//    [self sendImages];
-//}
-//
-//- (NSUInteger)seletedPhotosNumberInPhotoBrowser:(DNPhotoBrowser *)photoBrowser
-//{
-//    return self.selectedAssetsArray.count;
-//}
-//
-//- (BOOL)photoBrowser:(DNPhotoBrowser *)photoBrowser currentPhotoAssetIsSeleted:(ALAsset *)asset{
-//    return [self assetIsSelected:asset];
-//}
-//
-//- (BOOL)photoBrowser:(DNPhotoBrowser *)photoBrowser seletedAsset:(ALAsset *)asset
-//{
-//    BOOL seleted = [self seletedAssets:asset];
-//    [self.imageFlowCollectionView reloadData];
-//    return seleted;
-//}
-//
-//- (void)photoBrowser:(DNPhotoBrowser *)photoBrowser deseletedAsset:(ALAsset *)asset
-//{
-//    [self deseletedAssets:asset];
-//    [self.imageFlowCollectionView reloadData];
-//}
-//
-//- (void)photoBrowser:(DNPhotoBrowser *)photoBrowser seleteFullImage:(BOOL)fullImage
-//{
-//    self.isFullImage = fullImage;
-//}
+- (void)sendImagesFromPhotobrowser:(DNPhotoBrowser *)photoBrowser currentAsset:(DNAsset *)asset {
+    if (self.selectedAssetsArray.count <= 0) {
+        [self seletedAssets:asset];
+        [self.imageFlowCollectionView reloadData];
+    }
+    [self sendImages];
+}
+
+- (NSUInteger)seletedPhotosNumberInPhotoBrowser:(DNPhotoBrowser *)photoBrowser {
+    return self.selectedAssetsArray.count;
+}
+
+- (BOOL)photoBrowser:(DNPhotoBrowser *)photoBrowser currentPhotoAssetIsSeleted:(DNAsset *)asset{
+    return [self.selectedAssetsArray containsObject:asset];
+}
+
+- (BOOL)photoBrowser:(DNPhotoBrowser *)photoBrowser seletedAsset:(DNAsset *)asset {
+    BOOL seleted = [self seletedAssets:asset];
+    [self.imageFlowCollectionView reloadData];
+    return seleted;
+}
+
+- (void)photoBrowser:(DNPhotoBrowser *)photoBrowser deseletedAsset:(DNAsset *)asset {
+    [self deseletedAssets:asset];
+    [self.imageFlowCollectionView reloadData];
+}
+
+- (void)photoBrowser:(DNPhotoBrowser *)photoBrowser seleteFullImage:(BOOL)fullImage {
+    self.isFullImage = fullImage;
+}
 @end

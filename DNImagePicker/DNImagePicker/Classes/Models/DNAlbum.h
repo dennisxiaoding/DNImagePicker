@@ -7,22 +7,36 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DNImagePicker.h"
 
-@class PHFetchResult;
+NS_ASSUME_NONNULL_BEGIN
+
 @interface DNAlbum : NSObject
 
 #if DNImagePikerPhotosAvaiable == 1
+
++ ( DNAlbum * _Nonnull )albumWithAssetCollection:(PHAssetCollection * _Nonnull)collection
+                                         results:(PHFetchResult * _Nonnull)results;
+
+@property (nonatomic, strong, nullable) NSDate *startDate;
+
+@property (nonatomic, copy, nullable) NSString *identifier;
+
 /*
  @note use this model to store the album's 'result, 'count, 'name, 'startDate
  to avoid request and reserve too much times.
  */
-@property (nonatomic, strong) PHFetchResult *results;
-@property (nonatomic, assign) NSInteger count;
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, strong) NSDate *startDate;
-@property (nonatomic, copy) NSString *identifier;
+@property (nonatomic, strong, nullable) PHFetchResult *results;
+
 #endif
 
+@property (nonatomic, copy, nonnull) NSString *albumTitle;
 
+@property (nonatomic, assign) NSInteger count;
+
+@property (nonatomic, readonly, nonnull) NSAttributedString *albumAttributedString;
 
 @end
+
+
+NS_ASSUME_NONNULL_END

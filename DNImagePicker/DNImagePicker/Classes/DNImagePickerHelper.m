@@ -1,17 +1,17 @@
 //
-//  DNImagePickerManager.m
+//  DNImagePickerHelper.m
 //  DNImagePicker
 //
-//  Created by Ding Xiao on 16/7/6.
+//  Created by Ding Xiao on 16/8/23.
 //  Copyright © 2016年 Dennis. All rights reserved.
 //
 
-#import "DNImagePickerManager.h"
+#import "DNImagePickerHelper.h"
 #import "DNAlbum.h"
 
 static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePickerStoredGroup";
 
-@implementation DNImagePickerManager
+@implementation DNImagePickerHelper
 
 - (DNAlbumAuthorizationStatus)authorizationStatus {
 #if DNImagePikerPhotosAvaiable == 1
@@ -22,13 +22,13 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
 }
 
 #if DNImagePikerPhotosAvaiable == 1
-+ (NSArray *)fetchAlbumList {
++ (nonnull NSArray *)fetchAlbumList {
     NSMutableArray *albums = [NSMutableArray arrayWithArray:[self fetchAlbumsResults]];
     if (!albums)
         return [NSArray array];
     
     PHFetchOptions *userAlbumsOptions = [[PHFetchOptions alloc] init];
-    userAlbumsOptions.predicate = [NSPredicate predicateWithFormat:@"mediaType",@(PHAssetMediaTypeImage)];
+    userAlbumsOptions.predicate = [NSPredicate predicateWithFormat:@"mediaType = %@",@(PHAssetMediaTypeImage)];
     userAlbumsOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
     
     NSMutableArray *list = [NSMutableArray array];
@@ -48,10 +48,10 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
             
             if (count > 0) {
                 @autoreleasepool {
-                    DNAlbum *album = [[DNAlbum alloc] init];
+                    DNAlbum *album = [DNAlbum albumWithAssetCollection:obj results:assetResults];
                     album.count = count;
                     album.results = assetResults;
-                    album.name = obj.localizedTitle;
+                    album.albumTitle = obj.localizedTitle;
                     album.startDate = obj.startDate;
                     album.identifier = obj.localIdentifier;
                     [list addObject:album];
@@ -62,9 +62,9 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
     return list;
 }
 
-+(DNAlbum *)fetchCurrentAlbum {
++ (nonnull DNAlbum *)fetchCurrentAlbum {
     DNAlbum *album = [[DNAlbum alloc] init];
-    NSString *identifier = [DNImagePickerManager albumIdentifier];
+    NSString *identifier = [DNImagePickerHelper albumIdentifier];
     if (!identifier || identifier.length <= 0 ) {
         return album;
     }
@@ -78,7 +78,7 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
     options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
     PHAssetCollection *collection = result.firstObject;
     PHFetchResult *requestReslut = [PHAsset fetchKeyAssetsInAssetCollection:collection options:options];
-    album.name = collection.localizedTitle;
+    album.albumTitle = collection.localizedTitle;
     album.results = requestReslut;
     album.count = requestReslut.count;
     album.startDate = collection.startDate;
@@ -102,7 +102,8 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
     return albumsArray;
 }
 
-- (void)fetchImageSizeWithAsset:(PHAsset *)asset imageSizeResultHandler:(void (^)(CGFloat, NSString *))handler {
+- (void)fetchImageSizeWithAsset:(nullable PHAsset *)asset
+         imageSizeResultHandler:(void ( ^ _Nonnull)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler {
     if (!asset) {
         handler(0,@"0M");
         return;
@@ -133,9 +134,9 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
 }
 
 
-+ (PHImageRequestID)fetchImageWithAsset:(PHAsset *)asset
++ (PHImageRequestID)fetchImageWithAsset:(nullable PHAsset *)asset
                              targetSize:(CGSize)targetSize
-                      imageResutHandler:(void (^)(UIImage *))handler {
+                      imageResutHandler:(void (^ _Nullable)(UIImage * _Nullable))handler {
     return  [self fetchImageWithAsset:asset targetSize:targetSize needHighQuality:NO imageResutHandler:handler];
 }
 
@@ -167,13 +168,13 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
 #endif
 
 
-+ (void)saveAblumIdentifier:(NSString *)identifier {
++ (void)saveAblumIdentifier:(nullable NSString *)identifier {
     if (identifier.length <= 0)  return;
     [[NSUserDefaults standardUserDefaults] setObject:identifier forKey:kDNImagePickerStoredGroupKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+ (NSString *)albumIdentifier {
++ (nullable NSString *)albumIdentifier {
     return [[NSUserDefaults standardUserDefaults] objectForKey:kDNImagePickerStoredGroupKey];
 }
 

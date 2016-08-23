@@ -1,22 +1,23 @@
 //
-//  DNImagePickerManager.h
+//  DNImagePickerHelper.h
 //  DNImagePicker
 //
-//  Created by Ding Xiao on 16/7/6.
+//  Created by Ding Xiao on 16/8/23.
 //  Copyright © 2016年 Dennis. All rights reserved.
 //
 
-
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import "DNImagePicker.h"
 
 @class DNAlbum;
 
-@interface DNImagePickerManager : NSObject
+NS_ASSUME_NONNULL_BEGIN
+
+@interface DNImagePickerHelper : NSObject
 
 /**
  *  Returns information about your app’s authorization for accessing the user’s Photos library.
-    The current authorization status. See `DNAlbumAuthorizationStatus`.
+ The current authorization status. See `DNAlbumAuthorizationStatus`.
  *
  *  @return The current authorization status.
  */
@@ -39,7 +40,7 @@
  *
  *  @return `PHAsset` array in collection
  */
-- (nonnull NSArray *)fetchImageAssetsViaCollectionResults:(nullable PHFetchResult *)results;DNImagePickerManager
+- (nonnull NSArray *)fetchImageAssetsViaCollectionResults:(nullable PHFetchResult *)results;
 
 - (void)fetchImageSizeWithAsset:(nullable PHAsset *)asset
          imageSizeResultHandler:(void ( ^ _Nonnull)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler;
@@ -59,4 +60,7 @@
 
 + (nullable NSString *)albumIdentifier;
 
+
 @end
+
+NS_ASSUME_NONNULL_END

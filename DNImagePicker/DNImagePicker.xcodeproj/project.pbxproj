@@ -37,8 +37,8 @@
 		9526011D1D2BBB4A00080227 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952601191D2BBB4A00080227 /* CollectionViewController.m */; };
 		9526011E1D2BBB4A00080227 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9526011B1D2BBB4A00080227 /* CollectionViewCell.m */; };
 		952601211D2BBBA500080227 /* DNAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 952601201D2BBBA500080227 /* DNAsset.m */; };
-		952601271D2CDDB200080227 /* DNImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 952601261D2CDDB200080227 /* DNImagePickerManager.m */; };
 		9526012A1D2D112500080227 /* DNAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 952601291D2D112500080227 /* DNAlbum.m */; };
+		95A147311D6C15A900E80455 /* DNImagePickerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 95A147301D6C15A900E80455 /* DNImagePickerHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,10 +98,11 @@
 		9526011F1D2BBBA500080227 /* DNAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNAsset.h; sourceTree = "<group>"; };
 		952601201D2BBBA500080227 /* DNAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNAsset.m; sourceTree = "<group>"; };
 		952601221D2CD7C600080227 /* DNImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNImagePicker.h; sourceTree = "<group>"; };
-		952601251D2CDDB200080227 /* DNImagePickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNImagePickerManager.h; sourceTree = "<group>"; };
-		952601261D2CDDB200080227 /* DNImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNImagePickerManager.m; sourceTree = "<group>"; };
 		952601281D2D112500080227 /* DNAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNAlbum.h; sourceTree = "<group>"; };
 		952601291D2D112500080227 /* DNAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNAlbum.m; sourceTree = "<group>"; };
+		95A1472F1D6C15A900E80455 /* DNImagePickerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNImagePickerHelper.h; sourceTree = "<group>"; };
+		95A147301D6C15A900E80455 /* DNImagePickerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNImagePickerHelper.m; sourceTree = "<group>"; };
+		95A147331D6C1A0300E80455 /* DNAssetProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNAssetProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +257,7 @@
 			children = (
 				9526011F1D2BBBA500080227 /* DNAsset.h */,
 				952601201D2BBBA500080227 /* DNAsset.m */,
+				95A147331D6C1A0300E80455 /* DNAssetProtocol.h */,
 				952601281D2D112500080227 /* DNAlbum.h */,
 				952601291D2D112500080227 /* DNAlbum.m */,
 			);
@@ -265,8 +267,8 @@
 		952601241D2CDBAC00080227 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				952601251D2CDDB200080227 /* DNImagePickerManager.h */,
-				952601261D2CDDB200080227 /* DNImagePickerManager.m */,
+				95A1472F1D6C15A900E80455 /* DNImagePickerHelper.h */,
+				95A147301D6C15A900E80455 /* DNImagePickerHelper.m */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -369,7 +371,7 @@
 				9526011C1D2BBB4A00080227 /* InfoViewController.m in Sources */,
 				9526011E1D2BBB4A00080227 /* CollectionViewCell.m in Sources */,
 				952600F01D2BA26400080227 /* DNUnAuthorizedTipsView.m in Sources */,
-				952601271D2CDDB200080227 /* DNImagePickerManager.m in Sources */,
+				95A147311D6C15A900E80455 /* DNImagePickerHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

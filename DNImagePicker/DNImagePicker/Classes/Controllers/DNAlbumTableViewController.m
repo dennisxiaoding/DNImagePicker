@@ -11,7 +11,7 @@
 #import "DNImageFlowViewController.h"
 #import "UIViewController+DNImagePicker.h"
 #import "DNUnAuthorizedTipsView.h"
-#import "DNImagePickerManager.h"
+#import "DNImagePickerHelper.h"
 #import "DNAlbum.h"
 
 static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewCellReuseIdentifier";
@@ -26,13 +26,13 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupView];
-    self.albumArray = [DNImagePickerManager fetchAlbumList];
+    self.albumArray = [DNImagePickerHelper fetchAlbumList];
 }
 
 #pragma mark - public
 
 - (void)reloadTableView {
-    self.albumArray = [DNImagePickerManager fetchAlbumList];
+    self.albumArray = [DNImagePickerHelper fetchAlbumList];
     [self.tableView reloadData];
 }
 
@@ -69,24 +69,6 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
     return (DNImagePickerController *)self.navigationController;
 }
 
-- (NSAttributedString *)albumAttributedStringFromlbum:(DNAlbum *)album {
-    NSString *albumTitle = album.name;
-    NSString *numberString = [NSString stringWithFormat:@"  (%@)",assetsGroup.count];
-    NSString *cellTitleString = [NSString stringWithFormat:@"%@%@",albumTitle,numberString];
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:cellTitleString];
-    [attributedString setAttributes: @{
-                                       NSFontAttributeName : [UIFont systemFontOfSize:16.0f],
-                                       NSForegroundColorAttributeName : [UIColor blackColor],
-                                       }
-                              range:NSMakeRange(0, albumTitle.length)];
-    [attributedString setAttributes:@{
-                                      NSFontAttributeName : [UIFont systemFontOfSize:16.0f],
-                                      NSForegroundColorAttributeName : [UIColor grayColor],
-                                      } range:NSMakeRange(albumTitle.length, numberString.length)];
-    return attributedString;
-    
-}
-
 - (void)showUnAuthorizedTipsView {
     DNUnAuthorizedTipsView *view  = [[DNUnAuthorizedTipsView alloc] initWithFrame:self.tableView.frame];
     self.tableView.backgroundView = view;
@@ -101,10 +83,10 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:dnalbumTableViewCellReuseIdentifier forIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     DNAlbum *album = self.albumArray[indexPath.row];
-    cell.textLabel.attributedText = [self albumAttributedStringFromlbum:album];
+    cell.textLabel.attributedText = album.albumAttributedString;
     
     __weak UITableViewCell *blockCell = cell;
-    [DNImagePickerManager fetchImageWithAsset:album.results.lastObject
+    [DNImagePickerHelper fetchImageWithAsset:album.results.lastObject
                                    targetSize:CGSizeMake(60, 60)
                             imageResutHandler:^(UIImage * _Nullable postImage) {
                                 blockCell.imageView.image = postImage;

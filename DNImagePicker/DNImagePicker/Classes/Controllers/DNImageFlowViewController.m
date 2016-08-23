@@ -22,7 +22,8 @@ static NSUInteger const kDNImageFlowMaxSeletedNumber = 9;
 
 @interface DNImageFlowViewController () <UICollectionViewDataSource, UICollectionViewDelegate, DNAssetsViewCellDelegate, DNPhotoBrowserDelegate>
 
-@property (nonatomic, strong) NSString *albumIdentifier;
+@property (nonatomic, strong) DNAlbum *album;
+@property (nonatomic, copy) NSString *albumIdentifier;
 
 @property (nonatomic, strong) UICollectionView *imageFlowCollectionView;
 @property (nonatomic, strong) DNSendButton *sendButton;
@@ -38,13 +39,23 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 
 @implementation DNImageFlowViewController
 
-- (instancetype)initWithAlbumIdentifier:(NSString *)albumIdentifier;
-{
+- (instancetype)initWithAlbumIdentifier:(NSString *)albumIdentifier {
     self = [super init];
     if (self) {
         _assetsArray = [NSMutableArray new];
         _selectedAssetsArray = [NSMutableArray new];
         _albumIdentifier = albumIdentifier;
+    }
+    return self;
+}
+
+- (instancetype)initWithAblum:(DNAlbum *)album {
+    self = [super init];
+    if (self) {
+        _assetsArray = [NSMutableArray new];
+        _selectedAssetsArray = [NSMutableArray new];
+        _album = album;
+
     }
     return self;
 }
@@ -55,22 +66,15 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     [self setupData];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.toolbarHidden = NO;
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     self.navigationController.toolbarHidden = YES;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
-#pragma mark - setup view and data
 - (void)setupData
 {
 //    [_assetsLibrary groupForURL:[NSURL URLWithString:self.albumIdentifier] resultBlock:^(ALAssetsGroup *assetsGroup){

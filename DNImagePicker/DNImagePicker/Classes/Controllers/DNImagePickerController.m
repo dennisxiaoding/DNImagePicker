@@ -9,7 +9,7 @@
 #import "DNImagePickerController.h"
 #import "DNAlbumTableViewController.h"
 #import "DNImageFlowViewController.h"
-#import "DNImagePickerManager.h"
+#import "DNImagePickerHelper.h"
 
 NSString *kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePickerStoredGroup";
 
@@ -37,22 +37,22 @@ NSString *kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePickerStoredGroup"
     if (propwetyID.length <= 0) {
         [self showAlbumList];
     } else {
-        ALAssetsLibrary *assetsLibiary = [[ALAssetsLibrary alloc] init];
-        [assetsLibiary enumerateGroupsWithTypes:ALAssetsGroupAll
-                                     usingBlock:^(ALAssetsGroup *assetsGroup, BOOL *stop){
-             if (assetsGroup == nil && *stop ==  NO) {
-                 [self showAlbumList];
-             }
-             
-             NSString *assetsGroupID= [assetsGroup valueForProperty:ALAssetsGroupPropertyPersistentID];
-             if ([assetsGroupID isEqualToString:propwetyID]) {
-                 *stop = YES;
-                 [self showImageFlow];
-             }
-         }
-         failureBlock:^(NSError *error){
-             [self showAlbumList];
-         }];
+//        ALAssetsLibrary *assetsLibiary = [[ALAssetsLibrary alloc] init];
+//        [assetsLibiary enumerateGroupsWithTypes:ALAssetsGroupAll
+//                                     usingBlock:^(ALAssetsGroup *assetsGroup, BOOL *stop){
+//             if (assetsGroup == nil && *stop ==  NO) {
+//                 [self showAlbumList];
+//             }
+//             
+//             NSString *assetsGroupID= [assetsGroup valueForProperty:ALAssetsGroupPropertyPersistentID];
+//             if ([assetsGroupID isEqualToString:propwetyID]) {
+//                 *stop = YES;
+//                 [self showImageFlow];
+//             }
+//         }
+//         failureBlock:^(NSError *error){
+//             [self showAlbumList];
+//         }];
     }
 }
 
@@ -68,7 +68,7 @@ NSString *kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePickerStoredGroup"
 }
 
 - (void)showImageFlow {
-    NSString *albumIdentifier = [DNImagePickerManager albumIdentifier];
+    NSString *albumIdentifier = [DNImagePickerHelper albumIdentifier];
     DNAlbumTableViewController *albumTableViewController = [[DNAlbumTableViewController alloc] init];
     DNImageFlowViewController *imageFlowController = [[DNImageFlowViewController alloc] initWithAlbumIdentifier:albumIdentifier];
     [self setViewControllers:@[albumTableViewController,imageFlowController]];

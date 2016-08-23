@@ -188,11 +188,9 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 }
 
 #pragma mark - priviate methods
-- (void)sendImages
-{
-//    NSString *properyID = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyPersistentID];
-//    [[NSUserDefaults standardUserDefaults] setObject:properyID forKey:kDNImagePickerStoredGroupKey];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
+- (void)sendImages {
+    [[NSUserDefaults standardUserDefaults] setObject:self.album.identifier forKey:kDNImagePickerStoredGroupKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     DNImagePickerController *imagePicker = [self dnImagePickerController];
     if (imagePicker && [imagePicker.imagePickerDelegate respondsToSelector:@selector(dnImagePickerController:sendImages:isFullImage:)]) {

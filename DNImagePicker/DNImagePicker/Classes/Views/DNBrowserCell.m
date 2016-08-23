@@ -9,6 +9,8 @@
 #import "DNBrowserCell.h"
 #import "DNTapDetectingImageView.h"
 #import "DNPhotoBrowser.h"
+#import "UIView+DNImagePicker.h"
+#import "DNAsset.h"
 
 @interface DNBrowserCell () <UIScrollViewDelegate,DNTapDetectingImageViewDelegate>
 @property (nonatomic, strong) UIScrollView *zoomingScrollView;
@@ -40,8 +42,7 @@
 }
 
 #pragma mark - set
-- (void)setAsset:(ALAsset *)asset
-{
+- (void)setAsset:(DNAsset *)asset {
     if (_asset != asset) {
         _asset = asset;
         [self displayImage];
@@ -54,19 +55,24 @@
     self.zoomingScrollView.minimumZoomScale = 1;
     self.zoomingScrollView.zoomScale = 1;
     self.zoomingScrollView.contentSize = CGSizeMake(0, 0);
-    
-    UIImage *img = [UIImage imageWithCGImage:[[self.asset defaultRepresentation] fullScreenImage]];
-    self.photoImageView.image = img;
-    self.photoImageView.hidden = NO;
-    CGRect photoImageViewFrame;
-    photoImageViewFrame.origin = CGPointZero;
-    photoImageViewFrame.size = img.size;
-    self.photoImageView.frame = photoImageViewFrame;
-    self.zoomingScrollView.contentSize = photoImageViewFrame.size;
-            
-    // Set zoom to minimum zoom
-    [self setMaxMinZoomScalesForCurrentBounds];
-    [self setNeedsLayout];
+    __weak typeof(self)weakSelf = self;
+    [self.asset fetchImageWithSize:self.zoomingScrollView.size needHighQuality:YES imageResutHandler:^(UIImage * _Nullable image) {
+        if (!image) {
+            return;
+        }
+        __strong __typeof(weakSelf) strongSelf = weakSelf;
+        strongSelf.photoImageView.image = image;
+        strongSelf.photoImageView.hidden = NO;
+        CGRect photoImageViewFrame;
+        photoImageViewFrame.origin = CGPointZero;
+        photoImageViewFrame.size = image.size;
+        strongSelf.photoImageView.frame = photoImageViewFrame;
+        strongSelf.zoomingScrollView.contentSize = photoImageViewFrame.size;
+        
+        // Set zoom to minimum zoom
+        [strongSelf setMaxMinZoomScalesForCurrentBounds];
+        [strongSelf setNeedsLayout];
+    }];
 }
 
 

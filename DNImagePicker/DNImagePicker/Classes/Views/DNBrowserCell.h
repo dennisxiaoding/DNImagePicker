@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AssetsLibrary/AssetsLibrary.h>
+@class DNAsset;
 @class DNPhotoBrowser;
 
 @interface DNBrowserCell : UICollectionViewCell
 
-@property (nonatomic, weak) DNPhotoBrowser *photoBrowser;
+@property (nonatomic, weak, nullable) DNPhotoBrowser *photoBrowser;
 
-@property (nonatomic, strong) ALAsset *asset;
+@property (nonatomic, strong, nullable) DNAsset *asset;
 
 @end

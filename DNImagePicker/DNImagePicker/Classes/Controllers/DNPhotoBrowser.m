@@ -12,6 +12,8 @@
 #import "DNSendButton.h"
 #import "DNFullImageButton.h"
 #import "DNBrowserCell.h"
+#import "DNAsset.h"
+
 @interface DNPhotoBrowser () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 {
     BOOL _statusBarShouldBeHidden;
@@ -55,13 +57,15 @@
     }
     return self;
 }
+- (void)dealloc {
+    NSLog(@"____");
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupView];
     [self updateSelestedNumber];
     [self updateNavigationBarAndToolBar];
-    // Do any additional setup after loading the view.
 }
 - (void)viewWillAppear:(BOOL)animated {
     
@@ -156,17 +160,10 @@
     self.fullImageButton.selected = self.isFullImage;
     
     if (self.isFullImage) {
-        ALAsset *asset = self.photoDataSources[self.currentIndex];
-        NSInteger size = (NSUInteger)(asset.defaultRepresentation.size/1024);
-        CGFloat imageSize = (CGFloat)size;
-        NSString *imageSizeString;
-        if (size > 1024) {
-            imageSize = imageSize/1024.0f;
-            imageSizeString = [NSString stringWithFormat:@"(%.1fM)",imageSize];
-        } else {
-            imageSizeString = [NSString stringWithFormat:@"(%@K)",@(size)];
-        }
-        self.fullImageButton.text = imageSizeString;
+        DNAsset *asset = self.photoDataSources[self.currentIndex];
+        [asset fetchImageSizeWithHandler:^(CGFloat imageSize, NSString * _Nonnull sizeString) {
+            self.fullImageButton.text = sizeString;
+        }];
     }
 }
 

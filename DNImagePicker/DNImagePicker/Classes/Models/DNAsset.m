@@ -51,6 +51,13 @@
                            }];
 }
 
+- (void)fetchImageSizeWithHandler:(void (^ _Nullable)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler {
+    [DNImagePickerHelper fetchImageSizeWithAsset:self.asset
+                          imageSizeResultHandler:^(CGFloat imageSize, NSString * _Nonnull sizeString) {
+                              handler(imageSize, sizeString);
+    }];
+}
+
 
 - (BOOL)isEqual:(id)other {
     if (other == self) {

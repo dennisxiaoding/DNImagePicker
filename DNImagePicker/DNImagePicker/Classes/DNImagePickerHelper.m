@@ -188,13 +188,18 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
     }
     CGFloat scale = [[UIScreen mainScreen] scale];
     CGSize size = CGSizeMake(targetSize.width * scale, targetSize.height * scale);
-    return [[PHCachingImageManager defaultManager] requestImageForAsset:asset
+    
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(9);
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    PHImageRequestID reqestID = [[PHCachingImageManager defaultManager] requestImageForAsset:asset
                                                              targetSize:size
                                                             contentMode:PHImageContentModeAspectFill
                                                                 options:options
                                                           resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                                                               handler(result);
                                                           }];
+    dispatch_semaphore_signal(semaphore);
+    return reqestID;
 }
 
 #endif

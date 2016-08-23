@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #if DNImagePikerPhotosAvaiable == 1
 
-+ ( DNAlbum * _Nonnull )albumWithAssetCollection:(PHAssetCollection * _Nonnull)collection
++ (DNAlbum * _Nonnull)albumWithAssetCollection:(PHAssetCollection * _Nonnull)collection
                                          results:(PHFetchResult * _Nonnull)results;
 
 @property (nonatomic, strong, nullable) NSDate *startDate;

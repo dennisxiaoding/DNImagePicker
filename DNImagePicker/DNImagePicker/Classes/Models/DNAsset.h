@@ -22,11 +22,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)fetchImageWithSize:(CGSize)size
          imageResutHandler:(void (^ _Nullable)( UIImage * _Nullable image))handler;
 
+
+- (void)fetchImageSizeWithHandler:(void (^ _Nullable)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler;
+
 #if DNImagePikerPhotosAvaiable == 0
 @property (nonatomic, strong) NSURL *url;  //ALAsset url
 #else
 
-+ (DNAsset  * _Nonnull )assetWithPHAsset:(nullable PHAsset *)asset;
++ (DNAsset * _Nonnull)assetWithPHAsset:(nullable PHAsset *)asset;
 
 #endif
 

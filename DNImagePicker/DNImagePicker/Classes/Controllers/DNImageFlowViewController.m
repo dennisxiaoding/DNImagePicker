@@ -83,18 +83,7 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
         self.album = [DNImagePickerHelper fetchCurrentAlbum];
     }
     self.title = self.album.albumTitle;
-//    [_assetsLibrary groupForURL:[NSURL URLWithString:self.albumIdentifier] resultBlock:^(ALAssetsGroup *assetsGroup){
-//        self.assetsGroup = assetsGroup;
-//        if (self.assetsGroup) {
-//            self.title =[self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
-//            [self loadData];
-//        }
-//        
-//    } failureBlock:^(NSError *error){
-//        //            NSLog(@"%@",error.description);
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Tips" message:error.description delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-//        [alert show];
-//    }];
+    [self loadData];
 }
 
 
@@ -125,21 +114,17 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     [self setToolbarItems:@[item1,item2,item3,item4] animated:NO];
 }
 
-- (void)loadData
-{
-//    [self.assetsGroup setAssetsFilter:ALAssetsFilterFromDNImagePickerControllerFilterType([[self dnImagePickerController] filterType])];
-    
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        [self.assetsGroup enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-//            if (result) {
-//                [self.assetsArray insertObject:result atIndex:0];
-//            }
-//        }];
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [self.imageFlowCollectionView reloadData];
-//            [self scrollerToBottom:NO];
-//        });
-//    });
+- (void)loadData {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.assetsArray removeAllObjects];
+        [self.assetsArray addObjectsFromArray:
+         [DNImagePickerHelper fetchImageAssetsViaCollectionResults:self.album.results enumerationOptions:NSEnumerationReverse]
+         ];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.imageFlowCollectionView reloadData];
+            [self scrollerToBottom:NO];
+        });
+    });
 }
 
 #pragma mark - helpmethods
@@ -161,31 +146,31 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     return (DNImagePickerController *)self.navigationController;
 }
 
-- (BOOL)assetIsSelected:(ALAsset *)targetAsset
+- (BOOL)assetIsSelected:(DNAsset *)targetAsset
 {
-    for (ALAsset *asset in self.selectedAssetsArray) {
-        NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
-        NSURL *targetAssetURL = [targetAsset valueForProperty:ALAssetPropertyAssetURL];
-        if ([assetURL isEqualToOther:targetAssetURL]) {
-            return YES;
-        }
-    }
+//    for (ALAsset *asset in self.selectedAssetsArray) {
+//        NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
+//        NSURL *targetAssetURL = [targetAsset valueForProperty:ALAssetPropertyAssetURL];
+//        if ([assetURL isEqualToOther:targetAssetURL]) {
+//            return YES;
+//        }
+//    }
     return NO;
 }
 
-- (void)removeAssetsObject:(ALAsset *)asset
+- (void)removeAssetsObject:(DNAsset *)asset
 {
     if ([self assetIsSelected:asset]) {
         [self.selectedAssetsArray removeObject:asset];
     }
 }
 
-- (void)addAssetsObject:(ALAsset *)asset
+- (void)addAssetsObject:(DNAsset *)asset
 {
     [self.selectedAssetsArray addObject:asset];
 }
 
-- (DNAsset *)dnassetFromALAsset:(ALAsset *)ALAsset
+- (DNAsset *)dnassetFromALAsset:(DNAsset *)ALAsset
 {
     DNAsset *asset = [[DNAsset alloc] init];
 //    asset.url = [ALAsset valueForProperty:ALAssetPropertyAssetURL];
@@ -195,10 +180,10 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 - (NSArray *)seletedDNAssetArray
 {
     NSMutableArray *seletedArray = [NSMutableArray new];
-    for (ALAsset *asset in self.selectedAssetsArray) {
-        DNAsset *dnasset = [self dnassetFromALAsset:asset];
-        [seletedArray addObject:dnasset];
-    }
+//    for (ALAsset *asset in self.selectedAssetsArray) {
+//        DNAsset *dnasset = [self dnassetFromALAsset:asset];
+//        [seletedArray addObject:dnasset];
+//    }
     return seletedArray;
 }
 
@@ -264,9 +249,8 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 //    return _assetsLibrary;
 //}
 
-- (UICollectionView *)imageFlowCollectionView
-{
-    if (nil == _imageFlowCollectionView) {
+- (UICollectionView *)imageFlowCollectionView {
+    if (!_imageFlowCollectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
         layout.minimumLineSpacing = 2.0;
         layout.minimumInteritemSpacing = 2.0;
@@ -340,9 +324,17 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     DNAssetsViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:dnAssetsViewCellReuseIdentifier forIndexPath:indexPath];
-//    ALAsset *asset = self.assetsArray[indexPath.row];
-//    cell.delegate = self;
-//    [cell fillWithAsset:asset isSelected:[self assetIsSelected:asset]];
+    DNAsset *asset = self.assetsArray[indexPath.row];
+    cell.delegate = self;
+    CGFloat kThumbSizeLength =  ceil(([[UIScreen mainScreen] bounds].size.width -10)/4);
+    [asset fetchImageWithSize:CGSizeMake(kThumbSizeLength, kThumbSizeLength)
+            imageResutHandler:^(UIImage * _Nullable image) {
+                if (image) {
+                    cell.imageView.image = image;
+                } else {
+                    cell.imageView.image = [UIImage imageNamed:@"assets_placeholder_picture"];
+                }
+    }];
     return cell;
 }
 

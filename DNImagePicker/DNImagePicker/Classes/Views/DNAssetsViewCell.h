@@ -7,23 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AssetsLibrary/ALAsset.h>
+#import "DNImagePicker.h"
 
 @class DNAssetsViewCell;
+@class DNAsset;
 
 @protocol DNAssetsViewCellDelegate <NSObject>
 @optional
 
-- (void)didSelectItemAssetsViewCell:(DNAssetsViewCell *)assetsCell;
-- (void)didDeselectItemAssetsViewCell:(DNAssetsViewCell *)assetsCell;
+- (void)didSelectItemAssetsViewCell:(nonnull DNAssetsViewCell *)assetsCell;
+- (void)didDeselectItemAssetsViewCell:(nonnull DNAssetsViewCell *)assetsCell;
 @end
 
 @interface DNAssetsViewCell : UICollectionViewCell
 
-@property (nonatomic, strong) ALAsset *asset;
+@property (nonatomic, readonly, nonnull) UIImageView *imageView;
+@property (nonatomic, strong, nonnull) DNAsset *asset;
 @property (nonatomic, assign) BOOL isSelected;
-@property (nonatomic, weak) id<DNAssetsViewCellDelegate> delegate;
+@property (nonatomic, weak, nullable) id<DNAssetsViewCellDelegate> delegate;
 
-- (void)fillWithAsset:(ALAsset *)asset isSelected:(BOOL)seleted;
+- (void)fillWithAsset:(nonnull DNAsset *)asset isSelected:(BOOL)seleted;
 
 @end

@@ -11,8 +11,6 @@
 
 @class DNAlbum;
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface DNImagePickerHelper : NSObject
 
 /**
@@ -40,9 +38,21 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return `PHAsset` array in collection
  */
-- (nonnull NSArray *)fetchImageAssetsViaCollectionResults:(nullable PHFetchResult *)results;
++ (nonnull NSArray *)fetchImageAssetsViaCollectionResults:(nullable PHFetchResult *)results;
 
-- (void)fetchImageSizeWithAsset:(nullable PHAsset *)asset
+/**
+ *  fetch `PHAsset` array via CollectionResults
+ *
+ *  @param results collection fetch results
+ *  @param option  NSEnumerationOptions
+ *
+ *  @return `PHAsset` array in collection
+ */
++ (nonnull NSArray *)fetchImageAssetsViaCollectionResults:(nullable PHFetchResult *)results
+                                       enumerationOptions:(NSEnumerationOptions)option;
+
+
++ (void)fetchImageSizeWithAsset:(nullable PHAsset *)asset
          imageSizeResultHandler:(void ( ^ _Nonnull)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler;
 
 + (PHImageRequestID)fetchImageWithAsset:(nullable PHAsset *)asset
@@ -62,5 +72,3 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @end
-
-NS_ASSUME_NONNULL_END

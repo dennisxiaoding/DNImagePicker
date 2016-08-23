@@ -25,7 +25,7 @@
 
 
 #else
-+ (DNAsset  * _Nonnull )assetWithPHAsset:(nullable PHAsset *)asset {
++ (DNAsset * _Nonnull)assetWithPHAsset:(nullable PHAsset *)asset {
     DNAsset *a = [[DNAsset alloc] init];
     a.asset = asset;
     a.assetIdentifier = asset.localIdentifier;

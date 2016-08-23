@@ -8,6 +8,7 @@
 
 #import "DNImagePickerHelper.h"
 #import "DNAlbum.h"
+#import "DNAsset.h"
 
 static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePickerStoredGroup";
 
@@ -86,7 +87,7 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
     return album;
 }
 
-+ (NSArray *)fetchAlbumsResults {
++ (nonnull NSArray *)fetchAlbumsResults {
     PHFetchOptions *userAlbumsOptions = [[PHFetchOptions alloc] init];
     userAlbumsOptions.predicate = [NSPredicate predicateWithFormat:@"estimatedAssetCount > 0"];
     userAlbumsOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"startDate" ascending:NO]];
@@ -102,7 +103,38 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
     return albumsArray;
 }
 
-- (void)fetchImageSizeWithAsset:(nullable PHAsset *)asset
++ (nonnull NSArray *)fetchImageAssetsViaCollectionResults:(nullable PHFetchResult *)results {
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:results.count];
+    if (!results) {
+        return array;
+    }
+    
+    [results enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        @autoreleasepool {
+            DNAsset *asset = [DNAsset assetWithPHAsset:obj];
+            [array addObject:asset];
+        }
+    }];
+    return array;
+}
+
++ (nonnull NSArray *)fetchImageAssetsViaCollectionResults:(nullable PHFetchResult *)results
+                                       enumerationOptions:(NSEnumerationOptions)option {
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:results.count];
+    if (!results) {
+        return array;
+    }
+    
+    [results enumerateObjectsWithOptions:option usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        @autoreleasepool {
+            DNAsset *asset = [DNAsset assetWithPHAsset:obj];
+            [array addObject:asset];
+        }
+    }];
+    return array;
+}
+
++ (void)fetchImageSizeWithAsset:(nullable PHAsset *)asset
          imageSizeResultHandler:(void ( ^ _Nonnull)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler {
     if (!asset) {
         handler(0,@"0M");

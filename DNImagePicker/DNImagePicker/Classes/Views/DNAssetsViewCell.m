@@ -7,14 +7,12 @@
 //
 
 #import "DNAssetsViewCell.h"
-
+#import "DNAsset.h"
 
 @interface DNAssetsViewCell ()
-@property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) UIButton *checkButton;
-@property (nonatomic, strong) UIImageView *checkImageView;
-
-- (IBAction)checkButtonAction:(id)sender;
+@property (nonatomic, strong, nonnull) UIImageView *imageView;
+@property (nonatomic, strong, nonnull) UIButton *checkButton;
+@property (nonatomic, strong, nonnull) UIImageView *checkImageView;
 
 @end
 
@@ -122,16 +120,9 @@
 }
 
 
-- (void)fillWithAsset:(ALAsset *)asset isSelected:(BOOL)seleted
-{
+- (void)fillWithAsset:(nonnull DNAsset *)asset isSelected:(BOOL)seleted {
     self.isSelected = seleted;
     self.asset = asset;
-    CGImageRef thumbnailImageRef = [asset thumbnail];
-    if (thumbnailImageRef) {
-        self.imageView.image = [UIImage imageWithCGImage:thumbnailImageRef];
-    } else {
-        self.imageView.image = [UIImage imageNamed:@"assets_placeholder_picture"];
-    }
 }
 
 - (void)setIsSelected:(BOOL)isSelected

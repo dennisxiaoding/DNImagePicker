@@ -28,3 +28,5 @@ DerivedData
 ImagePicker.xcodeproj/project.xcworkspace/xcuserdata/Dennis.xcuserdatad/UserInterfaceState.xcuserstate
 
 .DS_Store
+
+*.xcuserstate

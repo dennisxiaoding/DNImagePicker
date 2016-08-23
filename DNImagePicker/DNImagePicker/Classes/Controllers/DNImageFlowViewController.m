@@ -10,12 +10,15 @@
 #import "DNImagePickerController.h"
 #import "DNPhotoBrowser.h"
 #import "UIViewController+DNImagePicker.h"
+#import "NSURL+DNIMagePickerUrlEqual.h"
 #import "UIView+DNImagePicker.h"
 #import "UIColor+Hex.h"
 #import "DNAssetsViewCell.h"
 #import "DNSendButton.h"
+#import "DNImagePickerHelper.h"
+#import "DNAlbum.h"
 #import "DNAsset.h"
-#import "NSURL+DNIMagePickerUrlEqual.h"
+
 
 
 static NSUInteger const kDNImageFlowMaxSeletedNumber = 9;
@@ -75,8 +78,11 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     self.navigationController.toolbarHidden = YES;
 }
 
-- (void)setupData
-{
+- (void)setupData {
+    if (!self.album && self.albumIdentifier.length > 0) {
+        self.album = [DNImagePickerHelper fetchCurrentAlbum];
+    }
+    self.title = self.album.albumTitle;
 //    [_assetsLibrary groupForURL:[NSURL URLWithString:self.albumIdentifier] resultBlock:^(ALAssetsGroup *assetsGroup){
 //        self.assetsGroup = assetsGroup;
 //        if (self.assetsGroup) {
@@ -182,7 +188,7 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 - (DNAsset *)dnassetFromALAsset:(ALAsset *)ALAsset
 {
     DNAsset *asset = [[DNAsset alloc] init];
-    asset.url = [ALAsset valueForProperty:ALAssetPropertyAssetURL];
+//    asset.url = [ALAsset valueForProperty:ALAssetPropertyAssetURL];
     return asset;
 }
 

@@ -102,7 +102,6 @@
 		952601291D2D112500080227 /* DNAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNAlbum.m; sourceTree = "<group>"; };
 		95A1472F1D6C15A900E80455 /* DNImagePickerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNImagePickerHelper.h; sourceTree = "<group>"; };
 		95A147301D6C15A900E80455 /* DNImagePickerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNImagePickerHelper.m; sourceTree = "<group>"; };
-		95A147331D6C1A0300E80455 /* DNAssetProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNAssetProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,7 +256,6 @@
 			children = (
 				9526011F1D2BBBA500080227 /* DNAsset.h */,
 				952601201D2BBBA500080227 /* DNAsset.m */,
-				95A147331D6C1A0300E80455 /* DNAssetProtocol.h */,
 				952601281D2D112500080227 /* DNAlbum.h */,
 				952601291D2D112500080227 /* DNAlbum.m */,
 			);

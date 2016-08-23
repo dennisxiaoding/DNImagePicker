@@ -105,7 +105,7 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
 #pragma mark - tableView delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DNAlbum *album = self.albumArray[indexPath.row];
-    DNImageFlowViewController *imageFlowViewController = [[DNImageFlowViewController alloc] initWithAlbumIdentifier:album.identifier];
+    DNImageFlowViewController *imageFlowViewController = [[DNImageFlowViewController alloc] initWithAblum:album];
     [self.navigationController pushViewController:imageFlowViewController animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

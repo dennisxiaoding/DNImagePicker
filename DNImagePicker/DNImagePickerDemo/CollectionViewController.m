@@ -45,38 +45,38 @@ static NSString * const reuseIdentifier = @"Cell";
     
     DNAsset *dnasset = self.imageArray[indexPath.row];
     
-    ALAssetsLibrary *lib = [ALAssetsLibrary new];
-    __block CollectionViewCell *blockCell = cell;
-    __weak typeof(self) weakSelf = self;
-    [lib assetForURL:dnasset.url resultBlock:^(ALAsset *asset){
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (asset) {
-            [strongSelf setCell:blockCell asset:asset];
-        } else {
-            // On iOS 8.1 [library assetForUrl] Photo Streams always returns nil. Try to obtain it in an alternative way
-            [lib enumerateGroupsWithTypes:ALAssetsGroupPhotoStream
-                                   usingBlock:^(ALAssetsGroup *group, BOOL *stop)
-             {
-                 [group enumerateAssetsWithOptions:NSEnumerationReverse
-                                        usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-                     
-                     if([[result valueForProperty:ALAssetPropertyAssetURL] isEqual:dnasset.url])
-                     {
-                         [strongSelf setCell:blockCell asset:result];
-                         *stop = YES;
-                     }
-                 }];
-             }
-                             failureBlock:^(NSError *error)
-             {
-                 [strongSelf setCell:blockCell asset:nil];
-             }];
-        }
-        
-    } failureBlock:^(NSError *error){
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf setCell:blockCell asset:nil];
-    }];
+//    ALAssetsLibrary *lib = [ALAssetsLibrary new];
+//    __block CollectionViewCell *blockCell = cell;
+//    __weak typeof(self) weakSelf = self;
+//    [lib assetForURL:dnasset.url resultBlock:^(ALAsset *asset){
+//        __strong typeof(weakSelf) strongSelf = weakSelf;
+//        if (asset) {
+//            [strongSelf setCell:blockCell asset:asset];
+//        } else {
+//            // On iOS 8.1 [library assetForUrl] Photo Streams always returns nil. Try to obtain it in an alternative way
+//            [lib enumerateGroupsWithTypes:ALAssetsGroupPhotoStream
+//                                   usingBlock:^(ALAssetsGroup *group, BOOL *stop)
+//             {
+//                 [group enumerateAssetsWithOptions:NSEnumerationReverse
+//                                        usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+//                     
+//                     if([[result valueForProperty:ALAssetPropertyAssetURL] isEqual:dnasset.url])
+//                     {
+//                         [strongSelf setCell:blockCell asset:result];
+//                         *stop = YES;
+//                     }
+//                 }];
+//             }
+//                             failureBlock:^(NSError *error)
+//             {
+//                 [strongSelf setCell:blockCell asset:nil];
+//             }];
+//        }
+//        
+//    } failureBlock:^(NSError *error){
+//        __strong typeof(weakSelf) strongSelf = weakSelf;
+//        [strongSelf setCell:blockCell asset:nil];
+//    }];
     
     
     return cell;

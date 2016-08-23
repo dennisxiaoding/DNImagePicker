@@ -79,7 +79,7 @@
 #pragma mark - get
 - (DNTapDetectingImageView *)photoImageView
 {
-    if (nil == _photoImageView) {
+    if (!_photoImageView) {
         _photoImageView = [[DNTapDetectingImageView alloc] initWithFrame:CGRectZero];
         _photoImageView.tapDelegate = self;
         _photoImageView.contentMode = UIViewContentModeCenter;
@@ -91,7 +91,7 @@
 
 - (UIScrollView *)zoomingScrollView
 {
-    if (nil == _zoomingScrollView) {
+    if (!_zoomingScrollView) {
         _zoomingScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(10, 0, self.frame.size.width-20, self.frame.size.height)];
         _zoomingScrollView.delegate = self;
         _zoomingScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleWidth;
@@ -129,7 +129,7 @@
     self.zoomingScrollView.zoomScale = 1;
     
     // Bail if no image
-    if (_photoImageView.image == nil) return;
+    if (!_photoImageView.image) return;
     
     // Reset position
     _photoImageView.frame = CGRectMake(0, 0, _photoImageView.frame.size.width, _photoImageView.frame.size.height);

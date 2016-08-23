@@ -37,22 +37,7 @@ NSString *kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePickerStoredGroup"
     if (propwetyID.length <= 0) {
         [self showAlbumList];
     } else {
-//        ALAssetsLibrary *assetsLibiary = [[ALAssetsLibrary alloc] init];
-//        [assetsLibiary enumerateGroupsWithTypes:ALAssetsGroupAll
-//                                     usingBlock:^(ALAssetsGroup *assetsGroup, BOOL *stop){
-//             if (assetsGroup == nil && *stop ==  NO) {
-//                 [self showAlbumList];
-//             }
-//             
-//             NSString *assetsGroupID= [assetsGroup valueForProperty:ALAssetsGroupPropertyPersistentID];
-//             if ([assetsGroupID isEqualToString:propwetyID]) {
-//                 *stop = YES;
-//                 [self showImageFlow];
-//             }
-//         }
-//         failureBlock:^(NSError *error){
-//             [self showAlbumList];
-//         }];
+        [self showImageFlow];
     }
 }
 

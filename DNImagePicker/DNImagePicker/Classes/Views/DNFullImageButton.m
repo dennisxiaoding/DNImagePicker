@@ -21,8 +21,7 @@ static NSInteger const buttonImageWidth = 16;
 
 @implementation DNFullImageButton
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
@@ -36,14 +35,12 @@ static NSInteger const buttonImageWidth = 16;
     return self;
 }
 
-- (void)addTarget:(id)target action:(SEL)action
-{
+- (void)addTarget:(id)target action:(SEL)action {
     [self.fullImageButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (UILabel *)imageSizeLabel
-{
-    if (nil == _imageSizeLabel) {
+- (UILabel *)imageSizeLabel {
+    if (!_imageSizeLabel) {
         _imageSizeLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 4, CGRectGetWidth(self.frame)- 100, 20)];
         _imageSizeLabel.backgroundColor = [UIColor clearColor];
         _imageSizeLabel.font = [UIFont systemFontOfSize:14.0f];
@@ -54,9 +51,8 @@ static NSInteger const buttonImageWidth = 16;
     return _imageSizeLabel;
 }
 
-- (UIButton *)fullImageButton
-{
-    if (nil == _fullImageButton) {
+- (UIButton *)fullImageButton {
+    if (!_fullImageButton) {
         _fullImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _fullImageButton.width = [self fullImageButtonWidth];
         _fullImageButton.height = 28;
@@ -75,9 +71,8 @@ static NSInteger const buttonImageWidth = 16;
     return _fullImageButton;
 }
 
-- (UIActivityIndicatorView *)indicatorView
-{
-    if (nil == _indicatorView) {
+- (UIActivityIndicatorView *)indicatorView {
+    if (!_indicatorView) {
         _indicatorView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(self.fullImageButton.width, 2, 26, 26)];
         _indicatorView.hidesWhenStopped = YES;
         [_indicatorView stopAnimating];
@@ -86,16 +81,14 @@ static NSInteger const buttonImageWidth = 16;
     return _indicatorView;
 }
 
-- (CGFloat)fullImageButtonWidth
-{
+- (CGFloat)fullImageButtonWidth {
     NSString *string = NSLocalizedStringFromTable(@"fullImage", @"DNImagePicker", @"原图");
     CGRect rect = [string boundingRectWithSize:CGSizeMake(MAXFLOAT, 20) options:NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName:kDNFullImageButtonFont} context:nil];
     CGFloat width = buttonImageWidth + buttonPadding + CGRectGetWidth(rect);
     return width;
 }
 
-- (void)setSelected:(BOOL)selected
-{
+- (void)setSelected:(BOOL)selected {
     if (_selected != selected) {
         _selected = selected;
         self.fullImageButton.selected = _selected;
@@ -109,13 +102,11 @@ static NSInteger const buttonImageWidth = 16;
     }
 }
 
-- (void)setText:(NSString *)text
-{
+- (void)setText:(NSString *)text {
     self.imageSizeLabel.text = text;
 }
 
-- (void)shouldAnimating:(BOOL)animate
-{
+- (void)shouldAnimating:(BOOL)animate {
     if (self.selected) {
         self.imageSizeLabel.hidden = animate;
         if (animate) {

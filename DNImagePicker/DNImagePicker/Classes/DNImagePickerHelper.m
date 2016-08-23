@@ -75,7 +75,7 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
         return album;
     }
     PHFetchOptions *options = [[PHFetchOptions alloc] init];
-    options.predicate = [NSPredicate predicateWithFormat:@"mediaType",@(PHAssetMediaTypeImage)];
+    options.predicate = [NSPredicate predicateWithFormat:@"mediaType = %@",@(PHAssetMediaTypeImage)];
     options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
     PHAssetCollection *collection = result.firstObject;
     PHFetchResult *requestReslut = [PHAsset fetchKeyAssetsInAssetCollection:collection options:options];

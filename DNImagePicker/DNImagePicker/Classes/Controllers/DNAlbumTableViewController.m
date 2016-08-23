@@ -60,7 +60,7 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
 #pragma mark - getter/setter
 
 - (DNImagePickerController *)dnImagePickerController {
-    if (nil == self.navigationController
+    if (!self.navigationController
         ||
         ![self.navigationController isKindOfClass:[DNImagePickerController class]])
     {

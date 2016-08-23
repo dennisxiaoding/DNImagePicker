@@ -10,8 +10,7 @@
 
 @implementation DNUnAuthorizedTipsView
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         [self imageView];
@@ -21,8 +20,7 @@
     return self;
 }
 
-- (void)addContentConstraints
-{
+- (void)addContentConstraints {
     NSDictionary *imageViewMetric = @{@"imageLength":@130,@"labelHeight":@60};
     NSString *vflV = @"V:|-120-[_imageView(imageLength)]-30-[_label(<=labelHeight@750)]";
     NSString *vflH = @"H:|-33-[_label]-33-|";
@@ -50,9 +48,8 @@
 }
 
 #pragma mark - getter
-- (UIImageView *)imageView
-{
-    if (_imageView == nil) {
+- (UIImageView *)imageView {
+    if (!_imageView) {
         _imageView = [UIImageView new];
         _imageView.image = [UIImage imageNamed:@"image_unAuthorized"];
         [_imageView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -61,9 +58,8 @@
     return _imageView;
 }
 
-- (UILabel *)label
-{
-    if (_label == nil) {
+- (UILabel *)label {
+    if (!_label) {
         _label = [UILabel new];
         [_label setTranslatesAutoresizingMaskIntoConstraints:NO];
         NSString *text = NSLocalizedStringFromTable(@"UnAuthorizedTip", @"DNImagePicker", @"UnAuthorizedTip");

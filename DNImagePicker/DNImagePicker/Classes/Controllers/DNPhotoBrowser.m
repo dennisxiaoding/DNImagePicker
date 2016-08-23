@@ -294,9 +294,8 @@
 }
 
 #pragma mark - get/set
-- (UIButton *)checkButton
-{
-    if (nil == _checkButton) {
+- (UIButton *)checkButton {
+    if (!_checkButton) {
         _checkButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _checkButton.frame = CGRectMake(0, 0, 25, 25);
         [_checkButton setBackgroundImage:[UIImage imageNamed:@"photo_check_selected"] forState:UIControlStateSelected];
@@ -306,9 +305,8 @@
     return _checkButton;
 }
 
-- (DNFullImageButton *)fullImageButton
-{
-    if (nil == _fullImageButton) {
+- (DNFullImageButton *)fullImageButton {
+    if (!_fullImageButton) {
         _fullImageButton = [[DNFullImageButton alloc] initWithFrame:CGRectZero];
         [_fullImageButton addTarget:self action:@selector(fullImageButtonAction)];
         _fullImageButton.selected = self.isFullImage;
@@ -316,18 +314,16 @@
     return _fullImageButton;
 }
 
-- (DNSendButton *)sendButton
-{
-    if (nil == _sendButton) {
+- (DNSendButton *)sendButton {
+    if (!_sendButton) {
         _sendButton = [[DNSendButton alloc] initWithFrame:CGRectZero];
         [_sendButton addTaget:self action:@selector(sendButtonAction)];
     }
     return  _sendButton;
 }
 
-- (UIToolbar *)toolbar
-{
-    if (nil == _toolbar) {
+- (UIToolbar *)toolbar {
+    if (!_toolbar) {
         CGFloat height = 44;
         _toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - height, self.view.bounds.size.width, height)];
         if ([[UIToolbar class] respondsToSelector:@selector(appearance)]) {
@@ -345,9 +341,8 @@
     return _toolbar;
 }
 
-- (UICollectionView *)browserCollectionView
-{
-    if (nil == _browserCollectionView) {
+- (UICollectionView *)browserCollectionView {
+    if (!_browserCollectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
         layout.minimumInteritemSpacing = 0;
         layout.minimumLineSpacing = 0;
@@ -367,29 +362,24 @@
 }
 
 #pragma mark - UICollectionViewDataSource
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [self.photoDataSources count];
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     DNBrowserCell *cell = (DNBrowserCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([DNBrowserCell class]) forIndexPath:indexPath];
-    
     cell.asset = [self.photoDataSources objectAtIndex:indexPath.row];
     cell.photoBrowser = self;
     return cell;
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake(self.view.bounds.size.width+20, self.view.bounds.size.height);
 }
 
 #pragma mark - scrollerViewDelegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat offsetX = scrollView.contentOffset.x;
     CGFloat itemWidth = CGRectGetWidth(self.browserCollectionView.frame);
     CGFloat currentPageOffset = itemWidth * self.currentIndex;
@@ -401,8 +391,7 @@
     }
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     CGFloat offsetX = scrollView.contentOffset.x;
     CGFloat itemWidth = CGRectGetWidth(self.browserCollectionView.frame);
     if (offsetX >= 0){
@@ -413,8 +402,7 @@
     [self.fullImageButton shouldAnimating:NO];
 }
 
-- (void)didScrollToPage:(NSInteger)page
-{
+- (void)didScrollToPage:(NSInteger)page {
     self.currentIndex = page;
     [self updateNavigationBarAndToolBar];
 }
@@ -422,9 +410,8 @@
 #pragma mark - Control Hiding / Showing
 // Fades all controls slide and fade
 - (void)setControlsHidden:(BOOL)hidden animated:(BOOL)animated{
-    
     // Force visible
-    if (nil == self.photoDataSources || self.photoDataSources.count == 0)
+    if (!self.photoDataSources || !self.photoDataSources.count)
         hidden = NO;
     // Animations & positions
     CGFloat animatonOffset = 20;

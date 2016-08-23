@@ -132,9 +132,9 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 }
 
 - (DNImagePickerController *)dnImagePickerController {
-    if (nil == self.navigationController
+    if (!self.navigationController
         ||
-        NO == [self.navigationController isKindOfClass:[DNImagePickerController class]])
+        ![self.navigationController isKindOfClass:[DNImagePickerController class]])
     {
         NSAssert(false, @"check the navigation controller");
     }
@@ -226,7 +226,7 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 }
 
 - (DNSendButton *)sendButton {
-    if (nil == _sendButton) {
+    if (!_sendButton) {
         _sendButton = [[DNSendButton alloc] initWithFrame:CGRectZero];
         [_sendButton addTaget:self action:@selector(sendButtonAction:)];
     }

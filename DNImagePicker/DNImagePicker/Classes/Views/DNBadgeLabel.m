@@ -18,8 +18,7 @@
 
 @implementation DNBadgeLabel
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
@@ -29,8 +28,7 @@
     return self;
 }
 
-- (void)setupViews
-{
+- (void)setupViews {
     _backGroudView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
     _backGroudView.backgroundColor = [UIColor hexStringToColor:@"#1FB823"];
     _backGroudView.layer.cornerRadius = 10;
@@ -48,8 +46,7 @@
     self.userInteractionEnabled = YES;
 }
 
-- (void)setTitle:(NSString *)title
-{
+- (void)setTitle:(NSString *)title {
     CGRect rect = [title boundingRectWithSize:CGSizeMake(MAXFLOAT, 20) options:NSStringDrawingTruncatesLastVisibleLine attributes:nil context:nil];
     self.frame = CGRectMake(self.left, self.top, (rect.size.width + 9) > 20?(rect.size.width + 9):20, 20);
     self.backGroudView.width = self.width;
@@ -75,13 +72,11 @@
     }
 }
 
-- (void)show
-{
+- (void)show {
     self.hidden = NO;
 }
 
-- (void)hide
-{
+- (void)hide {
     self.hidden = YES;
 }
 @end

@@ -37,10 +37,10 @@
                      sendImages:(NSArray *)imageAssets
                     isFullImage:(BOOL)fullImage {
     self.assetsArray = [NSMutableArray arrayWithArray:imageAssets];
-    CollectionViewController *collectionVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CollectionViewController"];
-    collectionVC.isFullImage = fullImage;
-    collectionVC.imageArray = imageAssets;
-    [self.navigationController pushViewController:collectionVC animated:YES];
+//    CollectionViewController *collectionVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CollectionViewController"];
+//    collectionVC.isFullImage = fullImage;
+//    collectionVC.imageArray = imageAssets;
+//    [self.navigationController pushViewController:collectionVC animated:YES];
 }
 
 - (void)dnImagePickerControllerDidCancel:(DNImagePickerController *)imagePicker {

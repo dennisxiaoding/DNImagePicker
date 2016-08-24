@@ -98,13 +98,17 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     
     [self imageFlowCollectionView];
     
-    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTable(@"preview", @"DNImagePicker", @"预览") style:UIBarButtonItemStylePlain target:self action:@selector(previewAction)];
+    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedStringFromTable(@"preview", @"DNImagePicker", @"预览")
+                                                              style:UIBarButtonItemStylePlain
+                                                             target:self
+                                                             action:@selector(previewAction)];
     [item1 setTintColor:[UIColor blackColor]];
     item1.enabled = NO;
     
     UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     UIBarButtonItem *item3 = [[UIBarButtonItem alloc] initWithCustomView:self.sendButton];
+    
     
     UIBarButtonItem *item4 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     item4.width = -10;
@@ -128,7 +132,9 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 #pragma mark - helpmethods
 - (void)scrollerToBottom:(BOOL)animated {
     NSInteger rows = [self.imageFlowCollectionView numberOfItemsInSection:0] - 1;
-    [self.imageFlowCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:rows inSection:0] atScrollPosition:UICollectionViewScrollPositionBottom animated:animated];
+    [self.imageFlowCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:rows inSection:0]
+                                         atScrollPosition:UICollectionViewScrollPositionBottom
+                                                 animated:animated];
 }
 
 - (DNImagePickerController *)dnImagePickerController {

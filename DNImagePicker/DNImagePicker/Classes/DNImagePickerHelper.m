@@ -14,7 +14,7 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
 
 @implementation DNImagePickerHelper
 
-- (DNAlbumAuthorizationStatus)authorizationStatus {
++ (DNAlbumAuthorizationStatus)authorizationStatus {
 #if DNImagePikerPhotosAvaiable == 1
     return (DNAlbumAuthorizationStatus)[PHPhotoLibrary authorizationStatus];
 #else
@@ -69,14 +69,14 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
     if (!identifier || identifier.length <= 0 ) {
         return album;
     }
-    
-    PHFetchResult *result = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[identifier] options:nil];
-    if (result.count <= 0) {
-        return album;
-    }
     PHFetchOptions *options = [[PHFetchOptions alloc] init];
     options.predicate = [NSPredicate predicateWithFormat:@"mediaType = %@",@(PHAssetMediaTypeImage)];
     options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+    
+    PHFetchResult *result = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[identifier] options:nil];
+    if (result.count <= 0) {
+        return album;       
+    }
     PHAssetCollection *collection = result.firstObject;
     PHFetchResult *requestReslut = [PHAsset fetchKeyAssetsInAssetCollection:collection options:options];
     album.albumTitle = collection.localizedTitle;
@@ -125,7 +125,8 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
         return array;
     }
     
-    [results enumerateObjectsWithOptions:option usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [results enumerateObjectsWithOptions:option
+                              usingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         @autoreleasepool {
             DNAsset *asset = [DNAsset assetWithPHAsset:obj];
             [array addObject:asset];

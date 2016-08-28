@@ -29,7 +29,6 @@ static NSUInteger const kDNImageFlowMaxSeletedNumber = 9;
 @property (nonatomic, strong) UICollectionView *imageFlowCollectionView;
 @property (nonatomic, strong) DNSendButton *sendButton;
 
-
 @property (nonatomic, strong) NSMutableArray *assetsArray;
 @property (nonatomic, strong) NSMutableArray *selectedAssetsArray;
 

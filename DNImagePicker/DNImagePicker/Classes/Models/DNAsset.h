@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 #else
 
 + (DNAsset * _Nonnull)assetWithPHAsset:(nullable PHAsset *)asset;
+@property (nonatomic, readonly, nullable) PHAsset *asset;
 
 #endif
 

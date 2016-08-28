@@ -50,11 +50,6 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
             if (count > 0) {
                 @autoreleasepool {
                     DNAlbum *album = [DNAlbum albumWithAssetCollection:obj results:assetResults];
-                    album.count = count;
-                    album.results = assetResults;
-                    album.albumTitle = obj.localizedTitle;
-                    album.startDate = obj.startDate;
-                    album.identifier = obj.localIdentifier;
                     [list addObject:album];
                 }
             }
@@ -72,7 +67,7 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
     PHFetchOptions *options = [[PHFetchOptions alloc] init];
     options.predicate = [NSPredicate predicateWithFormat:@"mediaType = %@",@(PHAssetMediaTypeImage)];
     options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
-    
+
     PHFetchResult *result = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[identifier] options:nil];
     if (result.count <= 0) {
         return album;       
@@ -135,14 +130,14 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
     return array;
 }
 
-+ (void)fetchImageSizeWithAsset:(nullable PHAsset *)asset
++ (void)fetchImageSizeWithAsset:(nullable DNAsset *)asset
          imageSizeResultHandler:(void ( ^ _Nonnull)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler {
     if (!asset) {
         handler(0,@"0M");
         return;
     }
     
-    [[PHImageManager defaultManager] requestImageDataForAsset:asset
+    [[PHImageManager defaultManager] requestImageDataForAsset:asset.asset
                                                       options:nil
                                                 resultHandler:^(NSData * _Nullable imageData,
                                                                 NSString * _Nullable dataUTI,

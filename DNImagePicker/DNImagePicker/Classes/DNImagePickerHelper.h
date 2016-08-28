@@ -10,6 +10,7 @@
 #import "DNImagePicker.h"
 
 @class DNAlbum;
+@class DNAsset;
 
 @interface DNImagePickerHelper : NSObject
 
@@ -52,7 +53,7 @@
                                        enumerationOptions:(NSEnumerationOptions)option;
 
 
-+ (void)fetchImageSizeWithAsset:(nullable PHAsset *)asset
++ (void)fetchImageSizeWithAsset:(nullable DNAsset *)asset
          imageSizeResultHandler:(void ( ^ _Nonnull)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler;
 
 + (PHImageRequestID)fetchImageWithAsset:(nullable PHAsset *)asset

@@ -130,14 +130,14 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
     return array;
 }
 
-+ (void)fetchImageSizeWithAsset:(nullable DNAsset *)asset
++ (void)fetchImageSizeWithAsset:(nullable PHAsset *)asset
          imageSizeResultHandler:(void ( ^ _Nonnull)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler {
     if (!asset) {
         handler(0,@"0M");
         return;
     }
     
-    [[PHImageManager defaultManager] requestImageDataForAsset:asset.asset
+    [[PHImageManager defaultManager] requestImageDataForAsset:asset
                                                       options:nil
                                                 resultHandler:^(NSData * _Nullable imageData,
                                                                 NSString * _Nullable dataUTI,

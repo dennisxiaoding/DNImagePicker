@@ -53,7 +53,7 @@
                                        enumerationOptions:(NSEnumerationOptions)option;
 
 
-+ (void)fetchImageSizeWithAsset:(nullable DNAsset *)asset
++ (void)fetchImageSizeWithAsset:(nullable PHAsset *)asset
          imageSizeResultHandler:(void ( ^ _Nonnull)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler;
 
 + (PHImageRequestID)fetchImageWithAsset:(nullable PHAsset *)asset

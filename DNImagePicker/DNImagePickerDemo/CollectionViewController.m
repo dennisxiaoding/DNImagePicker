@@ -12,6 +12,8 @@
 #import "DNAsset.h"
 #import "NSURL+DNIMagePickerUrlEqual.h"
 
+#define kSizeThumbnailCollectionView  self.view.frame.size.width/2
+
 @interface CollectionViewController ()
 @end
 
@@ -44,80 +46,12 @@ static NSString * const reuseIdentifier = @"Cell";
     CollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     DNAsset *dnasset = self.imageArray[indexPath.row];
-    
-//    ALAssetsLibrary *lib = [ALAssetsLibrary new];
-//    __block CollectionViewCell *blockCell = cell;
-//    __weak typeof(self) weakSelf = self;
-//    [lib assetForURL:dnasset.url resultBlock:^(ALAsset *asset){
-//        __strong typeof(weakSelf) strongSelf = weakSelf;
-//        if (asset) {
-//            [strongSelf setCell:blockCell asset:asset];
-//        } else {
-//            // On iOS 8.1 [library assetForUrl] Photo Streams always returns nil. Try to obtain it in an alternative way
-//            [lib enumerateGroupsWithTypes:ALAssetsGroupPhotoStream
-//                                   usingBlock:^(ALAssetsGroup *group, BOOL *stop)
-//             {
-//                 [group enumerateAssetsWithOptions:NSEnumerationReverse
-//                                        usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-//                     
-//                     if([[result valueForProperty:ALAssetPropertyAssetURL] isEqual:dnasset.url])
-//                     {
-//                         [strongSelf setCell:blockCell asset:result];
-//                         *stop = YES;
-//                     }
-//                 }];
-//             }
-//                             failureBlock:^(NSError *error)
-//             {
-//                 [strongSelf setCell:blockCell asset:nil];
-//             }];
-//        }
-//        
-//    } failureBlock:^(NSError *error){
-//        __strong typeof(weakSelf) strongSelf = weakSelf;
-//        [strongSelf setCell:blockCell asset:nil];
-//    }];
-    
+    [dnasset fetchImageWithSize:CGSizeMake(kSizeThumbnailCollectionView-4, kSizeThumbnailCollectionView*1.5) imageResutHandler:^(UIImage * _Nullable image) {
+        cell.imageView.image = image;
+    }];
     
     return cell;
 }
-
-- (void)setCell:(CollectionViewCell *)cell asset:(ALAsset *)asset
-{
-    
-    if (!asset) {
-        cell.imageView.image = [UIImage imageNamed:@"assets_placeholder_picture"];
-        cell.textLabel.hidden = YES;
-        return;
-    }
-    
-    cell.textLabel.hidden = NO;
-    UIImage *image;
-    NSString *string;
-    if (self.isFullImage) {
-        NSNumber *orientationValue = [asset valueForProperty:ALAssetPropertyOrientation];
-        UIImageOrientation orientation = UIImageOrientationUp;
-        if (orientationValue != nil) {
-            orientation = [orientationValue intValue];
-        }
-        
-        image = [UIImage imageWithCGImage:asset.thumbnail];
-//        image = [UIImage imageWithCGImage:asset.thumbnail scale:0.1 orientation:orientation];
-        
-        string = [NSString stringWithFormat:@"fileSize:%lld k\nwidth:%.0f\nheiht:%.0f",asset.defaultRepresentation.size/1000,[[asset defaultRepresentation] dimensions].width, [[asset defaultRepresentation] dimensions].height];
-        
-    } else {
-        image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
-        
-        string = [NSString stringWithFormat:@"fileSize:%lld k\nwidth:%.0f\nheiht:%.0f",asset.defaultRepresentation.size/1000,image.size.width,image.size.height];
-    }
-   
-    cell.textLabel.text = string;
-    cell.imageView.image = image;
-
-}
-
-#define kSizeThumbnailCollectionView  self.view.frame.size.width/2
 
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath

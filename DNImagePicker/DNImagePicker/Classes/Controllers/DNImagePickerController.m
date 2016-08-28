@@ -78,9 +78,6 @@ NSString *kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePickerStoredGroup"
             // TODO: requestAuthorization
             break;
             
-            
-            
-            
         default:
             break;
     }
@@ -126,23 +123,19 @@ NSString *kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePickerStoredGroup"
 
 #pragma mark - Delegate Forwarder
 
-- (BOOL)respondsToSelector:(SEL)s
-{
+- (BOOL)respondsToSelector:(SEL)s {
     return [super respondsToSelector:s] || [self.navDelegate respondsToSelector:s];
 }
 
-- (NSMethodSignature *)methodSignatureForSelector:(SEL)s
-{
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)s {
     return [super methodSignatureForSelector:s] ?: [(id)self.navDelegate methodSignatureForSelector:s];
 }
 
-- (void)forwardInvocation:(NSInvocation *)invocation
-{
+- (void)forwardInvocation:(NSInvocation *)invocation {
     id delegate = self.navDelegate;
     if ([delegate respondsToSelector:invocation.selector]) {
         [invocation invokeWithTarget:delegate];
     }
 }
-
 
 @end

@@ -23,6 +23,10 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
 @implementation DNAlbumTableViewController
 
 #pragma mark - life cycle
+- (void)dealloc {
+    NSLog(@"___");
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupView];
@@ -84,12 +88,9 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     DNAlbum *album = self.albumArray[indexPath.row];
     cell.textLabel.attributedText = album.albumAttributedString;
-    
-    __weak UITableViewCell *blockCell = cell;
-    [DNImagePickerHelper fetchImageWithAsset:album.results.lastObject
-                                   targetSize:CGSizeMake(60, 60)
-                            imageResutHandler:^(UIImage * _Nullable postImage) {
-                                blockCell.imageView.image = postImage;
+    cell.imageView.image = [UIImage imageNamed:@"assets_placeholder_picture"];
+    [album fetchPostImageWithSize:CGSizeMake(60, 60) imageResutHandler:^(UIImage * _Nullable postImage) {
+        cell.imageView.image = postImage;
     }];
     return cell;
 }

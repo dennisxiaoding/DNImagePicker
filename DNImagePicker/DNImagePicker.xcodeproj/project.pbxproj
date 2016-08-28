@@ -39,6 +39,7 @@
 		952601211D2BBBA500080227 /* DNAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 952601201D2BBBA500080227 /* DNAsset.m */; };
 		9526012A1D2D112500080227 /* DNAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 952601291D2D112500080227 /* DNAlbum.m */; };
 		95A147311D6C15A900E80455 /* DNImagePickerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 95A147301D6C15A900E80455 /* DNImagePickerHelper.m */; };
+		95BE232A1D73490700EDBAF3 /* DNAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 95BE23291D73490700EDBAF3 /* DNAlbumCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -102,6 +103,8 @@
 		952601291D2D112500080227 /* DNAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNAlbum.m; sourceTree = "<group>"; };
 		95A1472F1D6C15A900E80455 /* DNImagePickerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNImagePickerHelper.h; sourceTree = "<group>"; };
 		95A147301D6C15A900E80455 /* DNImagePickerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNImagePickerHelper.m; sourceTree = "<group>"; };
+		95BE23281D73490700EDBAF3 /* DNAlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNAlbumCell.h; sourceTree = "<group>"; };
+		95BE23291D73490700EDBAF3 /* DNAlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNAlbumCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +236,8 @@
 			children = (
 				952600D91D2BA26400080227 /* JKPromptView.h */,
 				952600DA1D2BA26400080227 /* JKPromptView.m */,
+				95BE23281D73490700EDBAF3 /* DNAlbumCell.h */,
+				95BE23291D73490700EDBAF3 /* DNAlbumCell.m */,
 				952600DB1D2BA26400080227 /* DNBrowserCell.h */,
 				952600DC1D2BA26400080227 /* DNBrowserCell.m */,
 				952600DD1D2BA26400080227 /* DNTapDetectingImageView.h */,
@@ -302,7 +307,7 @@
 				TargetAttributes = {
 					952600AC1D2B9D4100080227 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 5N2356MCME;
+						DevelopmentTeam = 7RQERF84NY;
 					};
 				};
 			};
@@ -358,6 +363,7 @@
 				9526011D1D2BBB4A00080227 /* CollectionViewController.m in Sources */,
 				952600EE1D2BA26400080227 /* DNFullImageButton.m in Sources */,
 				952600D51D2BA05700080227 /* DNAlbumTableViewController.m in Sources */,
+				95BE232A1D73490700EDBAF3 /* DNAlbumCell.m in Sources */,
 				952601121D2BB7F700080227 /* NSURL+DNIMagePickerUrlEqual.m in Sources */,
 				952600B51D2B9D4100080227 /* AppDelegate.m in Sources */,
 				952600B21D2B9D4100080227 /* main.m in Sources */,
@@ -497,7 +503,7 @@
 				INFOPLIST_FILE = DNImagePicker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dennis.DNImagePickerll;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dennis.DNImagePickerllI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -512,7 +518,7 @@
 				INFOPLIST_FILE = DNImagePicker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dennis.DNImagePickerll;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dennis.DNImagePickerllI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

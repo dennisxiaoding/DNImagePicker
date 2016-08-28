@@ -249,8 +249,7 @@
 }
 
 #pragma mark - ui actions
-- (void)checkButtonAction
-{
+- (void)checkButtonAction {
     if (self.checkButton.selected) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(photoBrowser:deseletedAsset:)]) {
             [self.delegate photoBrowser:self deseletedAsset:self.photoDataSources[self.currentIndex]];
@@ -269,15 +268,13 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)sendButtonAction
-{
+- (void)sendButtonAction {
     if ([self.delegate respondsToSelector:@selector(sendImagesFromPhotobrowser:currentAsset:)]) {
         [self.delegate sendImagesFromPhotobrowser:self currentAsset:self.photoDataSources[self.currentIndex]];
     }
 }
 
-- (void)fullImageButtonAction
-{
+- (void)fullImageButtonAction {
     self.fullImageButton.selected = !self.fullImageButton.selected;
     self.fullImage = self.fullImageButton.selected;
     if ([self.delegate respondsToSelector:@selector(photoBrowser:seleteFullImage:)]) {

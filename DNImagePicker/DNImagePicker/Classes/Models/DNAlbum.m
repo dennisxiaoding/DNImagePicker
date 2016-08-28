@@ -7,7 +7,7 @@
 //
 
 #import "DNAlbum.h"
-
+#import "DNImagePickerHelper.h"
 @interface DNAlbum ()
 
 @end
@@ -28,6 +28,15 @@
 }
 
 #endif
+
+- (void)fetchPostImageWithSize:(CGSize)size
+             imageResutHandler:(void (^ _Nullable)(UIImage * _Nullable))handler {
+    [DNImagePickerHelper fetchImageWithAsset:self.results.firstObject
+                                  targetSize:CGSizeMake(60, 60)
+                           imageResutHandler:^(UIImage * _Nullable postImage) {
+                               handler(postImage);
+                           }];
+}
 
 - (NSAttributedString *)albumAttributedString {
     NSString *numberString = [NSString stringWithFormat:@"  (%@)",@(self.count)];

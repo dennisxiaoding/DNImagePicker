@@ -196,7 +196,9 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
                                                             contentMode:PHImageContentModeAspectFill
                                                                 options:options
                                                           resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-                                                              handler(result);
+                                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                                  handler(result);
+                                                              });
                                                           }];
     dispatch_semaphore_signal(semaphore);
     return reqestID;

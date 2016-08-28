@@ -36,6 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly, nonnull) NSAttributedString *albumAttributedString;
 
+- (void)fetchPostImageWithSize:(CGSize)size imageResutHandler:(void (^ _Nullable)(UIImage * _Nullable))handler;
+
 @end
 
 

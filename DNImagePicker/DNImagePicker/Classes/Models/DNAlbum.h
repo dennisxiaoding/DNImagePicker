@@ -6,7 +6,7 @@
 //  Copyright © 2016年 Dennis. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "DNImagePicker.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -28,7 +28,15 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, strong, nullable) PHFetchResult *results;
 
+#else
+
++ (DNAlbum * _Nonnull)albumWithAssetGroup:(ALAssetsGroup *)assetGroup;
+
+@property (nonatomic, copy, nullable) NSString *albumPropertyType;
+
 #endif
+
+@property (nonatomic, copy, nullable) NSString *identifier;
 
 @property (nonatomic, copy, nonnull) NSString *albumTitle;
 

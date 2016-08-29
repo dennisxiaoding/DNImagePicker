@@ -30,7 +30,7 @@
 
 - (void)setupViews {
     _backGroudView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    _backGroudView.backgroundColor = [UIColor hexStringToColor:@"#1FB823"];
+    _backGroudView.backgroundColor = [UIColor dn_hexStringToColor:@"#1FB823"];
     _backGroudView.layer.cornerRadius = 10;
     [self addSubview:_backGroudView];
     

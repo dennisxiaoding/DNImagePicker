@@ -22,40 +22,12 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
 #endif
 }
 
++ (nonnull NSArray<DNAlbum *> *)fetchAlbumList {
 #if DNImagePikerPhotosAvaiable == 1
-+ (nonnull NSArray *)fetchAlbumList {
-    NSMutableArray *albums = [NSMutableArray arrayWithArray:[self fetchAlbumsResults]];
-    if (!albums)
-        return [NSArray array];
-    
-    PHFetchOptions *userAlbumsOptions = [[PHFetchOptions alloc] init];
-    userAlbumsOptions.predicate = [NSPredicate predicateWithFormat:@"mediaType = %@",@(PHAssetMediaTypeImage)];
-    userAlbumsOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
-    
-    NSMutableArray *list = [NSMutableArray array];
-    for (PHFetchResult *result in albums) {
-        [result enumerateObjectsUsingBlock:^(PHAssetCollection *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            PHFetchResult *assetResults = [PHAsset fetchAssetsInAssetCollection:obj options:userAlbumsOptions];
-            NSInteger count = 0;
-            switch (obj.assetCollectionType) {
-                case PHAssetCollectionTypeAlbum:
-                case PHAssetCollectionTypeSmartAlbum:
-                    count = assetResults.count;
-                    break;
-                default:
-                    count = 0;
-                    break;
-            }
-            
-            if (count > 0) {
-                @autoreleasepool {
-                    DNAlbum *album = [DNAlbum albumWithAssetCollection:obj results:assetResults];
-                    [list addObject:album];
-                }
-            }
-        }];
-    }
-    return list;
+    return [self fetchAlbumListInPhotos];
+#else
+    return [self fetchAlbumListInAssetsLibrary];
+#endif
 }
 
 + (nonnull DNAlbum *)fetchCurrentAlbum {
@@ -64,31 +36,32 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
     if (!identifier || identifier.length <= 0 ) {
         return album;
     }
-
-    PHFetchResult *result = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[identifier] options:nil];
     
-    if (result.count <= 0) {
-        return album;       
-    }
-    PHFetchOptions *options = [[PHFetchOptions alloc] init];
-    options.predicate = [NSPredicate predicateWithFormat:@"mediaType = %@",@(PHAssetMediaTypeImage)];
-    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
-    PHAssetCollection *collection = result.firstObject;
-    
-    PHFetchResult *requestReslut = [PHAsset fetchAssetsInAssetCollection:collection options:options];
-    album.albumTitle = collection.localizedTitle;
-    album.results = requestReslut;
-    album.count = requestReslut.count;
-    album.startDate = collection.startDate;
-    album.identifier = collection.localIdentifier;
+    //    PHFetchResult *result = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[identifier] options:nil];
+    //
+    //    if (result.count <= 0) {
+    //        return album;
+    //    }
+    //    PHFetchOptions *options = [[PHFetchOptions alloc] init];
+    //    options.predicate = [NSPredicate predicateWithFormat:@"mediaType = %@",@(PHAssetMediaTypeImage)];
+    //    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+    //    PHAssetCollection *collection = result.firstObject;
+    //
+    //    PHFetchResult *requestReslut = [PHAsset fetchAssetsInAssetCollection:collection options:options];
+    //    album.albumTitle = collection.localizedTitle;
+    //    album.results = requestReslut;
+    //    album.count = requestReslut.count;
+    //    album.startDate = collection.startDate;
+    //    album.identifier = collection.localIdentifier;
     return album;
 }
+#if DNImagePikerPhotosAvaiable == 1
 
 + (nonnull NSArray *)fetchAlbumsResults {
     PHFetchOptions *userAlbumsOptions = [[PHFetchOptions alloc] init];
     userAlbumsOptions.predicate = [NSPredicate predicateWithFormat:@"estimatedAssetCount > 0"];
     userAlbumsOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"startDate" ascending:YES]];
-
+    
     NSMutableArray *albumsArray = [NSMutableArray array];
     [albumsArray addObject:
      [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum
@@ -126,11 +99,11 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
     
     [results enumerateObjectsWithOptions:option
                               usingBlock:^(id _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        @autoreleasepool {
-            DNAsset *asset = [DNAsset assetWithPHAsset:obj];
-            [array addObject:asset];
-        }
-    }];
+                                  @autoreleasepool {
+                                      DNAsset *asset = [DNAsset assetWithPHAsset:obj];
+                                      [array addObject:asset];
+                                  }
+                              }];
     return array;
 }
 
@@ -192,20 +165,96 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(9);
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
     PHImageRequestID reqestID = [[PHCachingImageManager defaultManager] requestImageForAsset:asset
-                                                             targetSize:size
-                                                            contentMode:PHImageContentModeAspectFill
-                                                                options:options
-                                                          resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-                                                              dispatch_async(dispatch_get_main_queue(), ^{
-                                                                  handler(result);
-                                                              });
-                                                          }];
+                                                                                  targetSize:size
+                                                                                 contentMode:PHImageContentModeAspectFill
+                                                                                     options:options
+                                                                               resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                                                                                   dispatch_async(dispatch_get_main_queue(), ^{
+                                                                                       handler(result);
+                                                                                   });
+                                                                               }];
     dispatch_semaphore_signal(semaphore);
     return reqestID;
 }
 
-#endif
 
+//*****************************   priviate for PhotosAvaiable   **********************************
+
++ (nonnull NSArray<DNAlbum *> *)fetchAlbumListInPhotos {
+    NSMutableArray *albums = [NSMutableArray arrayWithArray:[self fetchAlbumsResults]];
+    if (!albums)
+        return [NSArray array];
+    
+    PHFetchOptions *userAlbumsOptions = [[PHFetchOptions alloc] init];
+    userAlbumsOptions.predicate = [NSPredicate predicateWithFormat:@"mediaType = %@",@(PHAssetMediaTypeImage)];
+    userAlbumsOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+    
+    NSMutableArray *list = [NSMutableArray array];
+    for (PHFetchResult *result in albums) {
+        [result enumerateObjectsUsingBlock:^(PHAssetCollection *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            PHFetchResult *assetResults = [PHAsset fetchAssetsInAssetCollection:obj options:userAlbumsOptions];
+            NSInteger count = 0;
+            switch (obj.assetCollectionType) {
+                case PHAssetCollectionTypeAlbum:
+                case PHAssetCollectionTypeSmartAlbum:
+                    count = assetResults.count;
+                    break;
+                default:
+                    count = 0;
+                    break;
+            }
+            
+            if (count > 0) {
+                @autoreleasepool {
+                    DNAlbum *album = [DNAlbum albumWithAssetCollection:obj results:assetResults];
+                    [list addObject:album];
+                }
+            }
+        }];
+    }
+    return list;
+}
+#else
+
+//*****************************   priviate for AssetsLibrary   **********************************
++ (nonnull NSArray<DNAlbum *> *)fetchAlbumListInAssetsLibrary {
+    __block NSMutableArray *albumArray = [NSMutableArray array];
+    ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
+    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAll
+                                 usingBlock:^(ALAssetsGroup *assetsGroup, BOOL *stop) {
+                                     if (assetsGroup) {
+                                         // Filter the assets group
+                                         [assetsGroup setAssetsFilter:[ALAssetsFilter allAssets]];
+                                         // Add assets group
+                                         if (assetsGroup.numberOfAssets > 0) {
+                                             // Add assets group
+                                             DNAlbum *album = [DNAlbum albumWithAssetGroup:assetsGroup];
+                                             [albumArray addObject:album];
+                                         }
+                                     }
+                                 } failureBlock:^(NSError *error) {
+                                     
+                                 }];
+    if (albumArray.count > 0) {
+        NSArray *sortedAssetsGroups = [albumArray
+                                       sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                                           
+                                           DNAlbum *a = obj1;
+                                           DNAlbum *b = obj2;
+                                           
+                                           NSNumber *apropertyType = @(a.albumPropertyType.doubleValue);
+                                           NSNumber *bpropertyType = @(b.albumPropertyType.doubleValue);
+                                           if ([apropertyType compare:bpropertyType] == NSOrderedAscending)
+                                           {
+                                               return NSOrderedDescending;
+                                           }
+                                           return NSOrderedSame;
+                                       }];
+        return sortedAssetsGroups;
+    }
+    return albumArray;
+}
+#endif
 
 + (void)saveAblumIdentifier:(nullable NSString *)identifier {
     if (identifier.length <= 0)  return;

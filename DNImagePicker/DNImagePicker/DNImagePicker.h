@@ -36,4 +36,11 @@ typedef NS_ENUM(NSUInteger, DNAlbumAuthorizationStatus) {
     DNAlbumAuthorizationStatusAuthorized
 };
 
+typedef NS_ENUM(NSUInteger, DNImagePickerFitlerType) {
+    DNImagePickerFitlerTypeUnknown = 0,
+    DNImagePickerFitlerTypeImage   = 1,
+    DNImagePickerFitlerTypeVideo   = 2,
+    DNImagePickerFitlerTypeAudio   = 3,
+};
+
 #endif /* DNImagePicker_h */

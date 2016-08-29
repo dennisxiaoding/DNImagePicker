@@ -10,7 +10,7 @@
 
 @implementation UIColor (Hex)
 
-+ (UIColor *)hexStringToColor:(NSString *)stringToConvert {
++ (UIColor *)dn_hexStringToColor:(NSString *)stringToConvert {
     NSString *cString = [[stringToConvert stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
 
     if ([cString length] < 6)
@@ -49,7 +49,7 @@
                            alpha:1.0f];
 }
 
-+ (UIColor *)colorWithHexNumber:(NSUInteger)hexColor {
++ (UIColor *)dn_colorWithHexNumber:(NSUInteger)hexColor {
     float r = ((hexColor>>16) & 0xFF) / 255.0f;
     float g = ((hexColor>>8) & 0xFF) / 255.0f;
     float b = (hexColor & 0xFF) / 255.0f;

@@ -45,7 +45,7 @@ static CGFloat const kSendButtonTextWitdh = 38.0f;
 {
     _backGroudView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
     _backGroudView.centerY = self.centerY;
-    _backGroudView.backgroundColor = [UIColor hexStringToColor:dnSendButtonTintNormalColor];
+    _backGroudView.backgroundColor = [UIColor dn_hexStringToColor:dnSendButtonTintNormalColor];
     _backGroudView.layer.cornerRadius = _backGroudView.height/2;
     [self addSubview:_backGroudView];
     
@@ -60,9 +60,9 @@ static CGFloat const kSendButtonTextWitdh = 38.0f;
     _sendButton.frame = CGRectMake(0, 0, self.width, self.height);
     [_sendButton setTitle:NSLocalizedStringFromTable(@"send", @"DNImagePicker", @"发送")
                  forState:UIControlStateNormal];
-    [_sendButton setTitleColor:[UIColor hexStringToColor:dnSendButtonTintNormalColor] forState:UIControlStateNormal];
-    [_sendButton setTitleColor:[UIColor hexStringToColor:dnSendButtonTintAbnormalColor] forState:UIControlStateHighlighted];
-    [_sendButton setTitleColor:[UIColor hexStringToColor:dnSendButtonTintAbnormalColor] forState:UIControlStateDisabled];
+    [_sendButton setTitleColor:[UIColor dn_hexStringToColor:dnSendButtonTintNormalColor] forState:UIControlStateNormal];
+    [_sendButton setTitleColor:[UIColor dn_hexStringToColor:dnSendButtonTintAbnormalColor] forState:UIControlStateHighlighted];
+    [_sendButton setTitleColor:[UIColor dn_hexStringToColor:dnSendButtonTintAbnormalColor] forState:UIControlStateDisabled];
     _sendButton.titleLabel.font = [UIFont systemFontOfSize:15.0f];
     _sendButton.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0);
     _sendButton.backgroundColor = [UIColor clearColor];

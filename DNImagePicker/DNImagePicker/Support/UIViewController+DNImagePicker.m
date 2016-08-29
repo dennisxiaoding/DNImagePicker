@@ -65,7 +65,7 @@
     [button setTitle:text forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:15.0f];
     [button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor hexStringToColor:@"808080"] forState:UIControlStateHighlighted];
+    [button setTitleColor:[UIColor dn_hexStringToColor:@"#808080"] forState:UIControlStateHighlighted];
     
     UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     switch (position) {
@@ -85,7 +85,7 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setFrame:CGRectMake(0, 0, 84, 44)];
     [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor hexStringToColor:@"#808080"] forState:UIControlStateHighlighted];
+    [button setTitleColor:[UIColor dn_hexStringToColor:@"#808080"] forState:UIControlStateHighlighted];
     UIEdgeInsets imageInsets = UIEdgeInsetsMake(0, -20, 0, 60);
     UIEdgeInsets titleInsets = UIEdgeInsetsMake(0, -45, 0, -15);
     [button.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];

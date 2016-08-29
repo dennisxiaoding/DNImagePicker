@@ -9,6 +9,7 @@
 #import "DNAlbumTableViewController.h"
 #import "DNImagePickerController.h"
 #import "DNImageFlowViewController.h"
+#import "DNAlbumCell.h"
 #import "UIViewController+DNImagePicker.h"
 #import "DNUnAuthorizedTipsView.h"
 #import "DNImagePickerHelper.h"
@@ -23,9 +24,6 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
 @implementation DNAlbumTableViewController
 
 #pragma mark - life cycle
-- (void)dealloc {
-    NSLog(@"___");
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,7 +45,7 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
                                    text:NSLocalizedStringFromTable(@"cancel", @"DNImagePicker", @"取消")
                                  action:@selector(cancelAction:)];
     
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:dnalbumTableViewCellReuseIdentifier];
+    [self.tableView registerClass:[DNAlbumCell class] forCellReuseIdentifier:dnalbumTableViewCellReuseIdentifier];
     UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.tableFooterView = view;
 }
@@ -84,13 +82,16 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:dnalbumTableViewCellReuseIdentifier forIndexPath:indexPath];
+    DNAlbumCell *cell = [tableView dequeueReusableCellWithIdentifier:dnalbumTableViewCellReuseIdentifier forIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     DNAlbum *album = self.albumArray[indexPath.row];
-    cell.textLabel.attributedText = album.albumAttributedString;
-    cell.imageView.image = [UIImage imageNamed:@"assets_placeholder_picture"];
+    cell.titleLabel.attributedText = album.albumAttributedString;
     [album fetchPostImageWithSize:CGSizeMake(60, 60) imageResutHandler:^(UIImage * _Nullable postImage) {
-        cell.imageView.image = postImage;
+        if (postImage) {
+            cell.postImageView.image = postImage;
+        } else {
+            cell.postImageView.image = [UIImage imageNamed:@"assets_placeholder_picture"];
+        }
     }];
     return cell;
 }

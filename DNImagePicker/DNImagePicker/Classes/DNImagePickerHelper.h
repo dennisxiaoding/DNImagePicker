@@ -23,7 +23,7 @@
 + (DNAlbumAuthorizationStatus)authorizationStatus;
 
 
-+ (nonnull NSArray *)fetchAlbumList;
++ (nonnull NSArray<DNAlbum *> *)fetchAlbumList;
 
 /**
  *  Fetch the album which is stored by identifier; if not stored, it'll return the album without anything.

@@ -18,12 +18,22 @@
 
 + (DNAlbum *)albumWithAssetCollection:(PHAssetCollection *)collection results:(PHFetchResult *)results{
     DNAlbum *album = [[DNAlbum alloc] init];
-    album.albumTitle = @"";
     album.count = results.count;
     album.results = results;
     album.albumTitle = collection.localizedTitle;
     album.startDate = collection.startDate;
     album.identifier = collection.localIdentifier;
+    return album;
+}
+
+#else
+
++ (DNAlbum * _Nonnull)albumWithAssetGroup:(ALAssetsGroup *)assetGroup {
+    DNAlbum *album = [[DNAlbum alloc] init];
+    album.albumTitle = [assetGroup valueForProperty:ALAssetsGroupPropertyName];
+    album.count = assetGroup.numberOfAssets;
+    album.identifier = [assetGroup valueForProperty:ALAssetsGroupPropertyURL];
+    album.albumPropertyType = [assetGroup valueForProperty:ALAssetsGroupPropertyType];
     return album;
 }
 

@@ -32,6 +32,7 @@
  */
 + (nonnull DNAlbum *)fetchCurrentAlbum;
 
+#if DNImagePikerPhotosAvaiable == 1
 /**
  *  fetch `PHAsset` array via CollectionResults
  *
@@ -65,6 +66,7 @@
                              targetSize:(CGSize)targetSize
                       imageResutHandler:(void (^ _Nullable)(UIImage * _Nullable))handler;
 
+#endif
 
 // storeage
 + (void)saveAblumIdentifier:(nullable NSString *)identifier;

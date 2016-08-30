@@ -20,8 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, nullable) NSDate *startDate;
 
-@property (nonatomic, copy, nullable) NSString *identifier;
-
 /*
  @note use this model to store the album's 'result, 'count, 'name, 'startDate
  to avoid request and reserve too much times.

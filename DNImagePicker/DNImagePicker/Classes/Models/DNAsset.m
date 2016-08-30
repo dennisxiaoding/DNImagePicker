@@ -15,6 +15,10 @@
 
 @property (nonatomic, strong, nonnull) PHAsset *asset;
 
+#else 
+///the size of the file for this representation
+@property (nonatomic, assign) NSInteger imageSize;
+
 #endif
 
 @end
@@ -23,6 +27,12 @@
 
 #if DNImagePikerPhotosAvaiable == 0
 
++ (DNAsset *)assetWithALAsset:(ALAsset *)asset {
+    DNAsset *a = [[DNAsset alloc] init];
+    a.assetIdentifier = [asset valueForProperty:ALAssetPropertyAssetURL];
+    a.imageSize = asset.defaultRepresentation.size/1024;
+    return a;
+}
 
 #else
 + (DNAsset * _Nonnull)assetWithPHAsset:(nullable PHAsset *)asset {
@@ -43,19 +53,35 @@
 - (void)fetchImageWithSize:(CGSize)size
            needHighQuality:(BOOL)highQuality
          imageResutHandler:(void (^ _Nullable)( UIImage * _Nullable image))handler {
+#if DNImagePikerPhotosAvaiable == 0
+    
+#else
     [DNImagePickerHelper fetchImageWithAsset:self.asset
                                   targetSize:size
                              needHighQuality:highQuality
                            imageResutHandler:^(UIImage * _Nullable image) {
                                handler(image);
                            }];
+#endif
 }
 
 - (void)fetchImageSizeWithHandler:(void (^ _Nullable)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler {
+#if DNImagePikerPhotosAvaiable == 0
+    NSString *string = @"0M";
+    if (self.imageSize > 1024*1024) {
+        CGFloat size = self.imageSize/(1024.0*2024.0);
+        string = [NSString stringWithFormat:@"%.1fM",size];
+    } else {
+        CGFloat size = self.imageSize/1024.0;
+        string = [NSString stringWithFormat:@"%.1fK",size];
+    }
+    handler(self.imageSize, string);
+#else
     [DNImagePickerHelper fetchImageSizeWithAsset:self.asset
                           imageSizeResultHandler:^(CGFloat imageSize, NSString * _Nonnull sizeString) {
                               handler(imageSize, sizeString);
     }];
+#endif
 }
 
 

@@ -142,7 +142,7 @@
                              }];
                          }];
     } else {
-        self.checkImageView.image = [UIImage imageNamed:@"assets_placeholder_picture"];
+        self.checkImageView.image = [UIImage imageNamed:@"photo_check_default"];
     }
 }
 

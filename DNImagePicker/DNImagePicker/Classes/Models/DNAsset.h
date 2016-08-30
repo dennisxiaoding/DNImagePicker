@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 Dennis. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "DNImagePicker.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -26,11 +26,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)fetchImageSizeWithHandler:(void (^ _Nullable)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler;
 
 #if DNImagePikerPhotosAvaiable == 0
-@property (nonatomic, strong) NSURL *url;  //ALAsset url
+
++ (DNAsset * _Nonnull)assetWithALAsset:(nullable ALAsset *)asset;
+
 #else
 
 + (DNAsset * _Nonnull)assetWithPHAsset:(nullable PHAsset *)asset;
-@property (nonatomic, readonly, nullable) PHAsset *asset;
 
 #endif
 

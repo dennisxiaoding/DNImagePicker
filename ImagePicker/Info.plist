@@ -24,6 +24,11 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>in iOS 10 you must declare access to any user private data types. You do this by adding a usage key to your app’s Info.plist together with a purpose string.  DNImagepicker要访问你的相册</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>in iOS 10 you must declare access to any user private data types. You do this by adding a usage key to your app’s Info.plist together with a purpose string. 
+DNImagepicker要访问你的相册</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

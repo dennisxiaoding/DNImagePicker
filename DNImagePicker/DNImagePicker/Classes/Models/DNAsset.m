@@ -11,30 +11,26 @@
 #import "DNImagePickerHelper.h"
 @interface DNAsset ()
 
-#if DNImagePikerPhotosAvaiable == 1
-
 @property (nonatomic, strong, nonnull) PHAsset *asset;
+@property (nonatomic, assign) PHImageRequestID requestID;
 
-#else 
+@property (nonatomic, strong, nonnull) ALAsset *alAssets;
+
 ///the size of the file for this representation
 @property (nonatomic, assign) NSInteger imageSize;
-
-#endif
 
 @end
 
 @implementation DNAsset
 
-#if DNImagePikerPhotosAvaiable == 0
-
 + (DNAsset *)assetWithALAsset:(ALAsset *)asset {
     DNAsset *a = [[DNAsset alloc] init];
     a.assetIdentifier = [asset valueForProperty:ALAssetPropertyAssetURL];
     a.imageSize = asset.defaultRepresentation.size/1024;
+    a.alAssets = asset;
     return a;
 }
 
-#else
 + (DNAsset * _Nonnull)assetWithPHAsset:(nullable PHAsset *)asset {
     DNAsset *a = [[DNAsset alloc] init];
     a.asset = asset;
@@ -42,8 +38,9 @@
     return a;
 }
 
-#endif
-
+- (void)cancelImageRequest {
+    [DNImagePickerHelper cancelFetchWithAssets:self.asset];
+}
 
 - (void)fetchImageWithSize:(CGSize)size
          imageResutHandler:(void (^ _Nullable)( UIImage * _Nullable image))handler {
@@ -53,37 +50,54 @@
 - (void)fetchImageWithSize:(CGSize)size
            needHighQuality:(BOOL)highQuality
          imageResutHandler:(void (^ _Nullable)( UIImage * _Nullable image))handler {
-#if DNImagePikerPhotosAvaiable == 0
-    
-#else
-    [DNImagePickerHelper fetchImageWithAsset:self.asset
-                                  targetSize:size
-                             needHighQuality:highQuality
-                           imageResutHandler:^(UIImage * _Nullable image) {
-                               handler(image);
-                           }];
-#endif
+    if (@available(iOS 8.0, *)) {
+        [DNImagePickerHelper fetchImageWithAsset:self.asset
+                                      targetSize:size
+                                 needHighQuality:highQuality
+                               imageResutHandler:^(UIImage * _Nullable image) {
+                                   handler(image);
+                               }];
+    }else {
+        UIImage *image;
+        if (highQuality) {
+            image = [UIImage imageWithCGImage:self.alAssets.defaultRepresentation.fullScreenImage];
+        } else {
+            image = [UIImage imageWithCGImage:self.alAssets.thumbnail];
+        }
+        handler(image);
+    }
 }
 
 - (void)fetchImageSizeWithHandler:(void (^ _Nullable)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler {
-#if DNImagePikerPhotosAvaiable == 0
-    NSString *string = @"0M";
-    if (self.imageSize > 1024*1024) {
-        CGFloat size = self.imageSize/(1024.0*2024.0);
-        string = [NSString stringWithFormat:@"%.1fM",size];
+    if (@available(iOS 8.0, *)) {
+        [DNImagePickerHelper fetchImageSizeWithAsset:self.asset
+                              imageSizeResultHandler:^(CGFloat imageSize, NSString * _Nonnull sizeString) {
+                                  handler(imageSize, sizeString);
+                              }];
     } else {
-        CGFloat size = self.imageSize/1024.0;
-        string = [NSString stringWithFormat:@"%.1fK",size];
+        NSString *string = @"0M";
+        if (self.imageSize > 1024*1024) {
+            CGFloat size = self.imageSize/(1024.0*2024.0);
+            string = [NSString stringWithFormat:@"%.1fM",size];
+        } else {
+            CGFloat size = self.imageSize/1024.0;
+            string = [NSString stringWithFormat:@"%.1fK",size];
+        }
+        handler(self.imageSize, string);
     }
-    handler(self.imageSize, string);
-#else
-    [DNImagePickerHelper fetchImageSizeWithAsset:self.asset
-                          imageSizeResultHandler:^(CGFloat imageSize, NSString * _Nonnull sizeString) {
-                              handler(imageSize, sizeString);
-    }];
-#endif
 }
 
+- (PHAsset *)fetchAsset {
+    return self.asset;
+}
+
+- (void)setRequestID:(PHImageRequestID)requesetID {
+    _requestID = requesetID;
+}
+
+- (void)resetRequestID {
+    self.requestID = PHInvalidImageRequestID;
+}
 
 - (BOOL)isEqual:(id)other {
     if (other == self) {
@@ -98,6 +112,5 @@
         }
     }
 }
-
 
 @end

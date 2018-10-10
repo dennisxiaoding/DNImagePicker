@@ -11,6 +11,7 @@
 @implementation CollectionViewCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     self.textLabel.backgroundColor = [UIColor colorWithRed:0 green:162.0f/255.0f blue:255.0f/255.0f alpha:0.5];
 }
 

@@ -7,27 +7,64 @@
 //
 
 #import "DNImagePickerHelper.h"
+#import "DNImageFetchOperation.h"
 #import "DNAlbum.h"
 #import "DNAsset.h"
 
 static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePickerStoredGroup";
 
+@interface DNImagePickerHelper ()
+
+@property (nonatomic, strong) NSOperationQueue *imageFetchQueue;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, DNImageFetchOperation*> *fetchImageOperationDics;
+
+@end
+
 @implementation DNImagePickerHelper
 
++ (nonnull instancetype)sharedHelper {
+    static dispatch_once_t once;
+    static id instance;
+    dispatch_once(&once, ^{
+        instance = [self new];
+    });
+    return instance;
+}
+
+- (nonnull instancetype)init {
+    self = [super init];
+    if (self) {
+        _imageFetchQueue = [NSOperationQueue new];
+        _imageFetchQueue.maxConcurrentOperationCount = 8;
+        _imageFetchQueue.name = @"com.awesomedennis.dnnimagefetchQueue";
+        _fetchImageOperationDics = [NSMutableDictionary dictionaryWithCapacity:50];
+    }
+    return self;
+}
+
++ (dispatch_semaphore_t)imageFetchSemaphore {
+    static dispatch_semaphore_t _imageFetchSemaphore = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _imageFetchSemaphore = dispatch_semaphore_create(9);
+    });
+    return _imageFetchSemaphore;
+}
+
 + (DNAlbumAuthorizationStatus)authorizationStatus {
-#if DNImagePikerPhotosAvaiable == 1
-    return (DNAlbumAuthorizationStatus)[PHPhotoLibrary authorizationStatus];
-#else
-    return (DNAlbumAuthorizationStatus)[ALAssetsLibrary authorizationStatus];
-#endif
+    if (@available(iOS 8.0, *)) {
+        return (DNAlbumAuthorizationStatus)[PHPhotoLibrary authorizationStatus];
+    } else {
+        return (DNAlbumAuthorizationStatus)[ALAssetsLibrary authorizationStatus];
+    }
 }
 
 + (nonnull NSArray<DNAlbum *> *)fetchAlbumList {
-#if DNImagePikerPhotosAvaiable == 1
-    return [self fetchAlbumListInPhotos];
-#else
-    return [self fetchAlbumListInAssetsLibrary];
-#endif
+    if (@available(iOS 8.0, *)) {
+        return [self fetchAlbumListInPhotos];
+    } else {
+        return [self fetchAlbumListInAssetsLibrary];
+    }
 }
 
 + (nonnull DNAlbum *)fetchCurrentAlbum {
@@ -37,25 +74,24 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
         return album;
     }
     
-    //    PHFetchResult *result = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[identifier] options:nil];
-    //
-    //    if (result.count <= 0) {
-    //        return album;
-    //    }
-    //    PHFetchOptions *options = [[PHFetchOptions alloc] init];
-    //    options.predicate = [NSPredicate predicateWithFormat:@"mediaType = %@",@(PHAssetMediaTypeImage)];
-    //    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
-    //    PHAssetCollection *collection = result.firstObject;
-    //
-    //    PHFetchResult *requestReslut = [PHAsset fetchAssetsInAssetCollection:collection options:options];
-    //    album.albumTitle = collection.localizedTitle;
-    //    album.results = requestReslut;
-    //    album.count = requestReslut.count;
-    //    album.startDate = collection.startDate;
-    //    album.identifier = collection.localIdentifier;
+    PHFetchResult *result = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[identifier] options:nil];
+    
+    if (result.count <= 0) {
+        return album;
+    }
+    PHFetchOptions *options = [[PHFetchOptions alloc] init];
+    options.predicate = [NSPredicate predicateWithFormat:@"mediaType = %@",@(PHAssetMediaTypeImage)];
+    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+    PHAssetCollection *collection = result.firstObject;
+    
+    PHFetchResult *requestReslut = [PHAsset fetchAssetsInAssetCollection:collection options:options];
+    album.albumTitle = collection.localizedTitle;
+    album.results = requestReslut;
+    album.count = requestReslut.count;
+    album.startDate = collection.startDate;
+    album.identifier = collection.localIdentifier;
     return album;
 }
-#if DNImagePikerPhotosAvaiable == 1
 
 + (nonnull NSArray *)fetchAlbumsResults {
     PHFetchOptions *userAlbumsOptions = [[PHFetchOptions alloc] init];
@@ -71,7 +107,6 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
      [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum
                                               subtype:PHAssetCollectionSubtypeAny
                                               options:userAlbumsOptions]];
-    
     return albumsArray;
 }
 
@@ -113,7 +148,6 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
         handler(0,@"0M");
         return;
     }
-    
     [[PHImageManager defaultManager] requestImageDataForAsset:asset
                                                       options:nil
                                                 resultHandler:^(NSData * _Nullable imageData,
@@ -139,42 +173,42 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
 }
 
 
-+ (PHImageRequestID)fetchImageWithAsset:(nullable PHAsset *)asset
++ (void)fetchImageWithAsset:(nullable PHAsset *)asset
                              targetSize:(CGSize)targetSize
                       imageResutHandler:(void (^ _Nullable)(UIImage * _Nullable))handler {
     return  [self fetchImageWithAsset:asset targetSize:targetSize needHighQuality:NO imageResutHandler:handler];
 }
 
-+ (PHImageRequestID)fetchImageWithAsset:(nullable PHAsset *)asset
++ (void)fetchImageWithAsset:(nullable PHAsset *)asset
                              targetSize:(CGSize)targetSize
                         needHighQuality:(BOOL)isHighQuality
                       imageResutHandler:(void (^ _Nullable)( UIImage * _Nullable image))handler {
     if (!asset) {
-        return PHInvalidImageRequestID;
+        return;
     }
     
-    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-    if (isHighQuality) {
-        options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
-    } else {
-        options.resizeMode = PHImageRequestOptionsResizeModeExact;
+    DNImagePickerHelper *helper = [DNImagePickerHelper sharedHelper];
+    DNImageFetchOperation *operation = [[DNImageFetchOperation alloc] initWithAsset:asset];
+    __weak typeof(helper) whelper = helper;
+    [operation fetchImageWithTargetSize:targetSize needHighQuality:isHighQuality imageResutHandler:^(UIImage * _Nonnull image) {
+        __strong typeof(whelper) shelper = whelper;
+        [shelper.fetchImageOperationDics removeObjectForKey:asset.localIdentifier];
+        handler(image);
+    }];
+    [helper.imageFetchQueue addOperation:operation];
+    [helper.fetchImageOperationDics setObject:operation forKey:asset.localIdentifier];
+}
+
++ (void)cancelFetchWithAssets:(PHAsset *)asset {
+    if (!asset) {
+        return;
     }
-    CGFloat scale = [[UIScreen mainScreen] scale];
-    CGSize size = CGSizeMake(targetSize.width * scale, targetSize.height * scale);
-    
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(9);
-    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-    PHImageRequestID reqestID = [[PHCachingImageManager defaultManager] requestImageForAsset:asset
-                                                                                  targetSize:size
-                                                                                 contentMode:PHImageContentModeAspectFill
-                                                                                     options:options
-                                                                               resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-                                                                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                                                                       handler(result);
-                                                                                   });
-                                                                               }];
-    dispatch_semaphore_signal(semaphore);
-    return reqestID;
+    DNImagePickerHelper *helper = [DNImagePickerHelper sharedHelper];
+    DNImageFetchOperation *operation = [helper.fetchImageOperationDics objectForKey:asset.localIdentifier];
+    if (operation) {
+        [operation cancel];
+    }
+    [helper.fetchImageOperationDics removeObjectForKey:asset.localIdentifier];
 }
 
 
@@ -214,7 +248,6 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
     }
     return list;
 }
-#else
 
 //*****************************   priviate for AssetsLibrary   **********************************
 + (nonnull NSArray<DNAlbum *> *)fetchAlbumListInAssetsLibrary {
@@ -254,7 +287,6 @@ static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePicke
     }
     return albumArray;
 }
-#endif
 
 + (void)saveAblumIdentifier:(nullable NSString *)identifier {
     if (identifier.length <= 0)  return;

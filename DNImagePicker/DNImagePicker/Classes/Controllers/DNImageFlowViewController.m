@@ -282,15 +282,7 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
     DNAsset *asset = self.assetsArray[indexPath.row];
     cell.delegate = self;
     [cell fillWithAsset:asset isSelected:[self.selectedAssetsArray containsObject:asset]];
-    CGFloat kThumbSizeLength =  ceil(([[UIScreen mainScreen] bounds].size.width -10)/4);
-    [asset fetchImageWithSize:CGSizeMake(kThumbSizeLength, kThumbSizeLength)
-            imageResutHandler:^(UIImage * _Nullable image) {
-                if (image) {
-                    cell.imageView.image = image;
-                } else {
-                    cell.imageView.image = [UIImage imageNamed:@"assets_placeholder_picture"];
-                }
-    }];
+    
     return cell;
 }
 

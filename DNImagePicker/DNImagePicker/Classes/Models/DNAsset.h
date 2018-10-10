@@ -25,15 +25,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)fetchImageSizeWithHandler:(void (^ _Nullable)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler;
 
-#if DNImagePikerPhotosAvaiable == 0
++ (DNAsset * _Nonnull)assetWithALAsset:(nullable ALAsset *)asset NS_DEPRECATED_IOS(4_0, 9_0);
 
-+ (DNAsset * _Nonnull)assetWithALAsset:(nullable ALAsset *)asset;
++ (DNAsset * _Nonnull)assetWithPHAsset:(nullable PHAsset *)asset NS_AVAILABLE_IOS(8_0);
 
-#else
-
-+ (DNAsset * _Nonnull)assetWithPHAsset:(nullable PHAsset *)asset;
-
-#endif
+- (void)cancelImageRequest;
 
 @end
 

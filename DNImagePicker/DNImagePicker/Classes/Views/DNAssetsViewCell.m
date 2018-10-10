@@ -9,6 +9,7 @@
 #import "DNAssetsViewCell.h"
 #import "DNAsset.h"
 
+
 @interface DNAssetsViewCell ()
 @property (nonatomic, strong, nonnull) UIImageView *imageView;
 @property (nonatomic, strong, nonnull) UIButton *checkButton;
@@ -121,6 +122,17 @@
 - (void)fillWithAsset:(nonnull DNAsset *)asset isSelected:(BOOL)seleted {
     self.isSelected = seleted;
     self.asset = asset;
+    __weak typeof(self) wSelf = self;
+    CGFloat kThumbSizeLength =  ceil(([[UIScreen mainScreen] bounds].size.width -10)/4);
+    [asset fetchImageWithSize:CGSizeMake(kThumbSizeLength, kThumbSizeLength)
+            imageResutHandler:^(UIImage * _Nullable image) {
+                __strong typeof(wSelf) sSelf = wSelf;
+                if (image) {
+                    sSelf.imageView.image = image;
+                } else {
+                    sSelf.imageView.image = [UIImage imageNamed:@"assets_placeholder_picture"];
+                }
+            }];
 }
 
 - (void)setIsSelected:(BOOL)isSelected {
@@ -160,10 +172,13 @@
 }
 
 - (void)prepareForReuse {
+    if (_asset) {
+        [_asset cancelImageRequest];
+    }
     _asset = nil;
     _isSelected = NO;
     _delegate = nil;
-    _imageView.image = nil;
+//    _imageView.image = nil;
 }
 
 #pragma mark - Getter

@@ -14,6 +14,10 @@
 
 @interface DNImagePickerHelper : NSObject
 
++ (nonnull instancetype)sharedHelper;
+
++ (void)cancelFetchWithAssets:(PHAsset *)asset;
+
 /**
  *  Returns information about your app’s authorization for accessing the user’s Photos library.
  The current authorization status. See `DNAlbumAuthorizationStatus`.
@@ -32,7 +36,6 @@
  */
 + (nonnull DNAlbum *)fetchCurrentAlbum;
 
-#if DNImagePikerPhotosAvaiable == 1
 /**
  *  fetch `PHAsset` array via CollectionResults
  *
@@ -57,16 +60,14 @@
 + (void)fetchImageSizeWithAsset:(nullable PHAsset *)asset
          imageSizeResultHandler:(void ( ^ _Nonnull)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler;
 
-+ (PHImageRequestID)fetchImageWithAsset:(nullable PHAsset *)asset
++ (void)fetchImageWithAsset:(nullable PHAsset *)asset
                              targetSize:(CGSize)targetSize
                         needHighQuality:(BOOL)isHighQuality
                       imageResutHandler:(void (^ _Nullable)( UIImage * _Nullable image))handler;
 
-+ (PHImageRequestID)fetchImageWithAsset:(nullable PHAsset *)asset
++ (void)fetchImageWithAsset:(nullable PHAsset *)asset
                              targetSize:(CGSize)targetSize
                       imageResutHandler:(void (^ _Nullable)(UIImage * _Nullable))handler;
-
-#endif
 
 // storeage
 + (void)saveAblumIdentifier:(nullable NSString *)identifier;

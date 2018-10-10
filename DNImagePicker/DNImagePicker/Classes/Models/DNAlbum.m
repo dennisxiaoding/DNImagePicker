@@ -8,13 +8,14 @@
 
 #import "DNAlbum.h"
 #import "DNImagePickerHelper.h"
+#import "DNAsset.h"
+
 @interface DNAlbum ()
 
 @end
 
 @implementation DNAlbum
 
-#if DNImagePikerPhotosAvaiable == 1
 
 + (DNAlbum *)albumWithAssetCollection:(PHAssetCollection *)collection results:(PHFetchResult *)results{
     DNAlbum *album = [[DNAlbum alloc] init];
@@ -26,7 +27,6 @@
     return album;
 }
 
-#else
 
 + (DNAlbum * _Nonnull)albumWithAssetGroup:(ALAssetsGroup *)assetGroup {
     DNAlbum *album = [[DNAlbum alloc] init];
@@ -34,18 +34,23 @@
     album.count = assetGroup.numberOfAssets;
     album.identifier = [assetGroup valueForProperty:ALAssetsGroupPropertyURL];
     album.albumPropertyType = [assetGroup valueForProperty:ALAssetsGroupPropertyType];
+    album.posterImage = [UIImage imageWithCGImage:assetGroup.posterImage];
     return album;
 }
 
-#endif
 
 - (void)fetchPostImageWithSize:(CGSize)size
              imageResutHandler:(void (^ _Nullable)(UIImage * _Nullable))handler {
-    [DNImagePickerHelper fetchImageWithAsset:self.results.firstObject
-                                  targetSize:CGSizeMake(60, 60)
-                           imageResutHandler:^(UIImage * _Nullable postImage) {
-                               handler(postImage);
-                           }];
+    if (@available(iOS 8.0, *)) {
+        [DNImagePickerHelper fetchImageWithAsset:self.results.firstObject
+                                      targetSize:size
+                               imageResutHandler:^(UIImage * _Nullable postImage) {
+                                   handler(postImage);
+                               }];
+    } else {
+        handler(self.posterImage);
+    }
+    
 }
 
 - (NSAttributedString *)albumAttributedString {

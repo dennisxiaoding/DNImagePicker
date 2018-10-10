@@ -6,22 +6,8 @@
 //  Copyright © 2016年 Dennis. All rights reserved.
 //
 
-#ifndef DNImagePicker_h
-#define DNImagePicker_h
-
-#if (defined(__IPHONE_OS_VERSION_MIN_REQUIRED) && __IPHONE_OS_VERSION_MIN_REQUIRED >= 80000)
-    #import <Photos/Photos.h>
-    #ifndef DNImagePikerPhotosAvaiable
-    #define DNImagePikerPhotosAvaiable 1
-    #endif
-#else
-    #import <AssetsLibrary/AssetsLibrary.h>
-    #ifndef DNImagePikerPhotosAvaiable
-    #define DNImagePikerPhotosAvaiable 0
-    #endif
-#endif
-
-
+#import <Photos/Photos.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
 typedef NS_ENUM(NSUInteger, DNAlbumAuthorizationStatus) {
     // User has not yet made a choice with regards to this application
@@ -43,4 +29,3 @@ typedef NS_ENUM(NSUInteger, DNImagePickerFitlerType) {
     DNImagePickerFitlerTypeAudio   = 3,
 };
 
-#endif /* DNImagePicker_h */

@@ -28,14 +28,18 @@ static NSString* const dnalbumTableViewCellReuseIdentifier = @"dnalbumTableViewC
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupView];
-    self.albumArray = [DNImagePickerHelper fetchAlbumList];
+    [self reloadTableView];
 }
 
 #pragma mark - public
 
 - (void)reloadTableView {
-    self.albumArray = [DNImagePickerHelper fetchAlbumList];
-    [self.tableView reloadData];
+    [DNImagePickerHelper requestAlbumListWithCompleteHandler:^(NSArray<DNAlbum *> * _Nonnull anblumList) {
+        if (anblumList) {
+            self.albumArray = [anblumList copy];
+            [self.tableView reloadData];
+        }
+    }];
 }
 
 #pragma mark - mark setup Data and View

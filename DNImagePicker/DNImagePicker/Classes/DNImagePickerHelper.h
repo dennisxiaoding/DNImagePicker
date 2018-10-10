@@ -11,12 +11,13 @@
 
 @class DNAlbum;
 @class DNAsset;
+NS_ASSUME_NONNULL_BEGIN
 
 @interface DNImagePickerHelper : NSObject
 
 + (nonnull instancetype)sharedHelper;
 
-+ (void)cancelFetchWithAssets:(PHAsset *)asset;
++ (void)cancelFetchWithAssets:(PHAsset *)asset NS_AVAILABLE_IOS(8_0);
 
 /**
  *  Returns information about your app’s authorization for accessing the user’s Photos library.
@@ -26,8 +27,11 @@
  */
 + (DNAlbumAuthorizationStatus)authorizationStatus;
 
-
-+ (nonnull NSArray<DNAlbum *> *)fetchAlbumList;
+/**
+ *  Fetch the albumlist
+ *
+ */
++ (void)requestAlbumListWithCompleteHandler:(void(^)(NSArray<DNAlbum *>* _Nullable anblumList))competeHandler;
 
 /**
  *  Fetch the album which is stored by identifier; if not stored, it'll return the album without anything.
@@ -43,7 +47,7 @@
  *
  *  @return `PHAsset` array in collection
  */
-+ (nonnull NSArray *)fetchImageAssetsViaCollectionResults:(nullable PHFetchResult *)results;
++ (nonnull NSArray *)fetchImageAssetsViaCollectionResults:(nullable PHFetchResult *)results NS_AVAILABLE_IOS(8_0);
 
 /**
  *  fetch `PHAsset` array via CollectionResults
@@ -54,20 +58,20 @@
  *  @return `PHAsset` array in collection
  */
 + (nonnull NSArray *)fetchImageAssetsViaCollectionResults:(nullable PHFetchResult *)results
-                                       enumerationOptions:(NSEnumerationOptions)option;
+                                       enumerationOptions:(NSEnumerationOptions)option NS_AVAILABLE_IOS(8_0);
 
 
 + (void)fetchImageSizeWithAsset:(nullable PHAsset *)asset
-         imageSizeResultHandler:(void ( ^ _Nonnull)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler;
+         imageSizeResultHandler:(void ( ^ _Nonnull)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler NS_AVAILABLE_IOS(8_0);
 
 + (void)fetchImageWithAsset:(nullable PHAsset *)asset
                              targetSize:(CGSize)targetSize
                         needHighQuality:(BOOL)isHighQuality
-                      imageResutHandler:(void (^ _Nullable)( UIImage * _Nullable image))handler;
+                      imageResutHandler:(void (^ _Nullable)( UIImage * _Nullable image))handler NS_AVAILABLE_IOS(8_0);
 
 + (void)fetchImageWithAsset:(nullable PHAsset *)asset
                              targetSize:(CGSize)targetSize
-                      imageResutHandler:(void (^ _Nullable)(UIImage * _Nullable))handler;
+                      imageResutHandler:(void (^ _Nullable)(UIImage * _Nullable))handler NS_AVAILABLE_IOS(8_0);
 
 // storeage
 + (void)saveAblumIdentifier:(nullable NSString *)identifier;
@@ -76,3 +80,4 @@
 
 
 @end
+NS_ASSUME_NONNULL_END

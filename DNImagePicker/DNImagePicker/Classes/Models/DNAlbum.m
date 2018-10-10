@@ -41,7 +41,7 @@
 
 - (void)fetchPostImageWithSize:(CGSize)size
              imageResutHandler:(void (^ _Nullable)(UIImage * _Nullable))handler {
-    if (@available(iOS 8.0, *)) {
+    if (@available(iOS 10.0, *)) {
         [DNImagePickerHelper fetchImageWithAsset:self.results.firstObject
                                       targetSize:size
                                imageResutHandler:^(UIImage * _Nullable postImage) {

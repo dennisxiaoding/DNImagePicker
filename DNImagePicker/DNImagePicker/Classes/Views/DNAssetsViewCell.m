@@ -178,7 +178,6 @@
     _asset = nil;
     _isSelected = NO;
     _delegate = nil;
-//    _imageView.image = nil;
 }
 
 #pragma mark - Getter

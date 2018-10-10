@@ -26,7 +26,7 @@
 + (DNAsset *)assetWithALAsset:(ALAsset *)asset {
     DNAsset *a = [[DNAsset alloc] init];
     a.assetIdentifier = [asset valueForProperty:ALAssetPropertyAssetURL];
-    a.imageSize = asset.defaultRepresentation.size/1024;
+    a.imageSize = (NSInteger)asset.defaultRepresentation.size/1024;
     a.alAssets = asset;
     return a;
 }
@@ -39,7 +39,9 @@
 }
 
 - (void)cancelImageRequest {
-    [DNImagePickerHelper cancelFetchWithAssets:self.asset];
+    if (@available(iOS 10.0, *)) {
+        [DNImagePickerHelper cancelFetchWithAssets:self.asset];
+    }
 }
 
 - (void)fetchImageWithSize:(CGSize)size
@@ -50,7 +52,7 @@
 - (void)fetchImageWithSize:(CGSize)size
            needHighQuality:(BOOL)highQuality
          imageResutHandler:(void (^ _Nullable)( UIImage * _Nullable image))handler {
-    if (@available(iOS 8.0, *)) {
+    if (@available(iOS 10.0, *)) {
         [DNImagePickerHelper fetchImageWithAsset:self.asset
                                       targetSize:size
                                  needHighQuality:highQuality
@@ -69,7 +71,7 @@
 }
 
 - (void)fetchImageSizeWithHandler:(void (^ _Nullable)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler {
-    if (@available(iOS 8.0, *)) {
+    if (@available(iOS 10.0, *)) {
         [DNImagePickerHelper fetchImageSizeWithAsset:self.asset
                               imageSizeResultHandler:^(CGFloat imageSize, NSString * _Nonnull sizeString) {
                                   handler(imageSize, sizeString);

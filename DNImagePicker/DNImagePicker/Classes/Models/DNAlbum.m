@@ -28,11 +28,16 @@
 }
 
 
-+ (DNAlbum * _Nonnull)albumWithAssetGroup:(ALAssetsGroup *)assetGroup {
++ (DNAlbum *)albumWithAssetGroup:(ALAssetsGroup *)assetGroup {
     DNAlbum *album = [[DNAlbum alloc] init];
     album.albumTitle = [assetGroup valueForProperty:ALAssetsGroupPropertyName];
     album.count = assetGroup.numberOfAssets;
-    album.identifier = [assetGroup valueForProperty:ALAssetsGroupPropertyURL];
+    id url = [assetGroup valueForProperty:ALAssetsGroupPropertyURL];
+    if ([url isKindOfClass:[NSURL class]]) {
+        album.identifier = ((NSURL *)url).absoluteString;
+    } else if ([url isKindOfClass:[NSString class]]) {
+        album.identifier = (NSString *)url;
+    }
     album.albumPropertyType = [assetGroup valueForProperty:ALAssetsGroupPropertyType];
     album.posterImage = [UIImage imageWithCGImage:assetGroup.posterImage];
     return album;
@@ -40,11 +45,11 @@
 
 
 - (void)fetchPostImageWithSize:(CGSize)size
-             imageResutHandler:(void (^ _Nullable)(UIImage * _Nullable))handler {
-    if (@available(iOS 10.0, *)) {
+             imageResutHandler:(void (^)(UIImage *))handler {
+    if (@available(iOS 8.0, *)) {
         [DNImagePickerHelper fetchImageWithAsset:self.results.firstObject
                                       targetSize:size
-                               imageResutHandler:^(UIImage * _Nullable postImage) {
+                               imageResutHandler:^(UIImage *postImage) {
                                    handler(postImage);
                                }];
     } else {

@@ -11,10 +11,10 @@
 #import "DNImagePickerHelper.h"
 @interface DNAsset ()
 
-@property (nonatomic, strong, nonnull) PHAsset *asset;
+@property (nonatomic, strong, nullable) PHAsset *asset;
 @property (nonatomic, assign) PHImageRequestID requestID;
 
-@property (nonatomic, strong, nonnull) ALAsset *alAssets;
+@property (nonatomic, strong, nullable) ALAsset *alAssets;
 
 ///the size of the file for this representation
 @property (nonatomic, assign) NSInteger imageSize;
@@ -25,13 +25,18 @@
 
 + (DNAsset *)assetWithALAsset:(ALAsset *)asset {
     DNAsset *a = [[DNAsset alloc] init];
-    a.assetIdentifier = [asset valueForProperty:ALAssetPropertyAssetURL];
+    id url = [asset valueForProperty:ALAssetPropertyAssetURL];
+    if ([url isKindOfClass:[NSURL class]]) {
+        a.assetIdentifier = ((NSURL *)url).absoluteString;
+    } else if ([url isKindOfClass:[NSString class]]) {
+        a.assetIdentifier = (NSString *)url;
+    }
     a.imageSize = (NSInteger)asset.defaultRepresentation.size/1024;
     a.alAssets = asset;
     return a;
 }
 
-+ (DNAsset * _Nonnull)assetWithPHAsset:(nullable PHAsset *)asset {
++ (DNAsset *)assetWithPHAsset:(PHAsset *)asset {
     DNAsset *a = [[DNAsset alloc] init];
     a.asset = asset;
     a.assetIdentifier = asset.localIdentifier;
@@ -39,20 +44,20 @@
 }
 
 - (void)cancelImageRequest {
-    if (@available(iOS 10.0, *)) {
+    if (@available(iOS 8.0, *)) {
         [DNImagePickerHelper cancelFetchWithAssets:self.asset];
     }
 }
 
 - (void)fetchImageWithSize:(CGSize)size
-         imageResutHandler:(void (^ _Nullable)( UIImage * _Nullable image))handler {
+         imageResutHandler:(void (^)(UIImage *image))handler {
     [self fetchImageWithSize:size needHighQuality:NO imageResutHandler:handler];
 }
 
 - (void)fetchImageWithSize:(CGSize)size
            needHighQuality:(BOOL)highQuality
-         imageResutHandler:(void (^ _Nullable)( UIImage * _Nullable image))handler {
-    if (@available(iOS 10.0, *)) {
+         imageResutHandler:(void (^)(UIImage *image))handler {
+    if (@available(iOS 8.0, *)) {
         [DNImagePickerHelper fetchImageWithAsset:self.asset
                                       targetSize:size
                                  needHighQuality:highQuality
@@ -70,10 +75,10 @@
     }
 }
 
-- (void)fetchImageSizeWithHandler:(void (^ _Nullable)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler {
-    if (@available(iOS 10.0, *)) {
+- (void)fetchImageSizeWithHandler:(void (^)(CGFloat imageSize, NSString *sizeString))handler {
+    if (@available(iOS 8.0, *)) {
         [DNImagePickerHelper fetchImageSizeWithAsset:self.asset
-                              imageSizeResultHandler:^(CGFloat imageSize, NSString * _Nonnull sizeString) {
+                              imageSizeResultHandler:^(CGFloat imageSize, NSString *sizeString) {
                                   handler(imageSize, sizeString);
                               }];
     } else {

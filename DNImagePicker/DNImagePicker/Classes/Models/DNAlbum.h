@@ -13,8 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DNAlbum : NSObject
 
-+ (DNAlbum * _Nonnull)albumWithAssetCollection:(PHAssetCollection * _Nonnull)collection
-                                         results:(PHFetchResult * _Nonnull)results NS_AVAILABLE_IOS(8_0);
++ (DNAlbum *)albumWithAssetCollection:(PHAssetCollection *)collection
+                                         results:(PHFetchResult *)results NS_AVAILABLE_IOS(8_0);
 
 @property (nonatomic, strong, nullable) NSDate *startDate NS_AVAILABLE_IOS(8_0);
 
@@ -26,19 +26,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy, nullable) NSString *identifier;
 
-@property (nonatomic, copy, nonnull) NSString *albumTitle;
+@property (nonatomic, copy, nullable) NSString *albumTitle;
 
 @property (nonatomic, assign) NSInteger count;
 
-@property (nonatomic, readonly, nonnull) NSAttributedString *albumAttributedString;
+@property (nonatomic, readonly, nullable) NSAttributedString *albumAttributedString;
 
-- (void)fetchPostImageWithSize:(CGSize)size imageResutHandler:(void (^ _Nullable)(UIImage * _Nullable))handler;
+- (void)fetchPostImageWithSize:(CGSize)size imageResutHandler:(void (^)(UIImage *))handler;
 
-+ (DNAlbum * _Nonnull)albumWithAssetGroup:(ALAssetsGroup *)assetGroup NS_DEPRECATED_IOS(4_0, 9_0);
+//@property (nonatomic, strong, nullable) ALAssetsGroup *assetGroup NS_DEPRECATED_IOS(4_0, 9_0);
 
 @property (nonatomic, copy, nullable) NSString *albumPropertyType NS_DEPRECATED_IOS(4_0, 9_0);
 
-@property (nonatomic, strong) UIImage *posterImage  NS_DEPRECATED_IOS(4_0, 9_0);
+@property (nonatomic, strong, nullable) UIImage *posterImage  NS_DEPRECATED_IOS(4_0, 9_0);
+
++ (DNAlbum *)albumWithAssetGroup:(ALAssetsGroup *)assetGroup NS_DEPRECATED_IOS(4_0, 9_0);
 
 @end
 

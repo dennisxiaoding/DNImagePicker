@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DNImagePickerHelper : NSObject
 
-+ (nonnull instancetype)sharedHelper;
++ (instancetype)sharedHelper;
 
 + (void)cancelFetchWithAssets:(PHAsset *)asset NS_AVAILABLE_IOS(8_0);
 
@@ -31,52 +31,53 @@ NS_ASSUME_NONNULL_BEGIN
  *  Fetch the albumlist
  *
  */
-+ (void)requestAlbumListWithCompleteHandler:(void(^)(NSArray<DNAlbum *>* _Nullable anblumList))competeHandler;
++ (void)requestAlbumListWithCompleteHandler:(void(^)(NSArray<DNAlbum *>* anblumList))competeHandler;
 
 /**
  *  Fetch the album which is stored by identifier; if not stored, it'll return the album without anything.
  *
  *  @return the stored album
  */
-+ (nonnull DNAlbum *)fetchCurrentAlbum;
++ (DNAlbum *)fetchCurrentAlbum;
+
 
 /**
- *  fetch `PHAsset` array via CollectionResults
- *
- *  @param results collection fetch results
- *
- *  @return `PHAsset` array in collection
+ fetch images in the specific ablum
+ 
+ @param album target album
+ @param completeHandler callbacks with imageArray
  */
-+ (nonnull NSArray *)fetchImageAssetsViaCollectionResults:(nullable PHFetchResult *)results NS_AVAILABLE_IOS(8_0);
++ (void)fetchImageAssetsInAlbum:(DNAlbum *)album completeHandler:(void(^)(NSArray<DNAsset *>* imageArray))completeHandler;
+
+
++ (void)fetchImageSizeWithAsset:(PHAsset *)asset
+         imageSizeResultHandler:(void (^)(CGFloat imageSize, NSString * sizeString))handler NS_AVAILABLE_IOS(8_0);
+
 
 /**
- *  fetch `PHAsset` array via CollectionResults
- *
- *  @param results collection fetch results
- *  @param option  NSEnumerationOptions
- *
- *  @return `PHAsset` array in collection
+ fetch Image with assets
+ 
+ @param asset target assets
+ @param targetSize target size
+ @param isHighQuality is need highQuality
+ @param handler callback with image
  */
-+ (nonnull NSArray *)fetchImageAssetsViaCollectionResults:(nullable PHFetchResult *)results
-                                       enumerationOptions:(NSEnumerationOptions)option NS_AVAILABLE_IOS(8_0);
-
-
-+ (void)fetchImageSizeWithAsset:(nullable PHAsset *)asset
-         imageSizeResultHandler:(void ( ^ _Nonnull)(CGFloat imageSize,  NSString * _Nonnull sizeString))handler NS_AVAILABLE_IOS(8_0);
-
-+ (void)fetchImageWithAsset:(nullable PHAsset *)asset
-                             targetSize:(CGSize)targetSize
-                        needHighQuality:(BOOL)isHighQuality
-                      imageResutHandler:(void (^ _Nullable)( UIImage * _Nullable image))handler NS_AVAILABLE_IOS(8_0);
-
-+ (void)fetchImageWithAsset:(nullable PHAsset *)asset
-                             targetSize:(CGSize)targetSize
-                      imageResutHandler:(void (^ _Nullable)(UIImage * _Nullable))handler NS_AVAILABLE_IOS(8_0);
++ (void)fetchImageWithAsset:(PHAsset *)asset
+                 targetSize:(CGSize)targetSize
+            needHighQuality:(BOOL)isHighQuality
+          imageResutHandler:(void (^)(UIImage * image))handler NS_AVAILABLE_IOS(8_0);
+/**
+ fetch Image with assets
+ same as `fetchImageWithAsset:targetSize:needHighQuality:imageResutHandler:` param `isHighQuality` is NO
+ */
++ (void)fetchImageWithAsset:(PHAsset *)asset
+                 targetSize:(CGSize)targetSize
+          imageResutHandler:(void (^)(UIImage *))handler NS_AVAILABLE_IOS(8_0);
 
 // storeage
-+ (void)saveAblumIdentifier:(nullable NSString *)identifier;
++ (void)saveAblumIdentifier:(NSString *)identifier;
 
-+ (nullable NSString *)albumIdentifier;
++ (NSString *)albumIdentifier;
 
 
 @end

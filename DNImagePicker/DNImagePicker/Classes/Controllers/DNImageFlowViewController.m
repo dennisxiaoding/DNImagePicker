@@ -116,16 +116,14 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 }
 
 - (void)loadData {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self.assetsArray removeAllObjects];
-        [self.assetsArray addObjectsFromArray:
-         [DNImagePickerHelper fetchImageAssetsViaCollectionResults:self.album.results enumerationOptions:NSEnumerationReverse]
-         ];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.imageFlowCollectionView reloadData];
-            [self scrollerToBottom:NO];
-        });
-    });
+    __weak typeof(self) wSelf = self;
+    [DNImagePickerHelper fetchImageAssetsInAlbum:self.album completeHandler:^(NSArray<DNAsset *> * imageArray) {
+        __strong typeof(wSelf) sSelf = wSelf;
+        [sSelf.assetsArray removeAllObjects];
+        [sSelf.assetsArray addObjectsFromArray:imageArray];
+        [self.imageFlowCollectionView reloadData];
+        [self scrollerToBottom:NO];
+    }];
 }
 
 #pragma mark - helpmethods

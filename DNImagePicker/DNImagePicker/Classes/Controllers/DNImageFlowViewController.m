@@ -10,7 +10,6 @@
 #import "DNImagePickerController.h"
 #import "DNPhotoBrowser.h"
 #import "UIViewController+DNImagePicker.h"
-#import "NSURL+DNIMagePickerUrlEqual.h"
 #import "UIView+DNImagePicker.h"
 #import "UIColor+Hex.h"
 #import "DNAssetsViewCell.h"

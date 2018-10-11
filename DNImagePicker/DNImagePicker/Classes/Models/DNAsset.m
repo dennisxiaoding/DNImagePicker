@@ -7,7 +7,6 @@
 //
 
 #import "DNAsset.h"
-#import "NSURL+DNIMagePickerUrlEqual.h"
 #import "DNImagePickerHelper.h"
 @interface DNAsset ()
 

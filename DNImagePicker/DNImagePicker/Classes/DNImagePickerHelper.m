@@ -260,7 +260,7 @@ static dispatch_queue_t imageFetchQueue() {
         }
     }];
     
-    return [[array reverseObjectEnumerator] allObjects];
+    return [array copy];
 }
 
 + (void)fetchAlbumListInPhotosWithCompleteHandelr:(void(^)(NSArray<DNAlbum*> *albumList))completeHandelr {
@@ -274,7 +274,7 @@ static dispatch_queue_t imageFetchQueue() {
         
         PHFetchOptions *userAlbumsOptions = [[PHFetchOptions alloc] init];
         userAlbumsOptions.predicate = [NSPredicate predicateWithFormat:@"mediaType = %@",@(PHAssetMediaTypeImage)];
-        userAlbumsOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+        userAlbumsOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
         
         NSMutableArray *list = [NSMutableArray array];
         for (PHFetchResult *result in albums) {

@@ -10,7 +10,6 @@
 #import "CollectionViewCell.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "DNAsset.h"
-#import "NSURL+DNIMagePickerUrlEqual.h"
 
 #define kSizeThumbnailCollectionView ceil(self.view.frame.size.width/2)
 

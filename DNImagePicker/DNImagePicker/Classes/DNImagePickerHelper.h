@@ -11,6 +11,9 @@
 
 @class DNAlbum;
 @class DNAsset;
+
+FOUNDATION_EXTERN NSString * const DNImagePickerPhotoLibraryChangedNotification;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DNImagePickerHelper : NSObject
@@ -38,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return the stored album
  */
-+ (DNAlbum *)fetchCurrentAlbum;
++ (void)requestCurrentAblumWithCompleteHandler:(void(^)(DNAlbum * album))completeHandler;
 
 
 /**

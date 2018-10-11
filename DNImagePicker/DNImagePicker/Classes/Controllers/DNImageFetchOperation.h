@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DNImageFetchOperation : NSOperation
+NS_CLASS_AVAILABLE_IOS(8.0) @interface DNImageFetchOperation : NSOperation
 
 @property (nonatomic, strong, nullable) PHAsset *asset;
 

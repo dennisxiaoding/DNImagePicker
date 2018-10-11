@@ -11,6 +11,7 @@
 #import "DNAlbum.h"
 #import "DNAsset.h"
 
+NSString * const DNImagePickerPhotoLibraryChangedNotification = @"DNImagePickerPhotoLibraryChangedNotification";
 static NSString* const kDNImagePickerStoredGroupKey = @"com.dennis.kDNImagePickerStoredGroup";
 
 static dispatch_queue_t imageFetchQueue() {
@@ -22,19 +23,11 @@ static dispatch_queue_t imageFetchQueue() {
     return queue;
 }
 
-static ALAssetsLibrary* assetsLibrary() {
-    static ALAssetsLibrary *lib = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        lib = [ALAssetsLibrary new];
-    });
-    return lib;
-}
-
-@interface DNImagePickerHelper ()
+@interface DNImagePickerHelper () <PHPhotoLibraryChangeObserver>
 
 @property (nonatomic, strong) NSOperationQueue *imageFetchQueue;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, DNImageFetchOperation*> *fetchImageOperationDics;
+@property (nonatomic, strong) ALAssetsLibrary *assetsLibrary NS_DEPRECATED_IOS(4_0, 9_0);
 
 @end
 
@@ -52,10 +45,17 @@ static ALAssetsLibrary* assetsLibrary() {
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _imageFetchQueue = [NSOperationQueue new];
-        _imageFetchQueue.maxConcurrentOperationCount = 8;
-        _imageFetchQueue.name = @"com.awesomedennis.dnnimagefetchQueue";
-        _fetchImageOperationDics = [NSMutableDictionary dictionaryWithCapacity:50];
+        if (@available(iOS 8.0, *)) {
+            _imageFetchQueue = [NSOperationQueue new];
+            _imageFetchQueue.maxConcurrentOperationCount = 8;
+            _imageFetchQueue.name = @"com.awesomedennis.dnnimagefetchQueue";
+            _fetchImageOperationDics = [NSMutableDictionary dictionaryWithCapacity:50];
+        } else {
+            _assetsLibrary = [ALAssetsLibrary new];
+            if ([[[UIDevice currentDevice] systemVersion] doubleValue] < 10.0) {
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_ALLibraryDidChange:) name:ALAssetsLibraryChangedNotification object:nil];
+            }
+        }
     }
     return self;
 }
@@ -67,6 +67,21 @@ static ALAssetsLibrary* assetsLibrary() {
         _imageFetchSemaphore = dispatch_semaphore_create(9);
     });
     return _imageFetchSemaphore;
+}
+
+#pragma mark -
+#pragma mark - PHPhotoLibraryChangeObserver
+
+- (void)photoLibraryDidChange:(PHChange *)changeInstance {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:DNImagePickerPhotoLibraryChangedNotification object:nil];
+    });
+}
+
+- (void)_ALLibraryDidChange:(NSNotification *)notification {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:DNImagePickerPhotoLibraryChangedNotification object:nil];
+    });
 }
 
 #pragma mark -
@@ -88,32 +103,13 @@ static ALAssetsLibrary* assetsLibrary() {
     }
 }
 
-+ (DNAlbum *)fetchCurrentAlbum {
-    DNAlbum *album = [[DNAlbum alloc] init];
-    NSString *identifier = [DNImagePickerHelper albumIdentifier];
-    if (!identifier || identifier.length <= 0) {
-        return album;
++ (void)requestCurrentAblumWithCompleteHandler:(void (^)(DNAlbum *))completeHandler {
+    if (@available(iOS 8.0, *)) {
+        [self _PHrequestCurrentAblumWithCompleteHandler:completeHandler];
+    } else {
+        [self _ALrequestCurrentAblumWithCompleteHandler:completeHandler];
     }
-    
-    PHFetchResult *result = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[identifier] options:nil];
-    
-    if (result.count <= 0) {
-        return album;
-    }
-    PHFetchOptions *options = [[PHFetchOptions alloc] init];
-    options.predicate = [NSPredicate predicateWithFormat:@"mediaType = %@",@(PHAssetMediaTypeImage)];
-    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
-    PHAssetCollection *collection = result.firstObject;
-    
-    PHFetchResult *requestReslut = [PHAsset fetchAssetsInAssetCollection:collection options:options];
-    album.albumTitle = collection.localizedTitle;
-    album.results = requestReslut;
-    album.count = requestReslut.count;
-    album.startDate = collection.startDate;
-    album.identifier = collection.localIdentifier;
-    return album;
 }
-
 
 + (void)fetchImageAssetsInAlbum:(DNAlbum *)album completeHandler:(void (^)(NSArray<DNAsset *> *))completeHandler {
     if (@available(iOS 8.0, *)) {
@@ -194,6 +190,44 @@ static ALAssetsLibrary* assetsLibrary() {
 
 #pragma mark -
 #pragma mark - priviate Photos
+
+
++ (void)_PHrequestCurrentAblumWithCompleteHandler:(void (^)(DNAlbum *))completeHandler {
+    void(^callBack)(DNAlbum *) = ^(DNAlbum * album){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completeHandler(album);
+        });
+    };
+    
+    dispatch_async(imageFetchQueue(), ^{
+        DNAlbum *album = [[DNAlbum alloc] init];
+        NSString *identifier = [DNImagePickerHelper albumIdentifier];
+        if (!identifier || identifier.length <= 0) {
+            callBack(album);
+            return;
+        }
+        
+        PHFetchResult *result = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[identifier] options:nil];
+        
+        if (result.count <= 0) {
+            callBack(album);
+            return;
+        }
+        
+        PHFetchOptions *options = [[PHFetchOptions alloc] init];
+        options.predicate = [NSPredicate predicateWithFormat:@"mediaType = %@",@(PHAssetMediaTypeImage)];
+        options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+        PHAssetCollection *collection = result.firstObject;
+        
+        PHFetchResult *requestReslut = [PHAsset fetchAssetsInAssetCollection:collection options:options];
+        album.albumTitle = collection.localizedTitle;
+        album.results = requestReslut;
+        album.count = requestReslut.count;
+        album.startDate = collection.startDate;
+        album.identifier = collection.localIdentifier;
+        callBack(album);
+    });
+}
 
 + (void)_PHfetchImageAssetsInAlbum:(DNAlbum *)album completeHandler:(void (^)(NSArray<DNAsset *> *))completeHandler {
     dispatch_async(imageFetchQueue(), ^{
@@ -295,13 +329,22 @@ static ALAssetsLibrary* assetsLibrary() {
 #pragma mark - priviate AssetsLibrary
 
 + (void)_ALfetchImageAssetsInAlbum:(DNAlbum *)album completeHandler:(void (^)(NSArray<DNAsset *> * _Nonnull))completeHandler {
+    if (!album || album.identifier.length <= 0) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (completeHandler) {
+                completeHandler([NSArray array]);
+            }
+        });
+        return;
+    }
+    
     dispatch_async(imageFetchQueue(), ^{
         NSMutableArray *a = [NSMutableArray array];
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
-        [assetsLibrary() groupForURL:[NSURL URLWithString:album.identifier] resultBlock:^(ALAssetsGroup *group) {
+        [[[self sharedHelper] assetsLibrary] groupForURL:[NSURL URLWithString:album.identifier] resultBlock:^(ALAssetsGroup *group) {
             [group setAssetsFilter:[ALAssetsFilter allPhotos]];
             
-            [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+            [group enumerateAssetsWithOptions:NSEnumerationConcurrent usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
                 if (result) {
                     [a addObject:[DNAsset assetWithALAsset:result]];
                 }
@@ -316,9 +359,35 @@ static ALAssetsLibrary* assetsLibrary() {
         dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
         dispatch_async(dispatch_get_main_queue(), ^{
             if (completeHandler) {
-                completeHandler([[a reverseObjectEnumerator] allObjects]);
+                completeHandler([a copy]);
             }
         });
+    });
+}
+
++ (void)_ALrequestCurrentAblumWithCompleteHandler:(void (^)(DNAlbum *))completeHandler {
+    void(^callBack)(DNAlbum *) = ^(DNAlbum * album){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completeHandler(album);
+        });
+    };
+    
+    dispatch_async(imageFetchQueue(), ^{
+        DNAlbum *album = [[DNAlbum alloc] init];
+        NSString *identifier = [DNImagePickerHelper albumIdentifier];
+        if (!identifier || identifier.length <= 0) {
+            callBack(album);
+            return;
+        }
+        [[[self sharedHelper] assetsLibrary] groupForURL:[NSURL URLWithString:identifier] resultBlock:^(ALAssetsGroup *assetsGroup){
+            if (assetsGroup) {
+                callBack([DNAlbum albumWithAssetGroup:assetsGroup]);
+            } else {
+                callBack(album);
+            }
+        } failureBlock:^(NSError *error){
+            callBack(album);
+        }];
     });
 }
 
@@ -326,24 +395,24 @@ static ALAssetsLibrary* assetsLibrary() {
     NSMutableArray *albumArray = [NSMutableArray array];
     dispatch_semaphore_t sem = dispatch_semaphore_create(0);
     
-    [assetsLibrary() enumerateGroupsWithTypes:type
-                                   usingBlock:^(ALAssetsGroup *assetsGroup, BOOL *stop) {
-                                       if (assetsGroup) {
-                                           // Filter the assets group
-                                           [assetsGroup setAssetsFilter:[ALAssetsFilter allAssets]];
-                                           // Add assets group
-                                           if (assetsGroup.numberOfAssets > 0) {
-                                               // Add assets group
-                                               DNAlbum *album = [DNAlbum albumWithAssetGroup:assetsGroup];
-                                               [albumArray addObject:album];
-                                           }
-                                       }
-                                       if (*stop || !assetsGroup) {
-                                           dispatch_semaphore_signal(sem);
-                                       }
-                                   } failureBlock:^(NSError *error) {
-                                       dispatch_semaphore_signal(sem);
-                                   }];
+    [[[self sharedHelper] assetsLibrary] enumerateGroupsWithTypes:type
+                                                       usingBlock:^(ALAssetsGroup *assetsGroup, BOOL *stop) {
+                                                           if (assetsGroup) {
+                                                               // Filter the assets group
+                                                               [assetsGroup setAssetsFilter:[ALAssetsFilter allAssets]];
+                                                               // Add assets group
+                                                               if (assetsGroup.numberOfAssets > 0) {
+                                                                   // Add assets group
+                                                                   DNAlbum *album = [DNAlbum albumWithAssetGroup:assetsGroup];
+                                                                   [albumArray addObject:album];
+                                                               }
+                                                           }
+                                                           if (*stop || !assetsGroup) {
+                                                               dispatch_semaphore_signal(sem);
+                                                           }
+                                                       } failureBlock:^(NSError *error) {
+                                                           dispatch_semaphore_signal(sem);
+                                                       }];
     
     dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     return [albumArray copy];
@@ -361,7 +430,7 @@ static ALAssetsLibrary* assetsLibrary() {
         if (albumArray.count > 0) {
             NSArray *sortedAssetsGroups = [albumArray
                                            sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-
+                                               
                                                DNAlbum *a = obj1;
                                                DNAlbum *b = obj2;
                                                

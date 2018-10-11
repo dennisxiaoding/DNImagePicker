@@ -10,10 +10,6 @@
 #import "DNImagePickerHelper.h"
 #import "DNAsset.h"
 
-@interface DNAlbum ()
-
-@end
-
 @implementation DNAlbum
 
 

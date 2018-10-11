@@ -32,6 +32,8 @@ static NSUInteger const kDNImageFlowMaxSeletedNumber = 9;
 @property (nonatomic, strong) NSMutableArray *assetsArray;
 @property (nonatomic, strong) NSMutableArray *selectedAssetsArray;
 
+@property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
+
 @property (nonatomic, assign) BOOL isFullImage;
 @end
 
@@ -69,23 +71,31 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.toolbarHidden = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:DNImagePickerPhotoLibraryChangedNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     self.navigationController.toolbarHidden = YES;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)setupData {
+    
     if (!self.album && self.albumIdentifier.length > 0) {
-        self.album = [DNImagePickerHelper fetchCurrentAlbum];
+        __weak typeof(self) wSelf = self;
+        [DNImagePickerHelper requestCurrentAblumWithCompleteHandler:^(DNAlbum *album) {
+            __strong typeof(wSelf) sSelf = wSelf;
+            sSelf.album = album;
+            sSelf.title = sSelf.album.albumTitle;
+            [sSelf loadData];
+        }];
+    } else {
+        self.title = self.album.albumTitle;
+        [self loadData];
     }
-    self.title = self.album.albumTitle;
-    [self loadData];
 }
 
-
-- (void)setupView
-{
+- (void)setupView {
     self.view.backgroundColor = [UIColor whiteColor];
     [self createBarButtonItemAtPosition:DNImagePickerNavigationBarPositionLeft
                       statusNormalImage:[UIImage imageNamed:@"back_normal"]
@@ -116,9 +126,13 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 }
 
 - (void)loadData {
+    if (!self.assetsArray.count) {
+        [self.indicatorView startAnimating];
+    }
     __weak typeof(self) wSelf = self;
     [DNImagePickerHelper fetchImageAssetsInAlbum:self.album completeHandler:^(NSArray<DNAsset *> * imageArray) {
         __strong typeof(wSelf) sSelf = wSelf;
+        [sSelf.indicatorView stopAnimating];
         [sSelf.assetsArray removeAllObjects];
         [sSelf.assetsArray addObjectsFromArray:imageArray];
         [self.imageFlowCollectionView reloadData];
@@ -156,8 +170,7 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
 
 #pragma mark - priviate methods
 - (void)sendImages {
-    [[NSUserDefaults standardUserDefaults] setObject:self.album.identifier forKey:kDNImagePickerStoredGroupKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [DNImagePickerHelper saveAblumIdentifier:self.album.identifier];
     
     DNImagePickerController *imagePicker = [self dnImagePickerController];
     if (imagePicker && [imagePicker.imagePickerDelegate respondsToSelector:@selector(dnImagePickerController:sendImages:isFullImage:)]) {
@@ -217,7 +230,6 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
         _imageFlowCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) collectionViewLayout:layout];
         _imageFlowCollectionView.backgroundColor = [UIColor clearColor];
         [_imageFlowCollectionView registerClass:[DNAssetsViewCell class] forCellWithReuseIdentifier:dnAssetsViewCellReuseIdentifier];
-        
         _imageFlowCollectionView.alwaysBounceVertical = YES;
         _imageFlowCollectionView.delegate = self;
         _imageFlowCollectionView.dataSource = self;
@@ -234,6 +246,17 @@ static NSString* const dnAssetsViewCellReuseIdentifier = @"DNAssetsViewCell";
         [_sendButton addTaget:self action:@selector(sendButtonAction:)];
     }
     return  _sendButton;
+}
+
+- (UIActivityIndicatorView *)indicatorView {
+    if (!_indicatorView) {
+        _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        _indicatorView.hidesWhenStopped = YES;
+        _indicatorView.centerX = CGRectGetWidth(self.view.bounds)/2;
+        _indicatorView.centerY = CGRectGetHeight(self.view.bounds)/2;
+        [self.view addSubview:_indicatorView];
+    }
+    return _indicatorView;
 }
 
 #pragma mark - ui action
@@ -335,4 +358,5 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 - (void)photoBrowser:(DNPhotoBrowser *)photoBrowser seleteFullImage:(BOOL)fullImage {
     self.isFullImage = fullImage;
 }
+
 @end

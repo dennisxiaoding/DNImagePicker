@@ -13,23 +13,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DNAsset : NSObject
 
-@property (nonatomic, copy, nullable) NSString *assetIdentifier;
-
-- (void)fetchImageWithSize:(CGSize)size
-           needHighQuality:(BOOL)highQuality
-         imageResutHandler:(void (^)(UIImage * image))handler;
-
-- (void)fetchImageWithSize:(CGSize)size
-         imageResutHandler:(void (^)(UIImage * image))handler;
-
-
-- (void)fetchImageSizeWithHandler:(void (^)(CGFloat imageSize, NSString *sizeString))handler;
-
-+ (DNAsset *)assetWithALAsset:(ALAsset *)asset NS_DEPRECATED_IOS(4_0, 9_0);
+@property (nonatomic, copy) NSString *assetIdentifier;
+@property (nonatomic, readonly) PHAsset *asset;
 
 + (DNAsset *)assetWithPHAsset:(PHAsset *)asset NS_AVAILABLE_IOS(8_0);
 
-- (void)cancelImageRequest;
 
 @end
 

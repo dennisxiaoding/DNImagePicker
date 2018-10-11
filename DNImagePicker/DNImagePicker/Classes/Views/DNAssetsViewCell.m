@@ -7,8 +7,6 @@
 //
 
 #import "DNAssetsViewCell.h"
-#import "DNAsset.h"
-
 
 @interface DNAssetsViewCell ()
 @property (nonatomic, strong, nonnull) UIImageView *imageView;
@@ -34,7 +32,7 @@
 - (void)addContentConstraint {
     NSLayoutConstraint *imageConstraintsBottom = [NSLayoutConstraint
                                                   constraintWithItem:self.imageView
-                                                  attribute:NSLayoutAttributeBottom 
+                                                  attribute:NSLayoutAttributeBottom
                                                   relatedBy:NSLayoutRelationEqual
                                                   toItem:self.contentView
                                                   attribute:NSLayoutAttributeBottom
@@ -96,7 +94,7 @@
                                                     attribute:NSLayoutAttributeHeight
                                                     multiplier:0.5f
                                                     constant:0];
-
+    
     NSLayoutConstraint *chekBtViewConsraintHeight = [NSLayoutConstraint
                                                      constraintWithItem:self.checkButton
                                                      attribute:NSLayoutAttributeHeight
@@ -113,7 +111,7 @@
     NSString *checkImageVIewVFLV = @"V:|-3-[_checkImageView(sideLength)]";
     NSArray *checkImageConstraintsH = [NSLayoutConstraint constraintsWithVisualFormat:checkImageViewVFLH options:0 metrics:checkImageViewMetric views:NSDictionaryOfVariableBindings(_checkImageView)];
     NSArray *checkImageConstraintsV = [NSLayoutConstraint constraintsWithVisualFormat:checkImageVIewVFLV options:0 metrics:checkImageViewMetric views:NSDictionaryOfVariableBindings(_checkImageView)];
-
+    
     [self.contentView addConstraints:checkImageConstraintsH];
     [self.contentView addConstraints:checkImageConstraintsV];
 }
@@ -124,15 +122,17 @@
     self.asset = asset;
     __weak typeof(self) wSelf = self;
     CGFloat kThumbSizeLength =  ceil(([[UIScreen mainScreen] bounds].size.width -10)/4);
-    [asset fetchImageWithSize:CGSizeMake(kThumbSizeLength, kThumbSizeLength)
-            imageResutHandler:^(UIImage * _Nullable image) {
-                __strong typeof(wSelf) sSelf = wSelf;
-                if (image) {
-                    sSelf.imageView.image = image;
-                } else {
-                    sSelf.imageView.image = [UIImage imageNamed:@"assets_placeholder_picture"];
-                }
-            }];
+    
+    [DNImagePickerHelper fetchImageWithAsset:self.asset
+                                  targetSize:CGSizeMake(kThumbSizeLength, kThumbSizeLength)
+                           imageResutHandler:^(UIImage * _Nonnull image) {
+                               __strong typeof(wSelf) sSelf = wSelf;
+                               if (image) {
+                                   sSelf.imageView.image = image;
+                               } else {
+                                   sSelf.imageView.image = [UIImage imageNamed:@"assets_placeholder_picture"];
+                               }
+                           }];
 }
 
 - (void)setIsSelected:(BOOL)isSelected {
@@ -158,8 +158,7 @@
     }
 }
 
-- (void)checkButtonAction:(id)sender
-{
+- (void)checkButtonAction:(id)sender {
     if (self.checkButton.selected) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(didDeselectItemAssetsViewCell:)]) {
             [self.delegate didDeselectItemAssetsViewCell:self];
@@ -172,8 +171,8 @@
 }
 
 - (void)prepareForReuse {
-    if (_asset) {
-        [_asset cancelImageRequest];
+    if (self.asset) {
+        [DNImagePickerHelper cancelFetchWithAssets:self.asset];
     }
     _asset = nil;
     _isSelected = NO;
@@ -193,7 +192,7 @@
 - (UIButton *)checkButton {
     if (!_checkButton) {
         _checkButton = [UIButton buttonWithType:UIButtonTypeCustom];
-
+        
         [_checkButton addTarget:self action:@selector(checkButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [_checkButton setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self.contentView addSubview:_checkButton];

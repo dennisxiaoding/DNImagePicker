@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24D077EA216F4BF2004E397A /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D077E9216F4BF2004E397A /* UIColor+Hex.m */; };
 		24EBD7FA216CB58700B020FA /* DNImageFetchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 24EBD7F9216CB58700B020FA /* DNImageFetchOperation.m */; };
 		952600B21D2B9D4100080227 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 952600B11D2B9D4100080227 /* main.m */; };
 		952600B51D2B9D4100080227 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 952600B41D2B9D4100080227 /* AppDelegate.m */; };
@@ -18,7 +19,6 @@
 		952600D51D2BA05700080227 /* DNAlbumTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952600CF1D2BA05700080227 /* DNAlbumTableViewController.m */; };
 		952600D61D2BA05700080227 /* DNImageFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952600D11D2BA05700080227 /* DNImageFlowViewController.m */; };
 		952600D71D2BA05700080227 /* DNPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 952600D31D2BA05700080227 /* DNPhotoBrowser.m */; };
-		952600E91D2BA26400080227 /* JKPromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = 952600DA1D2BA26400080227 /* JKPromptView.m */; };
 		952600EA1D2BA26400080227 /* DNBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 952600DC1D2BA26400080227 /* DNBrowserCell.m */; };
 		952600EB1D2BA26400080227 /* DNTapDetectingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 952600DE1D2BA26400080227 /* DNTapDetectingImageView.m */; };
 		952600EC1D2BA26400080227 /* DNAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 952600E01D2BA26400080227 /* DNAssetsViewCell.m */; };
@@ -31,8 +31,6 @@
 		952601031D2BAF6D00080227 /* imageResources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 952601011D2BAF6D00080227 /* imageResources.xcassets */; };
 		952601051D2BAF7700080227 /* DNImagePicker.strings in Resources */ = {isa = PBXBuildFile; fileRef = 952601071D2BAF7700080227 /* DNImagePicker.strings */; };
 		952601111D2BB7F700080227 /* UIViewController+DNImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 9526010A1D2BB7F700080227 /* UIViewController+DNImagePicker.m */; };
-		952601121D2BB7F700080227 /* NSURL+DNIMagePickerUrlEqual.m in Sources */ = {isa = PBXBuildFile; fileRef = 9526010C1D2BB7F700080227 /* NSURL+DNIMagePickerUrlEqual.m */; };
-		952601131D2BB7F700080227 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 9526010E1D2BB7F700080227 /* UIColor+Hex.m */; };
 		952601141D2BB7F700080227 /* UIView+DNImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 952601101D2BB7F700080227 /* UIView+DNImagePicker.m */; };
 		9526011C1D2BBB4A00080227 /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952601171D2BBB4A00080227 /* InfoViewController.m */; };
 		9526011D1D2BBB4A00080227 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 952601191D2BBB4A00080227 /* CollectionViewController.m */; };
@@ -44,6 +42,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		24D077E8216F4BF2004E397A /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
+		24D077E9216F4BF2004E397A /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
 		24EBD7F8216CB58700B020FA /* DNImageFetchOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DNImageFetchOperation.h; path = Controllers/DNImageFetchOperation.h; sourceTree = "<group>"; };
 		24EBD7F9216CB58700B020FA /* DNImageFetchOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DNImageFetchOperation.m; path = Controllers/DNImageFetchOperation.m; sourceTree = "<group>"; };
 		952600AD1D2B9D4100080227 /* DNImagePicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DNImagePicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,8 +64,6 @@
 		952600D11D2BA05700080227 /* DNImageFlowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNImageFlowViewController.m; sourceTree = "<group>"; };
 		952600D21D2BA05700080227 /* DNPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNPhotoBrowser.h; sourceTree = "<group>"; };
 		952600D31D2BA05700080227 /* DNPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNPhotoBrowser.m; sourceTree = "<group>"; };
-		952600D91D2BA26400080227 /* JKPromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKPromptView.h; sourceTree = "<group>"; };
-		952600DA1D2BA26400080227 /* JKPromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKPromptView.m; sourceTree = "<group>"; };
 		952600DB1D2BA26400080227 /* DNBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNBrowserCell.h; sourceTree = "<group>"; };
 		952600DC1D2BA26400080227 /* DNBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DNBrowserCell.m; sourceTree = "<group>"; };
 		952600DD1D2BA26400080227 /* DNTapDetectingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DNTapDetectingImageView.h; sourceTree = "<group>"; };
@@ -87,10 +85,6 @@
 		952601081D2BAFB200080227 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/DNImagePicker.strings"; sourceTree = "<group>"; };
 		952601091D2BB7F700080227 /* UIViewController+DNImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+DNImagePicker.h"; sourceTree = "<group>"; };
 		9526010A1D2BB7F700080227 /* UIViewController+DNImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+DNImagePicker.m"; sourceTree = "<group>"; };
-		9526010B1D2BB7F700080227 /* NSURL+DNIMagePickerUrlEqual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+DNIMagePickerUrlEqual.h"; sourceTree = "<group>"; };
-		9526010C1D2BB7F700080227 /* NSURL+DNIMagePickerUrlEqual.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+DNIMagePickerUrlEqual.m"; sourceTree = "<group>"; };
-		9526010D1D2BB7F700080227 /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
-		9526010E1D2BB7F700080227 /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
 		9526010F1D2BB7F700080227 /* UIView+DNImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+DNImagePicker.h"; sourceTree = "<group>"; };
 		952601101D2BB7F700080227 /* UIView+DNImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+DNImagePicker.m"; sourceTree = "<group>"; };
 		952601161D2BBB4A00080227 /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
@@ -207,12 +201,10 @@
 		952600CA1D2B9F6F00080227 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				24D077E8216F4BF2004E397A /* UIColor+Hex.h */,
+				24D077E9216F4BF2004E397A /* UIColor+Hex.m */,
 				952601091D2BB7F700080227 /* UIViewController+DNImagePicker.h */,
 				9526010A1D2BB7F700080227 /* UIViewController+DNImagePicker.m */,
-				9526010B1D2BB7F700080227 /* NSURL+DNIMagePickerUrlEqual.h */,
-				9526010C1D2BB7F700080227 /* NSURL+DNIMagePickerUrlEqual.m */,
-				9526010D1D2BB7F700080227 /* UIColor+Hex.h */,
-				9526010E1D2BB7F700080227 /* UIColor+Hex.m */,
 				9526010F1D2BB7F700080227 /* UIView+DNImagePicker.h */,
 				952601101D2BB7F700080227 /* UIView+DNImagePicker.m */,
 			);
@@ -237,8 +229,6 @@
 		952600D81D2BA17900080227 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				952600D91D2BA26400080227 /* JKPromptView.h */,
-				952600DA1D2BA26400080227 /* JKPromptView.m */,
 				95BE23281D73490700EDBAF3 /* DNAlbumCell.h */,
 				95BE23291D73490700EDBAF3 /* DNAlbumCell.m */,
 				952600DB1D2BA26400080227 /* DNBrowserCell.h */,
@@ -363,22 +353,20 @@
 				952600EF1D2BA26400080227 /* DNBadgeLabel.m in Sources */,
 				952600B81D2B9D4100080227 /* ViewController.m in Sources */,
 				952600ED1D2BA26400080227 /* DNSendButton.m in Sources */,
-				952600E91D2BA26400080227 /* JKPromptView.m in Sources */,
 				952601211D2BBBA500080227 /* DNAsset.m in Sources */,
 				9526011D1D2BBB4A00080227 /* CollectionViewController.m in Sources */,
 				952600EE1D2BA26400080227 /* DNFullImageButton.m in Sources */,
 				952600D51D2BA05700080227 /* DNAlbumTableViewController.m in Sources */,
 				95BE232A1D73490700EDBAF3 /* DNAlbumCell.m in Sources */,
-				952601121D2BB7F700080227 /* NSURL+DNIMagePickerUrlEqual.m in Sources */,
 				952600B51D2B9D4100080227 /* AppDelegate.m in Sources */,
 				952600B21D2B9D4100080227 /* main.m in Sources */,
-				952601131D2BB7F700080227 /* UIColor+Hex.m in Sources */,
 				952601141D2BB7F700080227 /* UIView+DNImagePicker.m in Sources */,
 				952601111D2BB7F700080227 /* UIViewController+DNImagePicker.m in Sources */,
 				952600D41D2BA05700080227 /* DNImagePickerController.m in Sources */,
 				24EBD7FA216CB58700B020FA /* DNImageFetchOperation.m in Sources */,
 				952600EA1D2BA26400080227 /* DNBrowserCell.m in Sources */,
 				9526011C1D2BBB4A00080227 /* InfoViewController.m in Sources */,
+				24D077EA216F4BF2004E397A /* UIColor+Hex.m in Sources */,
 				9526011E1D2BBB4A00080227 /* CollectionViewCell.m in Sources */,
 				952600F01D2BA26400080227 /* DNUnAuthorizedTipsView.m in Sources */,
 				95A147311D6C15A900E80455 /* DNImagePickerHelper.m in Sources */,

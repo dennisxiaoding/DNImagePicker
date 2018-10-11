@@ -23,35 +23,13 @@
     return album;
 }
 
-
-+ (DNAlbum *)albumWithAssetGroup:(ALAssetsGroup *)assetGroup {
-    DNAlbum *album = [[DNAlbum alloc] init];
-    album.albumTitle = [assetGroup valueForProperty:ALAssetsGroupPropertyName];
-    album.count = assetGroup.numberOfAssets;
-    id url = [assetGroup valueForProperty:ALAssetsGroupPropertyURL];
-    if ([url isKindOfClass:[NSURL class]]) {
-        album.identifier = ((NSURL *)url).absoluteString;
-    } else if ([url isKindOfClass:[NSString class]]) {
-        album.identifier = (NSString *)url;
-    }
-    album.albumPropertyType = [assetGroup valueForProperty:ALAssetsGroupPropertyType];
-    album.posterImage = [UIImage imageWithCGImage:assetGroup.posterImage];
-    return album;
-}
-
-
 - (void)fetchPostImageWithSize:(CGSize)size
              imageResutHandler:(void (^)(UIImage *))handler {
-    if (@available(iOS 8.0, *)) {
-        [DNImagePickerHelper fetchImageWithAsset:self.results.firstObject
-                                      targetSize:size
-                               imageResutHandler:^(UIImage *postImage) {
-                                   handler(postImage);
-                               }];
-    } else {
-        handler(self.posterImage);
-    }
-    
+    [DNImagePickerHelper fetchImageWithAsset:[DNAsset assetWithPHAsset:self.results.firstObject]
+                                  targetSize:size
+                           imageResutHandler:^(UIImage *postImage) {
+                               handler(postImage);
+                           }];
 }
 
 - (NSAttributedString *)albumAttributedString {

@@ -11,6 +11,7 @@
 #import "DNPhotoBrowser.h"
 #import "UIView+DNImagePicker.h"
 #import "DNAsset.h"
+#import "DNImagePickerHelper.h"
 
 @interface DNBrowserCell () <UIScrollViewDelegate,DNTapDetectingImageViewDelegate>
 @property (nonatomic, strong) UIScrollView *zoomingScrollView;
@@ -56,7 +57,7 @@
     self.zoomingScrollView.zoomScale = 1;
     self.zoomingScrollView.contentSize = CGSizeMake(0, 0);
     __weak typeof(self)weakSelf = self;
-    [self.asset fetchImageWithSize:self.zoomingScrollView.size needHighQuality:YES imageResutHandler:^(UIImage * _Nullable image) {
+    [DNImagePickerHelper fetchImageWithAsset:self.asset targetSize:self.zoomingScrollView.size needHighQuality:YES imageResutHandler:^(UIImage * _Nonnull image) {
         if (!image) {
             return;
         }

@@ -11,6 +11,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "DNAsset.h"
 
+
 #define kSizeThumbnailCollectionView ceil(self.view.frame.size.width/2)
 
 @interface CollectionViewController ()
@@ -36,15 +37,13 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     CollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    
     DNAsset *dnasset = self.imageArray[indexPath.row];
-    [dnasset fetchImageWithSize:CGSizeMake(kSizeThumbnailCollectionView-4, kSizeThumbnailCollectionView*1.5) imageResutHandler:^(UIImage * _Nullable image) {
+    [DNImagePickerHelper fetchImageWithAsset:dnasset targetSize:CGSizeMake(kSizeThumbnailCollectionView-4, kSizeThumbnailCollectionView*1.5) imageResutHandler:^(UIImage * _Nonnull image) {
         cell.imageView.image = image;
     }];
-    [dnasset fetchImageSizeWithHandler:^(CGFloat imageSize, NSString * _Nonnull sizeString) {
-         cell.textLabel.text = sizeString;
+    [DNImagePickerHelper fetchImageSizeWithAsset:dnasset imageSizeResultHandler:^(CGFloat imageSize, NSString * _Nonnull sizeString) {
+        cell.textLabel.text = sizeString;
     }];
-    
     return cell;
 }
 

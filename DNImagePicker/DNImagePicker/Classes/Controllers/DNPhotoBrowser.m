@@ -13,13 +13,10 @@
 #import "DNFullImageButton.h"
 #import "DNBrowserCell.h"
 #import "DNAsset.h"
-#define iOS8_OR_LATER   ( [[[UIDevice currentDevice] systemVersion] compare:@"8.0"] != NSOrderedAscending)
+#import "DNImagePickerHelper.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-
-
-#define DNIMAGEPICKER_UIBarMetrics iOS8_OR_LATER?UIBarMetricsCompact:UIBarMetricsLandscapePhone
 
 
 @interface DNPhotoBrowser () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
@@ -165,9 +162,10 @@
     self.fullImageButton.selected = self.isFullImage;
     
     if (self.isFullImage) {
-        DNAsset *asset = self.photoDataSources[self.currentIndex];
-        [asset fetchImageSizeWithHandler:^(CGFloat imageSize, NSString * _Nonnull sizeString) {
-            self.fullImageButton.text = sizeString;
+        __weak typeof(self) wSelf = self;
+        [DNImagePickerHelper fetchImageSizeWithAsset:self.photoDataSources[self.currentIndex] imageSizeResultHandler:^(CGFloat imageSize, NSString *sizeString) {
+            __strong typeof(wSelf) sSelf = wSelf;
+            sSelf.fullImageButton.text = sizeString;
         }];
     }
 }
@@ -194,13 +192,10 @@
     navBar.barStyle = UIBarStyleBlackTranslucent;
     if ([[UINavigationBar class] respondsToSelector:@selector(appearance)]) {
         [navBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
-        if (iOS8_OR_LATER) {
-            [navBar setBackgroundImage:nil forBarMetrics:UIBarMetricsCompact];;
-        } else {
-            [navBar setBackgroundImage:nil forBarMetrics:DNIMAGEPICKER_UIBarMetrics];
-        }
+        [navBar setBackgroundImage:nil forBarMetrics:UIBarMetricsCompact];;
     }
 }
+
 
 - (void)storePreviousNavBarAppearance {
     _didSavePreviousStateOfNavBar = YES;
@@ -213,11 +208,7 @@
     _previousNavBarStyle = self.navigationController.navigationBar.barStyle;
     if ([[UINavigationBar class] respondsToSelector:@selector(appearance)]) {
         _previousNavigationBarBackgroundImageDefault = [self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsDefault];
-        if (iOS8_OR_LATER) {
-            _previousNavigationBarBackgroundImageLandscapePhone = [self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsCompact];
-        } else {
-            _previousNavigationBarBackgroundImageLandscapePhone = [self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsLandscapePhone];
-        }
+        _previousNavigationBarBackgroundImageLandscapePhone = [self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsCompact];
     }
 }
 
@@ -233,11 +224,7 @@
         navBar.barStyle = _previousNavBarStyle;
         if ([[UINavigationBar class] respondsToSelector:@selector(appearance)]) {
             [navBar setBackgroundImage:_previousNavigationBarBackgroundImageDefault forBarMetrics:UIBarMetricsDefault];
-            if (iOS8_OR_LATER) {
-               [navBar setBackgroundImage:_previousNavigationBarBackgroundImageLandscapePhone forBarMetrics:UIBarMetricsCompact];
-            } else {
-               [navBar setBackgroundImage:_previousNavigationBarBackgroundImageLandscapePhone forBarMetrics:UIBarMetricsLandscapePhone];
-            }
+            [navBar setBackgroundImage:_previousNavigationBarBackgroundImageLandscapePhone forBarMetrics:UIBarMetricsCompact];
         }
         // Restore back button if we need to
         if (_previousViewControllerBackButton) {
@@ -325,11 +312,7 @@
         _toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - height, self.view.bounds.size.width, height)];
         if ([[UIToolbar class] respondsToSelector:@selector(appearance)]) {
             [_toolbar setBackgroundImage:nil forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
-            if (iOS8_OR_LATER) {
-                [_toolbar setBackgroundImage:nil forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsCompact];
-            } else {
-                [_toolbar setBackgroundImage:nil forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsLandscapePhone];
-            }
+            [_toolbar setBackgroundImage:nil forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsCompact];
         }
         _toolbar.barStyle = UIBarStyleBlackTranslucent;
         _toolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
@@ -436,9 +419,9 @@
         // Nav bar slides up on it's own on iOS 7
         [self.navigationController.navigationBar setAlpha:alpha];
         // Toolbar
-        _toolbar.frame = frame;
-        if (hidden) _toolbar.frame = CGRectOffset(_toolbar.frame, 0, animatonOffset);
-        _toolbar.alpha = alpha;
+        self.toolbar.frame = frame;
+        if (hidden) self.toolbar.frame = CGRectOffset(self.toolbar.frame, 0, animatonOffset);
+        self.toolbar.alpha = alpha;
         
     } completion:^(BOOL finished) {}];
 }

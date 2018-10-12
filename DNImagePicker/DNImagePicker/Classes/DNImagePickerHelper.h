@@ -33,16 +33,14 @@ typedef NS_ENUM(NSUInteger, DNImagePickerFitlerType) {
 @class DNAlbum;
 @class DNAsset;
 
-FOUNDATION_EXTERN NSString * const DNImagePickerPhotoLibraryChangedNotification;
-
 NS_ASSUME_NONNULL_BEGIN
-
-@interface DNImagePickerHelper : NSObject
+FOUNDATION_EXTERN NSString * const DNImagePickerPhotoLibraryChangedNotification;
+NS_CLASS_AVAILABLE_IOS(8.0) @interface DNImagePickerHelper : NSObject
 
 + (instancetype)sharedHelper;
 
 
-+ (void)cancelFetchWithAssets:(DNAsset *)asset NS_AVAILABLE_IOS(8_0);
++ (void)cancelFetchWithAssets:(DNAsset *)asset;
 
 /**
  *  Returns information about your app’s authorization for accessing the user’s Photos library.
@@ -76,7 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 + (void)fetchImageSizeWithAsset:(DNAsset *)asset
-         imageSizeResultHandler:(void (^)(CGFloat imageSize, NSString * sizeString))handler NS_AVAILABLE_IOS(8_0);
+         imageSizeResultHandler:(void (^)(CGFloat imageSize, NSString * sizeString))handler;
 
 
 /**
@@ -90,14 +88,14 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)fetchImageWithAsset:(DNAsset *)asset
                  targetSize:(CGSize)targetSize
             needHighQuality:(BOOL)isHighQuality
-          imageResutHandler:(void (^)(UIImage * image))handler NS_AVAILABLE_IOS(8_0);
+          imageResutHandler:(void (^)(UIImage * image))handler;
 /**
  fetch Image with assets
  same as `fetchImageWithAsset:targetSize:needHighQuality:imageResutHandler:` param `isHighQuality` is NO
  */
 + (void)fetchImageWithAsset:(DNAsset *)asset
                  targetSize:(CGSize)targetSize
-          imageResutHandler:(void (^)(UIImage *))handler NS_AVAILABLE_IOS(8_0);
+          imageResutHandler:(void (^)(UIImage *))handler;
 
 // storeage
 + (void)saveAblumIdentifier:(NSString *)identifier;

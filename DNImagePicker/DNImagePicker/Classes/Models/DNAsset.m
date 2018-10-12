@@ -7,14 +7,9 @@
 //
 
 #import "DNAsset.h"
-#import "DNImagePickerHelper.h"
+#import <Photos/Photos.h>
 @interface DNAsset ()
-
 @property (nonatomic, strong, nullable) PHAsset *asset;
-@property (nonatomic, assign) PHImageRequestID requestID;
-///the size of the file for this representation
-@property (nonatomic, assign) NSInteger imageSize;
-
 @end
 
 @implementation DNAsset

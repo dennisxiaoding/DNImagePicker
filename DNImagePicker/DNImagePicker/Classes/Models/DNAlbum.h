@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DNImagePicker.h"
+@class PHAssetCollection;
+@class PHFetchResult;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,8 +16,6 @@ NS_AVAILABLE_IOS(8.0) @interface DNAlbum : NSObject
 
 + (DNAlbum *)albumWithAssetCollection:(PHAssetCollection *)collection
                               results:(PHFetchResult *)results;
-
-@property (nonatomic, strong, nullable) NSDate *startDate;
 
 /*
  @note use this model to store the album's 'result, 'count, 'name, 'startDate

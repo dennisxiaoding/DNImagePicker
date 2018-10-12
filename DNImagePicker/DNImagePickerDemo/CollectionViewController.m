@@ -8,8 +8,7 @@
 
 #import "CollectionViewController.h"
 #import "CollectionViewCell.h"
-#import <AssetsLibrary/AssetsLibrary.h>
-#import "DNAsset.h"
+#import "DNImagePicker.h"
 
 
 #define kSizeThumbnailCollectionView ceil(self.view.frame.size.width/2)

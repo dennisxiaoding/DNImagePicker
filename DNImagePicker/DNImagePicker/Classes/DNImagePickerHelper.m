@@ -6,6 +6,7 @@
 //  Copyright © 2016年 Dennis. All rights reserved.
 //
 
+#import <Photos/Photos.h>
 #import "DNImagePickerHelper.h"
 #import "DNImageFetchOperation.h"
 #import "DNAlbum.h"
@@ -44,8 +45,8 @@ static dispatch_queue_t imageFetchQueue() {
     if (self) {
         _imageFetchQueue = [NSOperationQueue new];
         _imageFetchQueue.maxConcurrentOperationCount = 8;
-        _imageFetchQueue.name = @"com.awesomedennis.dnnimagefetchQueue";
-        _fetchImageOperationDics = [NSMutableDictionary dictionaryWithCapacity:50];
+        _imageFetchQueue.name = @"com.awesomedennis.dnnimagefetchOperationQueue";
+        _fetchImageOperationDics = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -140,7 +141,6 @@ static dispatch_queue_t imageFetchQueue() {
         album.albumTitle = collection.localizedTitle;
         album.results = requestReslut;
         album.count = requestReslut.count;
-        album.startDate = collection.startDate;
         album.identifier = collection.localIdentifier;
         callBack(album);
     });

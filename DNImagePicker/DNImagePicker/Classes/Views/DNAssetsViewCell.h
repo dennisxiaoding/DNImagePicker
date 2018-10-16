@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DNImagePicker.h"
 
 @class DNAssetsViewCell;
 @class DNAsset;

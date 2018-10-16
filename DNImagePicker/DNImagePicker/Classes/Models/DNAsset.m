@@ -12,6 +12,14 @@
 @property (nonatomic, strong, nullable) PHAsset *asset;
 @end
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMemoryWarningInAssets) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+    }
+    return self;
+}
+
 @implementation DNAsset
 
 + (DNAsset *)assetWithPHAsset:(PHAsset *)asset {
@@ -22,6 +30,10 @@
     a.asset = asset;
     a.assetIdentifier = asset.localIdentifier;
     return a;
+}
+
+- (void)didReceiveMemoryWarningInAssets {
+    _cacheImage = nil;
 }
 
 

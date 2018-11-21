@@ -12,6 +12,9 @@
 @property (nonatomic, strong, nullable) PHAsset *asset;
 @end
 
+
+@implementation DNAsset
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -20,7 +23,6 @@
     return self;
 }
 
-@implementation DNAsset
 
 + (DNAsset *)assetWithPHAsset:(PHAsset *)asset {
     DNAsset *a = [[DNAsset alloc] init];

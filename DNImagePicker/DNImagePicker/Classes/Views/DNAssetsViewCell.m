@@ -120,6 +120,9 @@
 
 - (void)fillWithAsset:(nonnull DNAsset *)asset isSelected:(BOOL)seleted {
     self.isSelected = seleted;
+    if (self.asset) {
+        [DNImagePickerHelper cancelFetchWithAssets:self.asset];
+    }
     self.asset = asset;
     
     if (self.asset.cacheImage) {
@@ -178,10 +181,6 @@
 }
 
 - (void)prepareForReuse {
-    if (self.asset) {
-        [DNImagePickerHelper cancelFetchWithAssets:self.asset];
-    }
-    _asset = nil;
     _isSelected = NO;
     _delegate = nil;
 }
